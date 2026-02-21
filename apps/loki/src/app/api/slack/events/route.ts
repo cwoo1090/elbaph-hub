@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+import { after } from "next/server";
 import { verifySlackSignature } from "@/lib/slack";
+import { handleAppMention } from "@/lib/handler";
 
 export async function POST(req: NextRequest) {
   const rawBody = await req.text();
@@ -19,6 +21,11 @@ export async function POST(req: NextRequest) {
     return new NextResponse("Invalid signature", { status: 401 });
   }
 
-  // Acknowledge event immediately
+  // Handle app_mention events in background
+  if (body.event?.type === "app_mention") {
+    after(() => handleAppMention(body.event));
+  }
+
+  // Acknowledge immediately
   return new NextResponse("ok", { status: 200 });
 }
