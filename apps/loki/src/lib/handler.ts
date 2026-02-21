@@ -1,5 +1,6 @@
 import { slack } from "./slack";
 import { askGemini } from "./gemini";
+import { createManusTask, pollManusTask } from "./manus";
 
 const processedEvents = new Set<string>();
 
@@ -21,7 +22,6 @@ export async function handleAppMention(event: {
   const threadTs = event.thread_ts || event.ts;
 
   try {
-    // Fetch thread context
     let threadContext = "";
     if (event.thread_ts) {
       const replies = await slack.conversations.replies({
@@ -37,7 +37,6 @@ export async function handleAppMention(event: {
       }
     }
 
-    // Ask Gemini
     const result = await askGemini(question, threadContext);
 
     if (result.type === "answer") {
@@ -47,12 +46,38 @@ export async function handleAppMention(event: {
         text: result.text,
       });
     } else {
-      // TODO: Route to Manus (Task 6)
+      // Deep research via Manus
       await slack.chat.postMessage({
         channel: event.channel,
         thread_ts: threadTs,
         text: "🔍 리서치 중입니다... 잠시만 기다려주세요.",
       });
+
+      try {
+        const manusPrompt = threadContext
+          ? `Context from team discussion:\n${threadContext}\n\nResearch request: ${question}\n\nProvide a structured research report in Korean with TL;DR, key findings with details, and source URLs.`
+          : `Research request: ${question}\n\nProvide a structured research report in Korean with TL;DR, key findings with details, and source URLs.`;
+
+        const taskId = await createManusTask(manusPrompt);
+        const manusResult = await pollManusTask(taskId);
+
+        await slack.chat.postMessage({
+          channel: event.channel,
+          thread_ts: threadTs,
+          text: manusResult,
+        });
+      } catch (error) {
+        const message =
+          error instanceof Error && error.message === "TIMEOUT"
+            ? "⏰ 리서치가 예상보다 오래 걸리고 있습니다. 결과가 나오면 알려드릴게요."
+            : "⚠️ 리서치 중 문제가 발생했습니다. 다시 시도해주세요.";
+
+        await slack.chat.postMessage({
+          channel: event.channel,
+          thread_ts: threadTs,
+          text: message,
+        });
+      }
     }
   } catch (error) {
     console.error("Error handling app_mention:", error);
