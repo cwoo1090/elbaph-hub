@@ -1,37 +1,49 @@
 # Members
 
-## 안철우 (Chulwoo Ahn)
-- 서울과고 → 연세대학교 의과대학 (currently 공군 운전병)
-- Solo builder — develops, launches, and sells side projects
-- Previously at Mashup Ventures (VC) and Sweep (startup)
-- Interests: 낭만, One Piece, travel (Iceland, Mongolia Gobi, next: South America)
-- Dream: 세계정복
-- LinkedIn: https://www.linkedin.com/in/chulwoo-ahn-3016a8236
+## Chulwoo Ahn (안철우)
 
-## 송태규 (Taekyu Song)
-- 20+ years in robot hardware design
-- Believes in fundamentals over hype, even in the LLM/Physical AI era
-- Top-tier robot HW designer in Korea (self-assessed top 10)
-- Interests: robotics, cross-discipline collaboration, organizational politics, history
-- Dream: A leader who maximizes organizational efficiency through deep expertise and skilled coordination
+- One-liner: I want to live a life where all of humanity — present and future — can say the world was better with me in it. 수신제가치국평천하
+- Facts About Me
+  - I love romance and growth. One Piece, Itaewon Class, Naruto.
+  - Graduated from Seoul Science High School, currently on leave from Yonsei University College of Medicine serving as an Air Force driver.
+  - Been to Iceland and Mongolia's Gobi Desert. Highly recommend. South America is next.
+- Dream: World domination
+- https://www.linkedin.com/in/chulwoo-ahn-3016a8236
 
-## 서예찬 (Yechan Seo)
-- 경기과고 → 서울대학교 의과대학 본과 3학년
-- Leader of rosota (robotics crew), building surgical robots he'll use as a surgeon
-- Focus: Robotics, Brain-Computer Interface (BCI)
-- Dream: Build a Korean medtech company that surpasses Intuitive Surgical
+## Taekyu Song (송태규)
+
+- One-liner: Someone who's been digging one well — robot hardware — for 20 years straight.
+- Facts About Me
+  - In the era of LLMs and Physical AI, I believe in the importance of fundamentals more than ever.
+  - When it comes to designing robot hardware to replace humans (not machines), I'd say I'm in the top 10 in Korea. (There aren't many people doing this here yet..)
+  - Robotics is a field where CS, EE, and ME are deeply intertwined — cross-discipline collaboration within an organization IS the organization's capability. That's why I value organizational politics (stakeholder alignment).
+  - I love history.
+- Dream: To become a leader who maximizes organizational efficiency through deep expertise across all areas of robotics and skilled coordination.
+
+## Yechan Seo (서예찬)
+
+- One-liner: I'm going to build a company in Korea that surpasses Intuitive Surgical!
+- Facts About Me
+  - Graduated from Gyeonggi Science High School. As of 2026, 3rd year at Seoul National University College of Medicine.
+  - Leader of rosota (robotics crew), building surgical robots I'll use as a surgeon.
+  - Been deep into Robotics and BCI (Brain-Computer Interface) for the past few years.
+- Dream: To build Korea's leading medtech conglomerate.
 - https://yechxn.github.io
 - https://www.rosota.run
 
-## 노영훈 (Younghoon Noh)
-- 서울과고 28기 → MIT CS (graduating May 2026)
-- Joining Frontier Lab as engineer from July 2026
-- Interests: building things, improving things, solving problems
-- Exploring startups and side projects until summer
-- Dream: 창업
+## Younghoon Noh (노영훈)
 
-## 김재환 (Jaehwan Kim)
-- 서울과고 → 서울대 수학과/물리과 복전 → Columbia 수학과 박사과정 (on leave)
-- Loves math and physics, currently exploring how to make money
-- Interests: robotics (expects to end up here eventually)
-- Dream: 인생 재밌게살기
+- One-liner: I like building things, improving things, and solving problems — headed toward entrepreneurship, but in exploration mode for now.
+- Facts About Me
+  - Seoul Science High School class 28. Graduating from MIT CS in May.
+  - Joining Frontier Lab as an engineer from July.
+  - Free until summer, trying various things in the meantime.
+- Dream: Startup
+
+## Jaehwan Kim (김재환)
+
+- One-liner: Loved math and physics, but currently soul-searching. Trying to make money first.
+- Facts About Me
+  - Graduated from Seoul Science High School. Double-majored in Math and Physics at SNU, then entered Columbia's Math PhD program — currently on leave.
+  - Love robotics. Will probably end up there eventually.
+- Dream: Live an interesting life
