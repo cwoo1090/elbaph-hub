@@ -1,6 +1,6 @@
 import { slack } from "./slack";
 import { askGemini } from "./gemini";
-import { createManusTask, pollManusTask } from "./manus";
+import { createManusTask, saveTaskContext } from "./manus";
 
 const processedEvents = new Set<string>();
 
@@ -59,23 +59,13 @@ export async function handleAppMention(event: {
           : `Research request: ${question}\n\nProvide a structured research report in Korean with TL;DR, key findings with details, and source URLs.`;
 
         const taskId = await createManusTask(manusPrompt);
-        const manusResult = await pollManusTask(taskId);
-
-        await slack.chat.postMessage({
-          channel: event.channel,
-          thread_ts: threadTs,
-          text: manusResult,
-        });
+        // Save context so webhook handler knows where to post the result
+        saveTaskContext(taskId, { channel: event.channel, threadTs });
       } catch (error) {
-        const message =
-          error instanceof Error && error.message === "TIMEOUT"
-            ? "⏰ 리서치가 예상보다 오래 걸리고 있습니다. 결과가 나오면 알려드릴게요."
-            : "⚠️ 리서치 중 문제가 발생했습니다. 다시 시도해주세요.";
-
         await slack.chat.postMessage({
           channel: event.channel,
           thread_ts: threadTs,
-          text: message,
+          text: "⚠️ 리서치 중 문제가 발생했습니다. 다시 시도해주세요.",
         });
       }
     }
