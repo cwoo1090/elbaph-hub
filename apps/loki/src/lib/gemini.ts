@@ -1,6 +1,10 @@
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+let ai: GoogleGenAI;
+function getAI() {
+  if (!ai) ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+  return ai;
+}
 
 const SYSTEM_PROMPT = `You are Loki, an AI assistant for the ELBAPH community — a group of builders interested in robotics, medtech, BCI, AI, and startups.
 
@@ -23,7 +27,7 @@ export async function askGemini(
     ? `[이전 대화 맥락]\n${threadContext}\n\n[질문]\n${question}`
     : question;
 
-  const response = await ai.models.generateContent({
+  const response = await getAI().models.generateContent({
     model: "gemini-3-flash-preview",
     contents: userMessage,
     config: {
