@@ -1,7 +1,7 @@
 import crypto from "crypto";
 import { WebClient } from "@slack/web-api";
 
-export const slack = new WebClient(process.env.SLACK_BOT_TOKEN);
+export const slack = new WebClient(process.env.SLACK_BOT_TOKEN?.trim());
 
 export function verifySlackSignature(
   signingSecret: string,

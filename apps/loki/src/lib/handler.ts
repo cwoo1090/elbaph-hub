@@ -1,6 +1,7 @@
 import { slack } from "./slack";
 import { askGemini } from "./gemini";
-import { createManusTask, saveTaskContext } from "./manus";
+import { createManusTask } from "./manus";
+import { markdownToSlack } from "./format";
 
 const processedEvents = new Set<string>();
 
@@ -43,7 +44,7 @@ export async function handleAppMention(event: {
       await slack.chat.postMessage({
         channel: event.channel,
         thread_ts: threadTs,
-        text: result.text,
+        text: markdownToSlack(result.text),
       });
     } else {
       // Deep research via Manus
@@ -58,9 +59,7 @@ export async function handleAppMention(event: {
           ? `Context from team discussion:\n${threadContext}\n\nResearch request: ${question}\n\nProvide a structured research report in Korean with TL;DR, key findings with details, and source URLs.`
           : `Research request: ${question}\n\nProvide a structured research report in Korean with TL;DR, key findings with details, and source URLs.`;
 
-        const taskId = await createManusTask(manusPrompt);
-        // Save context so webhook handler knows where to post the result
-        saveTaskContext(taskId, { channel: event.channel, threadTs });
+        await createManusTask(manusPrompt, { channel: event.channel, threadTs });
       } catch (error) {
         await slack.chat.postMessage({
           channel: event.channel,

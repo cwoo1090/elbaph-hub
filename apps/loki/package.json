@@ -8,15 +8,16 @@
     "start": "next start"
   },
   "dependencies": {
+    "@google/genai": "^1.0.0",
+    "@slack/web-api": "^7.0.0",
+    "@upstash/redis": "^1.36.2",
     "next": "^15.2.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "@slack/web-api": "^7.0.0",
-    "@google/genai": "^1.0.0"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "typescript": "^5.0.0",
     "@types/node": "^22.0.0",
-    "@types/react": "^19.0.0"
+    "@types/react": "^19.0.0",
+    "typescript": "^5.0.0"
   }
 }
