@@ -14,8 +14,8 @@ For member profiles, see [members.md](members.md).
 
 AI Slack bot (`apps/loki/`) — members tag @Loki to get answers or deep research. Deployed on Vercel.
 
-- **Triage**: Gemini 3 Flash Preview (free) answers simple questions with Google Search grounding
-- **Deep research**: Routes complex queries to Manus API (Pro subscription), results posted via webhook
+- **Triage**: Gemini 3 Flash Preview (free) answers most questions with Google Search grounding
+- **Deep research**: Only for questions explicitly requiring comprehensive reports across 10+ sources — routes to Manus API (Pro subscription), results posted via webhook
 - **State**: Upstash Redis stores task context across serverless invocations
 - **Formatting**: `src/lib/format.ts` converts markdown → Slack mrkdwn
 
