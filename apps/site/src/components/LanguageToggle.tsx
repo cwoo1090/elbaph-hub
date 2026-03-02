@@ -14,7 +14,10 @@ export default function LanguageToggle() {
   }
 
   return (
-    <button onClick={toggle} className="text-sm font-medium text-neutral-400 hover:text-white transition-colors">
+    <button
+      onClick={toggle}
+      className="text-xs font-medium tracking-[0.1em] text-[#737373] hover:text-[#1a1a1a] transition-colors duration-150 uppercase"
+    >
       {locale === 'ko' ? 'EN' : 'KO'}
     </button>
   )

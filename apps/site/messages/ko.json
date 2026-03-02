@@ -10,10 +10,12 @@
     "cta": "Giants 보기"
   },
   "WhoWeAre": {
+    "label": "Our Story",
     "title": "Who We Are",
     "description": "우리는, 다음 시대를 만들어가는 젊은 거인들입니다.\n깊이 생각하고, 멀리 꿈꾸는 이들이 모였습니다.\n서로의 어깨 위에 서서 함께 세상을 바라보고, 함께 미래를 만들어 갑니다."
   },
   "WhatWeValue": {
+    "label": "Our Values",
     "title": "What We Value",
     "curiosity": "지적 호기심",
     "curiosityDesc": "지적 호기심을 갖고 배움의 즐거움을 아는 것",
@@ -23,16 +25,19 @@
     "togetherDesc": "같이 시간을 보내기 즐거운 사람들과 함께 하는 것"
   },
   "Members": {
+    "label": "The Giants",
     "title": "Giants",
     "seeAll": "전체 보기",
     "dream": "꿈"
   },
   "Meetups": {
+    "label": "Recent Gathering",
     "title": "밋업",
     "speakers": "발표자",
     "takeaways": "핵심 포인트"
   },
   "Blog": {
+    "label": "Writing",
     "title": "블로그",
     "empty": "첫 번째 포스트가 곧 올라옵니다",
     "readMore": "더 읽기"

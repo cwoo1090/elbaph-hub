@@ -16,14 +16,13 @@ export default function Nav() {
   const [open, setOpen] = useState(false)
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.06] bg-[#0a0a0a]/90 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[#e5e5e5] bg-[#faf9f6]">
+      <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6">
         <Link
           href="/"
-          className="font-[family-name:var(--font-syne)] text-base font-800 tracking-[0.2em] text-white hover:text-[#f59e0b] transition-colors duration-200"
-          style={{ fontWeight: 800 }}
+          className="font-[family-name:var(--font-syne)] text-sm font-bold tracking-[0.18em] text-[#1a1a1a] uppercase"
         >
-          ELBAPH
+          Elbaph
         </Link>
 
         {/* Desktop links */}
@@ -32,7 +31,7 @@ export default function Nav() {
             <Link
               key={key}
               href={href}
-              className="text-sm font-medium text-neutral-500 hover:text-white transition-colors duration-200"
+              className="text-sm text-[#737373] hover:text-[#1a1a1a] transition-colors duration-150"
             >
               {t(key)}
             </Link>
@@ -41,30 +40,30 @@ export default function Nav() {
         </div>
 
         {/* Mobile hamburger */}
-        <div className="flex items-center gap-4 md:hidden">
+        <div className="flex items-center gap-5 md:hidden">
           <LanguageToggle />
           <button
             onClick={() => setOpen(!open)}
-            className="flex flex-col justify-center gap-1.5 p-1"
+            className="flex flex-col justify-center gap-[5px] p-1"
             aria-label="Toggle menu"
           >
-            <span className={`block h-px w-5 bg-white transition-all duration-300 ${open ? 'translate-y-2 rotate-45' : ''}`} />
-            <span className={`block h-px w-5 bg-white transition-all duration-300 ${open ? 'opacity-0' : ''}`} />
-            <span className={`block h-px w-5 bg-white transition-all duration-300 ${open ? '-translate-y-2 -rotate-45' : ''}`} />
+            <span className={`block h-px w-5 bg-[#1a1a1a] transition-all duration-200 ${open ? 'translate-y-[7px] rotate-45' : ''}`} />
+            <span className={`block h-px w-5 bg-[#1a1a1a] transition-all duration-200 ${open ? 'opacity-0' : ''}`} />
+            <span className={`block h-px w-5 bg-[#1a1a1a] transition-all duration-200 ${open ? '-translate-y-[7px] -rotate-45' : ''}`} />
           </button>
         </div>
       </div>
 
       {/* Mobile dropdown */}
       {open && (
-        <div className="border-t border-white/[0.06] bg-[#0a0a0a]/98 backdrop-blur-xl md:hidden">
-          <div className="flex flex-col px-6 py-5 gap-5">
+        <div className="border-t border-[#e5e5e5] bg-[#faf9f6] md:hidden">
+          <div className="flex flex-col px-6 py-6 gap-5">
             {navLinks.map(({ href, key }) => (
               <Link
                 key={key}
                 href={href}
                 onClick={() => setOpen(false)}
-                className="text-sm font-medium text-neutral-400 hover:text-white transition-colors duration-200"
+                className="text-sm text-[#737373] hover:text-[#1a1a1a] transition-colors duration-150"
               >
                 {t(key)}
               </Link>

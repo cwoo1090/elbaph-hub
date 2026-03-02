@@ -6,34 +6,15 @@ type Props = {
   dreamLabel: string
 }
 
-const avatarGradients = [
-  'avatar-gradient-0',
-  'avatar-gradient-1',
-  'avatar-gradient-2',
-  'avatar-gradient-3',
-  'avatar-gradient-4',
-]
-
-const memberOrder = ['chulwoo', 'taekyu', 'yechan', 'younghoon', 'jaehwan']
-
 export default function MemberCard({ member, locale, dreamLabel }: Props) {
-  const gradientIndex = memberOrder.indexOf(member.id)
-  const gradientClass = avatarGradients[gradientIndex >= 0 ? gradientIndex : 0]
-
   return (
-    <div className="card-glow rounded-2xl p-8">
+    <div className="border border-[#e5e5e5] bg-white p-8">
       <div className="flex items-center gap-4">
-        <div
-          className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-full text-xl font-bold text-white ${gradientClass}`}
-          style={{ fontFamily: 'var(--font-syne)', fontWeight: 700 }}
-        >
+        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#f0ede8] text-base font-semibold text-[#1a1a1a] font-[family-name:var(--font-syne)]">
           {member.name[locale].charAt(0)}
         </div>
         <div>
-          <h2
-            className="text-lg font-semibold font-[family-name:var(--font-syne)]"
-            style={{ fontWeight: 600 }}
-          >
+          <h2 className="text-base font-semibold text-[#1a1a1a] font-[family-name:var(--font-syne)]">
             {member.name[locale]}
           </h2>
           {(member.linkedin || member.website) && (
@@ -43,7 +24,7 @@ export default function MemberCard({ member, locale, dreamLabel }: Props) {
                   href={member.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-neutral-500 hover:text-[#f59e0b] transition-colors duration-200"
+                  className="text-xs text-[#737373] hover:text-[#1a1a1a] transition-colors duration-150"
                 >
                   LinkedIn
                 </a>
@@ -53,7 +34,7 @@ export default function MemberCard({ member, locale, dreamLabel }: Props) {
                   href={member.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-neutral-500 hover:text-[#f59e0b] transition-colors duration-200"
+                  className="text-xs text-[#737373] hover:text-[#1a1a1a] transition-colors duration-150"
                 >
                   Website
                 </a>
@@ -63,23 +44,21 @@ export default function MemberCard({ member, locale, dreamLabel }: Props) {
         </div>
       </div>
 
-      <p className="mt-6 text-sm italic leading-relaxed text-neutral-300 border-l-2 border-[#f59e0b]/30 pl-4">
+      <p className="mt-6 text-sm italic leading-relaxed text-[#737373] border-l border-[#e5e5e5] pl-4">
         &ldquo;{member.oneLiner[locale]}&rdquo;
       </p>
 
       <div className="mt-6 space-y-2">
         {member.bio.map((b, i) => (
-          <p key={i} className="text-sm leading-relaxed text-neutral-400">
+          <p key={i} className="text-sm leading-relaxed text-[#737373]">
             {b[locale]}
           </p>
         ))}
       </div>
 
-      <div className="mt-6 rounded-xl border border-[#f59e0b]/15 bg-[#f59e0b]/5 px-4 py-3.5">
-        <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#f59e0b]/70">
-          {dreamLabel}
-        </span>
-        <p className="mt-1 text-sm font-medium text-neutral-200">
+      <div className="mt-6 border-t border-[#e5e5e5] pt-5">
+        <span className="section-label mb-1">{dreamLabel}</span>
+        <p className="text-sm font-medium text-[#1a1a1a]">
           {member.dream[locale]}
         </p>
       </div>

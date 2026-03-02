@@ -1,147 +1,43 @@
 @import "tailwindcss";
 
-/* ─── Custom CSS variables ─────────────────────────────────────── */
 :root {
-  --accent: #f59e0b;
-  --accent-dim: rgba(245, 158, 11, 0.15);
-  --accent-glow: rgba(245, 158, 11, 0.25);
-  --surface: rgba(255, 255, 255, 0.04);
-  --border: rgba(255, 255, 255, 0.08);
-  --border-accent: rgba(245, 158, 11, 0.4);
+  --bg: #faf9f6;
+  --text: #1a1a1a;
+  --muted: #737373;
+  --border: #e5e5e5;
+  --card: #ffffff;
 }
 
-/* ─── Selection ──────────────────────────────────────────────── */
 ::selection {
-  background-color: rgba(245, 158, 11, 0.25);
-  color: #fff;
+  background-color: #1a1a1a;
+  color: #faf9f6;
 }
 
-/* ─── Scrollbar ──────────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: #faf9f6;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.12);
+  background: #d4d4d4;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(245, 158, 11, 0.4);
+  background: #a3a3a3;
 }
 
-/* ─── Keyframes ──────────────────────────────────────────────── */
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(245, 158, 11, 0.15); }
-  50% { box-shadow: 0 0 40px rgba(245, 158, 11, 0.3); }
-}
-
-/* ─── Gradient text utility ──────────────────────────────────── */
-.text-gradient {
-  background: linear-gradient(135deg, #fff 0%, #f59e0b 60%, #fbbf24 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.text-gradient-subtle {
-  background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ─── Accent line ────────────────────────────────────────────── */
-.accent-line {
+.section-label {
   display: block;
-  width: 40px;
-  height: 2px;
-  background: #f59e0b;
-  margin-bottom: 1.5rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #737373;
+  margin-bottom: 1.25rem;
 }
 
-/* ─── Section divider ────────────────────────────────────────── */
 .section-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08) 20%, rgba(245, 158, 11, 0.2) 50%, rgba(255,255,255,0.08) 80%, transparent);
-}
-
-/* ─── Card hover glow ────────────────────────────────────────── */
-.card-glow {
-  border: 1px solid var(--border);
-  background: var(--surface);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease, background 0.3s ease;
-}
-
-.card-glow:hover {
-  border-color: var(--border-accent);
-  box-shadow: 0 0 30px var(--accent-glow), 0 8px 32px rgba(0,0,0,0.4);
-  transform: translateY(-3px);
-  background: rgba(245, 158, 11, 0.04);
-}
-
-/* ─── Avatar gradient backgrounds ───────────────────────────── */
-.avatar-gradient-0 {
-  background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
-}
-.avatar-gradient-1 {
-  background: linear-gradient(135deg, #3b1f6e 0%, #7c3aed 100%);
-}
-.avatar-gradient-2 {
-  background: linear-gradient(135deg, #1a4731 0%, #059669 100%);
-}
-.avatar-gradient-3 {
-  background: linear-gradient(135deg, #7c2d12 0%, #dc2626 100%);
-}
-.avatar-gradient-4 {
-  background: linear-gradient(135deg, #713f12 0%, #d97706 100%);
-}
-
-/* ─── Section animations ─────────────────────────────────────── */
-@media (prefers-reduced-motion: no-preference) {
-  .animate-fade-up {
-    animation: fade-up 0.6s ease-out both;
-  }
-
-  .animate-fade-up-delay-1 {
-    animation: fade-up 0.6s 0.1s ease-out both;
-  }
-
-  .animate-fade-up-delay-2 {
-    animation: fade-up 0.6s 0.2s ease-out both;
-  }
-
-  .animate-fade-up-delay-3 {
-    animation: fade-up 0.6s 0.3s ease-out both;
-  }
-
-  .animate-fade-up-delay-4 {
-    animation: fade-up 0.6s 0.4s ease-out both;
-  }
-
-  main > section {
-    animation: fade-up 0.6s ease-out both;
-  }
+  background: #e5e5e5;
 }

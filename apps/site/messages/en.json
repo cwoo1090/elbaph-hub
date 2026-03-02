@@ -10,10 +10,12 @@
     "cta": "Meet the Giants"
   },
   "WhoWeAre": {
+    "label": "Our Story",
     "title": "Who We Are",
     "description": "We are young giants shaping the next era.\nDeep thinkers and far dreamers, gathered together.\nStanding on each other's shoulders, we see the world and build the future together."
   },
   "WhatWeValue": {
+    "label": "Our Values",
     "title": "What We Value",
     "curiosity": "Intellectual Curiosity",
     "curiosityDesc": "The joy of learning and the drive to know more",
@@ -23,16 +25,19 @@
     "togetherDesc": "Being with people who make time worth spending"
   },
   "Members": {
+    "label": "The Giants",
     "title": "Giants",
     "seeAll": "See all",
     "dream": "Dream"
   },
   "Meetups": {
+    "label": "Recent Gathering",
     "title": "Meetups",
     "speakers": "Speakers",
     "takeaways": "Key Takeaways"
   },
   "Blog": {
+    "label": "Writing",
     "title": "Blog",
     "empty": "First post coming soon",
     "readMore": "Read more"
