@@ -16,6 +16,9 @@ node_modules/
 # Claude Code local config
 .claude/settings.local.json
 
+# Docs
+docs/
+
 # Binary files
 *.pptx
 ~$*.pptx
