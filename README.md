@@ -13,6 +13,7 @@ Automation hub for Elbaph — a community of ambitious builders.
 
 - Node.js 18+
 - npm
+- [Vercel CLI](https://vercel.com/docs/cli) (`npm i -g vercel`)
 
 ### 1. Clone the repo
 
@@ -30,11 +31,18 @@ npm install
 
 ### 3. Set up environment variables
 
+Link the Vercel project and pull env vars automatically:
+
+```bash
+vercel link
+vercel env pull .env.local
+```
+
+If you don't have Vercel access, copy the example and ask Chulwoo for the keys:
+
 ```bash
 cp .env.example .env.local
 ```
-
-Ask Chulwoo for the API keys and fill them in `.env.local`.
 
 ### 4. Run locally
 
