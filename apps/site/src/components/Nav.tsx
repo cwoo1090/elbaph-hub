@@ -20,7 +20,7 @@ export default function Nav() {
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6">
         <Link
           href="/"
-          className="text-sm font-bold tracking-[0.18em] text-[#1a1a1a] uppercase"
+          className="text-base font-bold text-[#1a1a1a]"
         >
           Elbaph
         </Link>
