@@ -7,7 +7,7 @@ export default function Hero() {
   return (
     <section className="flex flex-col items-center justify-center px-6 py-40 text-center md:py-56">
       <div className="mx-auto max-w-4xl">
-        <h1 className="font-[family-name:var(--font-syne)] text-6xl font-bold leading-[1.1] tracking-normal text-[#1a1a1a] md:text-8xl lg:text-9xl">
+        <h1 className="text-6xl font-bold leading-[1.1] tracking-normal text-[#1a1a1a] md:text-8xl lg:text-9xl">
           {t('headline')}
         </h1>
 

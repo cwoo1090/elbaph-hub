@@ -17,7 +17,7 @@ export default async function BlogPostPage({ params }: Props) {
     <article className="px-6 py-24">
       <div className="mx-auto max-w-3xl">
         <header>
-          <h1 className="text-4xl font-bold tracking-tight md:text-5xl">
+          <h1 className="text-4xl font-bold tracking-normal md:text-5xl">
             {post.title[locale]}
           </h1>
           <div className="mt-4 flex items-center gap-4 text-sm text-neutral-500">

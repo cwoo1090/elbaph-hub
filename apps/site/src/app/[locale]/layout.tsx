@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Syne } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
@@ -7,11 +7,10 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import '../globals.css'
 
-const syne = Syne({
+const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-syne',
-  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-inter',
 })
 
 export const metadata: Metadata = {
@@ -34,7 +33,7 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <html lang={locale} className="scroll-smooth">
-      <body className={`${syne.variable} font-[family-name:var(--font-syne)] bg-[#faf9f6] text-[#1a1a1a] antialiased`}>
+      <body className={`${inter.variable} font-[family-name:var(--font-inter)] bg-[#faf9f6] text-[#1a1a1a] antialiased`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <div className="flex min-h-screen flex-col">
             <Nav />

@@ -13,7 +13,7 @@ export default function MembersPreview() {
         <div className="flex items-end justify-between mb-14">
           <div>
             <span className="section-label">{t('label')}</span>
-            <h2 className="font-[family-name:var(--font-syne)] text-3xl font-bold tracking-tight text-[#1a1a1a] md:text-4xl">
+            <h2 className="text-3xl font-bold tracking-normal text-[#1a1a1a] md:text-4xl">
               {t('title')}
             </h2>
           </div>
