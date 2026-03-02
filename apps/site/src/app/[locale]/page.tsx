@@ -1,5 +1,6 @@
 import Hero from '@/components/Hero'
-import WhatWeDo from '@/components/WhatWeDo'
+import WhoWeAre from '@/components/WhatWeDo'
+import WhatWeValue from '@/components/WhatWeValue'
 import MembersPreview from '@/components/MembersPreview'
 import RecentMeetup from '@/components/RecentMeetup'
 
@@ -7,7 +8,8 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <WhatWeDo />
+      <WhoWeAre />
+      <WhatWeValue />
       <MembersPreview />
       <RecentMeetup />
     </>

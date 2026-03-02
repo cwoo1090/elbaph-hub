@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ['latin'], display: 'swap' })
 
 export const metadata: Metadata = {
   title: 'Elbaph',
-  description: 'A community of ambitious builders',
+  description: 'A Land of Giants — Standing on each other\'s shoulders to see a wider world',
 }
 
 type Props = {

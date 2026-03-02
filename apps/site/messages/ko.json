@@ -1,40 +1,44 @@
 {
   "Nav": {
-    "members": "\ud06c\ub8e8",
-    "meetups": "\ubc0b\uc5c5",
-    "blog": "\ube14\ub85c\uadf8"
+    "members": "Giants",
+    "meetups": "밋업",
+    "blog": "블로그"
   },
   "Hero": {
-    "headline": "We are Elbaph",
-    "subtext": "\uc57c\ub9dd \uc788\ub294 \ube4c\ub354\ub4e4\uc758 \ucee4\ubba4\ub2c8\ud2f0",
-    "cta": "\ud06c\ub8e8 \ubcf4\uae30"
+    "headline": "A Land of Giants",
+    "subtext": "거인의 어깨에 올라서서 더 넓은 세상을 바라보라",
+    "cta": "Giants 보기"
   },
-  "WhatWeDo": {
-    "title": "What We Do",
-    "meetups": "\uc6d4\uac04 \ubc0b\uc5c5",
-    "meetupsDesc": "\ub9e4\ub2ec \ubaa8\uc5ec \uac01\uc790\uc758 \ubd84\uc57c\uc5d0\uc11c \uc778\uc0ac\uc774\ud2b8\ub97c \uacf5\uc720\ud569\ub2c8\ub2e4",
-    "diversity": "\ub2e4\uc591\ud55c \ubd84\uc57c",
-    "diversityDesc": "\uc758\ud559, \ub85c\ubd07\uacf5\ud559, CS, \uc218\ud559, \ubb3c\ub9ac\ud559 \u2014 \ub2e4\uc591\ud55c \uc2dc\uc57c\uc640 \uad00\uc810",
-    "network": "\ub124\ud2b8\uc6cc\ud06c",
-    "networkDesc": "\uc720\ud6a8\ucda9\ub3cc\uc744 \ud1b5\ud574 \ubbf8\ub798\ub97c \ud568\uaed8 \ub9cc\ub4e4\uc5b4\uac11\ub2c8\ub2e4"
+  "WhoWeAre": {
+    "title": "Who We Are",
+    "description": "우리는, 다음 시대를 만들어가는 젊은 거인들입니다.\n깊이 생각하고, 멀리 꿈꾸는 이들이 모였습니다.\n서로의 어깨 위에 서서 함께 세상을 바라보고, 함께 미래를 만들어 갑니다."
+  },
+  "WhatWeValue": {
+    "title": "What We Value",
+    "curiosity": "지적 호기심",
+    "curiosityDesc": "지적 호기심을 갖고 배움의 즐거움을 아는 것",
+    "thinking": "근본적 사고",
+    "thinkingDesc": "인류 차원의 생각, 개방적 사고, 비판적 사고를 하는 것",
+    "together": "함께 하는 즐거움",
+    "togetherDesc": "같이 시간을 보내기 즐거운 사람들과 함께 하는 것"
   },
   "Members": {
-    "title": "Crew",
-    "seeAll": "\uc804\uccb4 \ubcf4\uae30",
-    "dream": "\uafc8"
+    "title": "Giants",
+    "seeAll": "전체 보기",
+    "dream": "꿈"
   },
   "Meetups": {
-    "title": "\ubc0b\uc5c5",
-    "speakers": "\ubc1c\ud45c\uc790",
-    "takeaways": "\ud575\uc2ec \ud3ec\uc778\ud2b8"
+    "title": "밋업",
+    "speakers": "발표자",
+    "takeaways": "핵심 포인트"
   },
   "Blog": {
-    "title": "\ube14\ub85c\uadf8",
-    "empty": "\uccab \ubc88\uc9f8 \ud3ec\uc2a4\ud2b8\uac00 \uacf7 \uc62c\ub77c\uc635\ub2c8\ub2e4",
-    "readMore": "\ub354 \uc77d\uae30"
+    "title": "블로그",
+    "empty": "첫 번째 포스트가 곧 올라옵니다",
+    "readMore": "더 읽기"
   },
   "Footer": {
-    "contact": "\ubb38\uc758",
+    "contact": "문의",
     "rights": "All rights reserved."
   }
 }

@@ -1,25 +1,29 @@
 {
   "Nav": {
-    "members": "Crew",
+    "members": "Giants",
     "meetups": "Meetups",
     "blog": "Blog"
   },
   "Hero": {
-    "headline": "We are Elbaph",
-    "subtext": "A community of ambitious builders",
-    "cta": "Meet the Crew"
+    "headline": "A Land of Giants",
+    "subtext": "Standing on the shoulders of giants to see a wider world",
+    "cta": "Meet the Giants"
   },
-  "WhatWeDo": {
-    "title": "What We Do",
-    "meetups": "Monthly Meetups",
-    "meetupsDesc": "We gather monthly to share insights from our respective fields",
-    "diversity": "Diverse Fields",
-    "diversityDesc": "Medicine, Robotics, CS, Math, Physics \u2014 broader perspectives",
-    "network": "Network",
-    "networkDesc": "Meaningful collisions that shape the future together"
+  "WhoWeAre": {
+    "title": "Who We Are",
+    "description": "We are young giants shaping the next era.\nDeep thinkers and far dreamers, gathered together.\nStanding on each other's shoulders, we see the world and build the future together."
+  },
+  "WhatWeValue": {
+    "title": "What We Value",
+    "curiosity": "Intellectual Curiosity",
+    "curiosityDesc": "The joy of learning and the drive to know more",
+    "thinking": "Fundamental Thinking",
+    "thinkingDesc": "Thinking at the scale of humanity — open, critical, from first principles",
+    "together": "Together",
+    "togetherDesc": "Being with people who make time worth spending"
   },
   "Members": {
-    "title": "Crew",
+    "title": "Giants",
     "seeAll": "See all",
     "dream": "Dream"
   },
