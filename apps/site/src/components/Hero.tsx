@@ -7,13 +7,11 @@ export default function Hero() {
   return (
     <section className="flex flex-col items-center justify-center px-6 py-40 text-center md:py-56">
       <div className="mx-auto max-w-4xl">
-        <p className="section-label mb-8">A Land of Giants</p>
-
-        <h1 className="font-[family-name:var(--font-syne)] text-5xl font-bold leading-[1.05] tracking-tight text-[#1a1a1a] md:text-7xl lg:text-8xl">
+        <h1 className="font-[family-name:var(--font-syne)] text-6xl font-bold leading-[1.1] tracking-normal text-[#1a1a1a] md:text-8xl lg:text-9xl">
           {t('headline')}
         </h1>
 
-        <p className="mt-8 max-w-2xl mx-auto text-lg leading-relaxed text-[#737373]">
+        <p className="mt-8 max-w-2xl mx-auto text-xl leading-relaxed tracking-wide text-[#737373] md:text-2xl">
           {t('subtext')}
         </p>
 
