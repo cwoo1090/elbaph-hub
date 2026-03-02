@@ -1,11 +1,15 @@
-import { useTranslations } from 'next-intl'
+import Hero from '@/components/Hero'
+import WhatWeDo from '@/components/WhatWeDo'
+import MembersPreview from '@/components/MembersPreview'
+import RecentMeetup from '@/components/RecentMeetup'
 
 export default function Home() {
-  const t = useTranslations('Hero')
   return (
-    <main>
-      <h1>{t('headline')}</h1>
-      <p>{t('subtext')}</p>
-    </main>
+    <>
+      <Hero />
+      <WhatWeDo />
+      <MembersPreview />
+      <RecentMeetup />
+    </>
   )
 }
