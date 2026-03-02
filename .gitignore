@@ -1,0 +1,21 @@
+# Dependencies & build
+node_modules/
+.next/
+.vercel
+
+# Environment / secrets
+.env*
+
+# Python
+.venv/
+
+# Local tools
+.omc/
+.playwright-mcp/
+
+# Claude Code local config
+.claude/settings.local.json
+
+# Binary files
+*.pptx
+~$*.pptx

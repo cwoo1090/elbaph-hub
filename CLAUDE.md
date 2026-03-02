@@ -7,8 +7,6 @@ For member profiles, see [members.md](members.md).
 ## Skills
 
 - `/news` — daily news briefing posted to #news
-- `/meetup` — meetup reminders and scheduling for #meetups
-- `/research [topic]` — deep-dive research on a requested topic
 
 ## Loki Bot
 
