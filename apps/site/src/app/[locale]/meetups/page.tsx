@@ -11,10 +11,14 @@ export default function MeetupsPage() {
   return (
     <section className="px-6 py-24">
       <div className="mx-auto max-w-6xl">
-        <h1 className="text-4xl font-bold tracking-tight md:text-5xl">
+        <span className="accent-line" />
+        <h1
+          className="font-[family-name:var(--font-syne)] text-4xl font-bold tracking-tight md:text-6xl"
+          style={{ fontWeight: 800 }}
+        >
           {t('title')}
         </h1>
-        <div className="mt-12 space-y-8">
+        <div className="mt-14 space-y-6">
           {sorted.map((m) => (
             <MeetupCard
               key={m.id}

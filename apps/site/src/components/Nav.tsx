@@ -16,9 +16,13 @@ export default function Nav() {
   const [open, setOpen] = useState(false)
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-[#0a0a0a]/80 backdrop-blur-md">
+    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.06] bg-[#0a0a0a]/90 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-        <Link href="/" className="text-lg font-bold tracking-widest hover:text-neutral-300 transition-colors">
+        <Link
+          href="/"
+          className="font-[family-name:var(--font-syne)] text-base font-800 tracking-[0.2em] text-white hover:text-[#f59e0b] transition-colors duration-200"
+          style={{ fontWeight: 800 }}
+        >
           ELBAPH
         </Link>
 
@@ -28,7 +32,7 @@ export default function Nav() {
             <Link
               key={key}
               href={href}
-              className="text-sm font-medium text-neutral-400 hover:text-white transition-colors"
+              className="text-sm font-medium text-neutral-500 hover:text-white transition-colors duration-200"
             >
               {t(key)}
             </Link>
@@ -44,23 +48,23 @@ export default function Nav() {
             className="flex flex-col justify-center gap-1.5 p-1"
             aria-label="Toggle menu"
           >
-            <span className={`block h-0.5 w-5 bg-white transition-all duration-200 ${open ? 'translate-y-2 rotate-45' : ''}`} />
-            <span className={`block h-0.5 w-5 bg-white transition-all duration-200 ${open ? 'opacity-0' : ''}`} />
-            <span className={`block h-0.5 w-5 bg-white transition-all duration-200 ${open ? '-translate-y-2 -rotate-45' : ''}`} />
+            <span className={`block h-px w-5 bg-white transition-all duration-300 ${open ? 'translate-y-2 rotate-45' : ''}`} />
+            <span className={`block h-px w-5 bg-white transition-all duration-300 ${open ? 'opacity-0' : ''}`} />
+            <span className={`block h-px w-5 bg-white transition-all duration-300 ${open ? '-translate-y-2 -rotate-45' : ''}`} />
           </button>
         </div>
       </div>
 
       {/* Mobile dropdown */}
       {open && (
-        <div className="border-t border-white/10 bg-[#0a0a0a]/95 backdrop-blur-md md:hidden">
-          <div className="flex flex-col px-6 py-4 gap-4">
+        <div className="border-t border-white/[0.06] bg-[#0a0a0a]/98 backdrop-blur-xl md:hidden">
+          <div className="flex flex-col px-6 py-5 gap-5">
             {navLinks.map(({ href, key }) => (
               <Link
                 key={key}
                 href={href}
                 onClick={() => setOpen(false)}
-                className="text-sm font-medium text-neutral-400 hover:text-white transition-colors"
+                className="text-sm font-medium text-neutral-400 hover:text-white transition-colors duration-200"
               >
                 {t(key)}
               </Link>

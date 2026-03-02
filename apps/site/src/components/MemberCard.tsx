@@ -6,23 +6,44 @@ type Props = {
   dreamLabel: string
 }
 
+const avatarGradients = [
+  'avatar-gradient-0',
+  'avatar-gradient-1',
+  'avatar-gradient-2',
+  'avatar-gradient-3',
+  'avatar-gradient-4',
+]
+
+const memberOrder = ['chulwoo', 'taekyu', 'yechan', 'younghoon', 'jaehwan']
+
 export default function MemberCard({ member, locale, dreamLabel }: Props) {
+  const gradientIndex = memberOrder.indexOf(member.id)
+  const gradientClass = avatarGradients[gradientIndex >= 0 ? gradientIndex : 0]
+
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-8 transition-colors hover:bg-white/[0.08]">
+    <div className="card-glow rounded-2xl p-8">
       <div className="flex items-center gap-4">
-        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white/10 text-xl font-bold text-neutral-400">
+        <div
+          className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-full text-xl font-bold text-white ${gradientClass}`}
+          style={{ fontFamily: 'var(--font-syne)', fontWeight: 700 }}
+        >
           {member.name[locale].charAt(0)}
         </div>
         <div>
-          <h2 className="text-lg font-semibold">{member.name[locale]}</h2>
+          <h2
+            className="text-lg font-semibold font-[family-name:var(--font-syne)]"
+            style={{ fontWeight: 600 }}
+          >
+            {member.name[locale]}
+          </h2>
           {(member.linkedin || member.website) && (
-            <div className="mt-1 flex gap-3">
+            <div className="mt-1.5 flex gap-3">
               {member.linkedin && (
                 <a
                   href={member.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-neutral-500 hover:text-white transition-colors"
+                  className="text-xs text-neutral-500 hover:text-[#f59e0b] transition-colors duration-200"
                 >
                   LinkedIn
                 </a>
@@ -32,7 +53,7 @@ export default function MemberCard({ member, locale, dreamLabel }: Props) {
                   href={member.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-neutral-500 hover:text-white transition-colors"
+                  className="text-xs text-neutral-500 hover:text-[#f59e0b] transition-colors duration-200"
                 >
                   Website
                 </a>
@@ -42,7 +63,7 @@ export default function MemberCard({ member, locale, dreamLabel }: Props) {
         </div>
       </div>
 
-      <p className="mt-6 text-sm italic leading-relaxed text-neutral-300">
+      <p className="mt-6 text-sm italic leading-relaxed text-neutral-300 border-l-2 border-[#f59e0b]/30 pl-4">
         &ldquo;{member.oneLiner[locale]}&rdquo;
       </p>
 
@@ -54,8 +75,8 @@ export default function MemberCard({ member, locale, dreamLabel }: Props) {
         ))}
       </div>
 
-      <div className="mt-6 rounded-lg bg-white/5 px-4 py-3">
-        <span className="text-xs font-medium uppercase tracking-wider text-neutral-500">
+      <div className="mt-6 rounded-xl border border-[#f59e0b]/15 bg-[#f59e0b]/5 px-4 py-3.5">
+        <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#f59e0b]/70">
           {dreamLabel}
         </span>
         <p className="mt-1 text-sm font-medium text-neutral-200">

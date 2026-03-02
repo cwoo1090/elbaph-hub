@@ -10,20 +10,32 @@ export default function WhatWeValue() {
   const t = useTranslations('WhatWeValue')
 
   return (
-    <section className="border-t border-white/10 px-6 py-24">
+    <section className="px-6 py-32">
+      <div className="section-divider mb-32" />
       <div className="mx-auto max-w-6xl">
-        <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
+        <span className="accent-line" />
+        <h2
+          className="font-[family-name:var(--font-syne)] text-3xl font-bold tracking-tight md:text-5xl"
+          style={{ fontWeight: 700 }}
+        >
           {t('title')}
         </h2>
-        <div className="mt-12 grid gap-8 md:grid-cols-3">
-          {values.map(({ key, icon }) => (
+        <div className="mt-14 grid gap-6 md:grid-cols-3">
+          {values.map(({ key, icon }, i) => (
             <div
               key={key}
-              className="rounded-2xl border border-white/10 bg-white/5 p-8 transition-colors hover:bg-white/[0.08]"
+              className={`card-glow rounded-2xl p-8 animate-fade-up-delay-${i + 1}`}
             >
-              <div className="text-3xl">{icon}</div>
-              <h3 className="mt-4 text-lg font-semibold">{t(key)}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-neutral-400">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#f59e0b]/10 text-2xl">
+                {icon}
+              </div>
+              <h3
+                className="mt-5 text-lg font-semibold font-[family-name:var(--font-syne)]"
+                style={{ fontWeight: 600 }}
+              >
+                {t(key)}
+              </h3>
+              <p className="mt-2.5 text-sm leading-relaxed text-neutral-400">
                 {t(`${key}Desc`)}
               </p>
             </div>

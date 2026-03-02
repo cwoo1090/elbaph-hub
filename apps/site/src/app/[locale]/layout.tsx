@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Syne, DM_Sans } from 'next/font/google'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
@@ -7,7 +7,19 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import '../globals.css'
 
-const inter = Inter({ subsets: ['latin'], display: 'swap' })
+const syne = Syne({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-syne',
+  weight: ['400', '500', '600', '700', '800'],
+})
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-dm-sans',
+  weight: ['300', '400', '500'],
+})
 
 export const metadata: Metadata = {
   title: 'Elbaph',
@@ -29,7 +41,7 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <html lang={locale} className="scroll-smooth">
-      <body className={`${inter.className} bg-[#0a0a0a] text-white antialiased`}>
+      <body className={`${syne.variable} ${dmSans.variable} font-[family-name:var(--font-dm-sans)] bg-[#0a0a0a] text-white antialiased`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <div className="flex min-h-screen flex-col">
             <Nav />
