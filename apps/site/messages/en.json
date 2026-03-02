@@ -1,0 +1,40 @@
+{
+  "Nav": {
+    "members": "Crew",
+    "meetups": "Meetups",
+    "blog": "Blog"
+  },
+  "Hero": {
+    "headline": "We are Elbaph",
+    "subtext": "A community of ambitious builders",
+    "cta": "Meet the Crew"
+  },
+  "WhatWeDo": {
+    "title": "What We Do",
+    "meetups": "Monthly Meetups",
+    "meetupsDesc": "We gather monthly to share insights from our respective fields",
+    "diversity": "Diverse Fields",
+    "diversityDesc": "Medicine, Robotics, CS, Math, Physics \u2014 broader perspectives",
+    "network": "Network",
+    "networkDesc": "Meaningful collisions that shape the future together"
+  },
+  "Members": {
+    "title": "Crew",
+    "seeAll": "See all",
+    "dream": "Dream"
+  },
+  "Meetups": {
+    "title": "Meetups",
+    "speakers": "Speakers",
+    "takeaways": "Key Takeaways"
+  },
+  "Blog": {
+    "title": "Blog",
+    "empty": "First post coming soon",
+    "readMore": "Read more"
+  },
+  "Footer": {
+    "contact": "Contact",
+    "rights": "All rights reserved."
+  }
+}

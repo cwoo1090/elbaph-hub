@@ -1,0 +1,40 @@
+{
+  "Nav": {
+    "members": "\ud06c\ub8e8",
+    "meetups": "\ubc0b\uc5c5",
+    "blog": "\ube14\ub85c\uadf8"
+  },
+  "Hero": {
+    "headline": "We are Elbaph",
+    "subtext": "\uc57c\ub9dd \uc788\ub294 \ube4c\ub354\ub4e4\uc758 \ucee4\ubba4\ub2c8\ud2f0",
+    "cta": "\ud06c\ub8e8 \ubcf4\uae30"
+  },
+  "WhatWeDo": {
+    "title": "What We Do",
+    "meetups": "\uc6d4\uac04 \ubc0b\uc5c5",
+    "meetupsDesc": "\ub9e4\ub2ec \ubaa8\uc5ec \uac01\uc790\uc758 \ubd84\uc57c\uc5d0\uc11c \uc778\uc0ac\uc774\ud2b8\ub97c \uacf5\uc720\ud569\ub2c8\ub2e4",
+    "diversity": "\ub2e4\uc591\ud55c \ubd84\uc57c",
+    "diversityDesc": "\uc758\ud559, \ub85c\ubd07\uacf5\ud559, CS, \uc218\ud559, \ubb3c\ub9ac\ud559 \u2014 \ub2e4\uc591\ud55c \uc2dc\uc57c\uc640 \uad00\uc810",
+    "network": "\ub124\ud2b8\uc6cc\ud06c",
+    "networkDesc": "\uc720\ud6a8\ucda9\ub3cc\uc744 \ud1b5\ud574 \ubbf8\ub798\ub97c \ud568\uaed8 \ub9cc\ub4e4\uc5b4\uac11\ub2c8\ub2e4"
+  },
+  "Members": {
+    "title": "Crew",
+    "seeAll": "\uc804\uccb4 \ubcf4\uae30",
+    "dream": "\uafc8"
+  },
+  "Meetups": {
+    "title": "\ubc0b\uc5c5",
+    "speakers": "\ubc1c\ud45c\uc790",
+    "takeaways": "\ud575\uc2ec \ud3ec\uc778\ud2b8"
+  },
+  "Blog": {
+    "title": "\ube14\ub85c\uadf8",
+    "empty": "\uccab \ubc88\uc9f8 \ud3ec\uc2a4\ud2b8\uac00 \uacf7 \uc62c\ub77c\uc635\ub2c8\ub2e4",
+    "readMore": "\ub354 \uc77d\uae30"
+  },
+  "Footer": {
+    "contact": "\ubb38\uc758",
+    "rights": "All rights reserved."
+  }
+}
