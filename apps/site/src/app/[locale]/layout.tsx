@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
+import Nav from '@/components/Nav'
+import Footer from '@/components/Footer'
 import '../globals.css'
 
 export const metadata: Metadata = {
@@ -26,7 +28,13 @@ export default async function LocaleLayout({ children, params }: Props) {
     <html lang={locale}>
       <body className="bg-[#0a0a0a] text-white antialiased">
         <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
+          <div className="flex min-h-screen flex-col">
+            <Nav />
+            <main className="flex-1 pt-16">
+              {children}
+            </main>
+            <Footer />
+          </div>
         </NextIntlClientProvider>
       </body>
     </html>
