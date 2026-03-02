@@ -1,10 +1,13 @@
 import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import '../globals.css'
+
+const inter = Inter({ subsets: ['latin'], display: 'swap' })
 
 export const metadata: Metadata = {
   title: 'Elbaph',
@@ -25,8 +28,8 @@ export default async function LocaleLayout({ children, params }: Props) {
   const messages = (await import(`../../../messages/${locale}.json`)).default
 
   return (
-    <html lang={locale}>
-      <body className="bg-[#0a0a0a] text-white antialiased">
+    <html lang={locale} className="scroll-smooth">
+      <body className={`${inter.className} bg-[#0a0a0a] text-white antialiased`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <div className="flex min-h-screen flex-col">
             <Nav />
