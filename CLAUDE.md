@@ -8,6 +8,12 @@ For member profiles, see [members.md](members.md).
 
 - `/news` — daily news briefing posted to #news
 
+## Slack Archive
+
+Weekly GitHub Actions job (`scripts/archive-slack/`) archives #ideas and #projects to `archive/<channel>/<date>.md`. Generates thread summaries via Gemini Flash. Runs Sundays 9am KST, also manual via `gh workflow run archive-slack.yml`.
+
+**Secrets** (GitHub Actions): `SLACK_BOT_TOKEN`, `GEMINI_API_KEY`
+
 ## Loki Bot
 
 AI Slack bot (`apps/loki/`) — members tag @Loki to get answers or deep research. Deployed on Vercel.

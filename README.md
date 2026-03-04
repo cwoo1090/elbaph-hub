@@ -5,6 +5,7 @@ Automation hub for Elbaph — a community of ambitious builders.
 ## What's in here
 
 - **Loki Bot** (`apps/loki/`) — AI Slack bot that answers questions (Gemini) and does deep research (Manus) when tagged
+- **Slack Archive** (`scripts/archive-slack/`) — weekly auto-archive of #ideas and #projects to searchable markdown, with AI thread summaries
 - **News Skill** (`.claude/skills/news/`) — daily news briefing posted to #news via Claude Code
 
 ## Local Setup
@@ -60,13 +61,15 @@ Loki is deployed on **Vercel**. Pushes to `main` auto-deploy.
 
 ```
 elbaph-hub/
-├── apps/loki/          # Loki Slack bot (Next.js)
+├── apps/loki/              # Loki Slack bot (Next.js)
 │   ├── src/
-│   │   ├── app/api/    # API routes (Slack events, Manus webhook)
-│   │   └── lib/        # Shared utilities (format, Gemini, Manus, Redis)
-│   └── .env.example    # Required env vars
-├── .claude/skills/     # Claude Code automation skills
-│   └── news/           # Daily news briefing
-├── CLAUDE.md           # Project context for Claude Code
-└── members.md          # Member profiles
+│   │   ├── app/api/        # API routes (Slack events, Manus webhook)
+│   │   └── lib/            # Shared utilities (format, Gemini, Manus, Redis)
+│   └── .env.example        # Required env vars
+├── scripts/archive-slack/  # Weekly Slack archive (GitHub Actions)
+├── archive/                # Archived Slack messages (auto-generated)
+├── .claude/skills/         # Claude Code automation skills
+│   └── news/               # Daily news briefing
+├── CLAUDE.md               # Project context for Claude Code
+└── members.md              # Member profiles
 ```
