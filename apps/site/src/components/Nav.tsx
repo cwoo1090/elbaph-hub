@@ -6,7 +6,7 @@ import { Link } from '@/i18n/navigation'
 import LanguageToggle from './LanguageToggle'
 
 const navLinks = [
-  { href: '/members', key: 'members' },
+  { href: '/crew', key: 'members' },
   { href: '/meetups', key: 'meetups' },
   { href: '/blog', key: 'blog' },
 ] as const

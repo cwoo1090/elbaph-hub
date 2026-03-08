@@ -1,18 +1,18 @@
 {
   "Nav": {
-    "members": "Giants",
+    "members": "Crew",
     "meetups": "Meetups",
     "blog": "Blog"
   },
   "Hero": {
     "headline": "Elbaph",
-    "subtext": "A Land of Giants",
-    "cta": "Meet the Giants"
+    "subtext": "Standing on each other's shoulders",
+    "cta": "Meet the Crew"
   },
   "WhoWeAre": {
     "label": "Our Story",
     "title": "Who We Are",
-    "description": "We are young giants shaping the next era.\nDeep thinkers and far dreamers, gathered together.\nStanding on each other's shoulders, we see the world and build the future together."
+    "description": "Deep thinkers and far dreamers, gathered together.\nStanding on each other's shoulders, we see the world and build the future together."
   },
   "WhatWeValue": {
     "label": "Our Values",
@@ -25,8 +25,9 @@
     "togetherDesc": "Being with people who make time worth spending"
   },
   "Members": {
-    "label": "The Giants",
-    "title": "Giants",
+    "label": "The Crew",
+    "title": "Crew",
+    "subtitle": "5 people standing on each other's shoulders.",
     "seeAll": "See all",
     "dream": "Dream"
   },

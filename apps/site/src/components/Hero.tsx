@@ -17,7 +17,7 @@ export default function Hero() {
 
         <div className="mt-12 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
           <Link
-            href="/members"
+            href="/crew"
             className="inline-block border border-[#1a1a1a] bg-[#1a1a1a] px-7 py-3 text-sm font-medium text-[#faf9f6] hover:bg-[#333] transition-colors duration-150"
           >
             {t('cta')}

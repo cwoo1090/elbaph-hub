@@ -7,6 +7,7 @@ export type Member = {
   photo: string
   linkedin?: string
   website?: string
+  website2?: { url: string; label: string }
 }
 
 export const members: Member[] = [
@@ -14,124 +15,132 @@ export const members: Member[] = [
     id: 'chulwoo',
     name: { ko: '안철우', en: 'Chulwoo Ahn' },
     oneLiner: {
-      ko: '인류 전체가 — 현재와 미래 모두 — 내가 있어서 세상이 더 나아졌다고 말할 수 있는 삶을 살고 싶다.',
+      ko: '지금 존재하는, 그리고 앞으로 존재할 인류가 안철우가 있는 삶이 안철우가 없는 삶보다 더 좋았다고 말할 수 있을 만한 삶을 살고 싶습니다. 수신제가치국평천하',
       en: 'I want to live a life where all of humanity can say the world was better with me in it.',
     },
     bio: [
       {
-        ko: '로맨스와 성장을 사랑합니다. 원피스, 이태원 클라쓰, 나루토.',
+        ko: '낭만을 좋아합니다. 원피스, 이태원클라쓰, 나루토 좋아합니다. 낭만과 성장.',
         en: 'I love romance and growth. One Piece, Itaewon Class, Naruto.',
       },
       {
-        ko: '서울과학고 졸업, 연세대학교 의과대학 휴학 중 (공군 운전병 복무 중)',
+        ko: '서울과고를 졸업하고 연세대학교 의과대학을 재학하다 지금은 공군에서 운전병을 하고 있습니다.',
         en: 'Graduated from Seoul Science High School, on leave from Yonsei University College of Medicine (Air Force).',
       },
       {
-        ko: '아이슬란드와 몽골 고비사막을 다녀왔습니다. 다음은 남미.',
+        ko: '아이슬란드, 몽골 고비 사막 가봤습니다. 꼭 가보세요. 다음엔 남미 가려고 합니다.',
         en: "Been to Iceland and Mongolia's Gobi Desert. South America is next.",
       },
     ],
-    dream: { ko: '세계 정복', en: 'World domination' },
-    photo: '/members/chulwoo.jpg',
+    dream: { ko: '세계정복', en: 'World domination' },
+    photo: '/members/chulwoo.png',
     linkedin: 'https://www.linkedin.com/in/chulwoo-ahn-3016a8236',
-  },
-  {
-    id: 'taekyu',
-    name: { ko: '송태규', en: 'Taekyu Song' },
-    oneLiner: {
-      ko: '로봇 하드웨어라는 한 우물을 20년째 파고 있는 사람',
-      en: "Someone who's been digging one well — robot hardware — for 20 years straight.",
-    },
-    bio: [
-      {
-        ko: 'LLM과 Physical AI 시대, 기본기의 중요성을 그 어느 때보다 믿습니다.',
-        en: 'In the era of LLMs and Physical AI, I believe in the importance of fundamentals more than ever.',
-      },
-      {
-        ko: '인간을 대체하는 로봇 하드웨어 설계에 있어서 한국 탑 10. (아직 하는 사람이 많지 않아서..)',
-        en: "When it comes to designing robot hardware to replace humans, I'd say I'm in the top 10 in Korea.",
-      },
-      {
-        ko: '로보틱스는 CS, EE, ME가 깊이 얽힌 분야 — 조직 내 협업이 곧 조직의 역량입니다.',
-        en: 'Robotics is where CS, EE, and ME are deeply intertwined — cross-discipline collaboration IS the capability.',
-      },
-    ],
-    dream: {
-      ko: '로보틱스 전 분야의 깊은 전문성과 조율 능력으로 조직 효율을 극대화하는 리더',
-      en: 'A leader who maximizes organizational efficiency through deep expertise across all areas of robotics.',
-    },
-    photo: '/members/taekyu.jpg',
-  },
-  {
-    id: 'yechan',
-    name: { ko: '서예찬', en: 'Yechan Seo' },
-    oneLiner: {
-      ko: '인튜이티브 서지컬을 넘는 회사를 한국에서 만들겠습니다!',
-      en: "I'm going to build a company in Korea that surpasses Intuitive Surgical!",
-    },
-    bio: [
-      {
-        ko: '경기과학고 졸업. 2026년 기준 서울대학교 의과대학 3학년.',
-        en: 'Graduated from Gyeonggi Science High School. 3rd year at Seoul National University College of Medicine.',
-      },
-      {
-        ko: 'rosota (로보틱스 크루) 리더, 외과의로서 직접 쓸 수술 로봇을 만들고 있습니다.',
-        en: 'Leader of rosota (robotics crew), building surgical robots to use as a surgeon.',
-      },
-      {
-        ko: '최근 몇 년간 로보틱스와 BCI (뇌-컴퓨터 인터페이스)에 깊이 빠져 있습니다.',
-        en: 'Been deep into Robotics and BCI (Brain-Computer Interface) for the past few years.',
-      },
-    ],
-    dream: {
-      ko: '한국 최고의 메드텍 기업을 만드는 것',
-      en: "To build Korea's leading medtech conglomerate.",
-    },
-    photo: '/members/yechan.jpg',
-    website: 'https://yechxn.github.io',
-  },
-  {
-    id: 'younghoon',
-    name: { ko: '노영훈', en: 'Younghoon Noh' },
-    oneLiner: {
-      ko: '만들고, 개선하고, 문제 해결하는 걸 좋아합니다 — 창업을 향해 가는 중, 탐색 모드.',
-      en: 'I like building things, improving things, and solving problems — headed toward entrepreneurship.',
-    },
-    bio: [
-      {
-        ko: '서울과학고 28기. MIT CS 5월 졸업 예정.',
-        en: 'Seoul Science High School class 28. Graduating from MIT CS in May.',
-      },
-      {
-        ko: '7월부터 Frontier Lab 엔지니어로 합류.',
-        en: 'Joining Frontier Lab as an engineer from July.',
-      },
-      {
-        ko: '여름까지 자유 — 다양한 것들을 시도하는 중.',
-        en: 'Free until summer, trying various things in the meantime.',
-      },
-    ],
-    dream: { ko: '스타트업', en: 'Startup' },
-    photo: '/members/younghoon.jpg',
+    website2: { url: 'https://amenable-yak-89c.notion.site/Library-24a6e2948d6080b1b773c9fe1881cc2a', label: 'Library' },
   },
   {
     id: 'jaehwan',
     name: { ko: '김재환', en: 'Jaehwan Kim' },
     oneLiner: {
-      ko: '수학과 물리학을 사랑했지만, 현재 자아탐색 중. 일단 돈부터.',
+      ko: '수학 물리 좋아했는데, 방황중입니다. 일단 돈을 벌어보려고 합니다.',
       en: 'Loved math and physics, but currently soul-searching. Trying to make money first.',
     },
     bio: [
       {
-        ko: '서울과학고 졸업. 서울대 수학/물리 복수전공 후 컬럼비아대 수학 박사 과정 — 현재 휴학 중.',
+        ko: '서울과고를 졸업하고 서울대 수학과, 물리과 복전하고 콜롬비아 수학과 박사과정중에 휴학하려하고 있습니다.',
         en: "Graduated from Seoul Science High School. Double-majored in Math and Physics at SNU, then entered Columbia's Math PhD — on leave.",
       },
       {
-        ko: '로보틱스를 좋아합니다. 결국 그쪽으로 갈 것 같습니다.',
+        ko: '로봇 좋아합니다. 결국 여기로 갈거같습니다.',
         en: 'Love robotics. Will probably end up there eventually.',
       },
     ],
-    dream: { ko: '재미있는 인생을 사는 것', en: 'Live an interesting life' },
-    photo: '/members/jaehwan.jpg',
+    dream: { ko: '인생 재밌게살기', en: 'Live an interesting life' },
+    photo: '/members/jaehwan.png',
+  },
+  {
+    id: 'younghoon',
+    name: { ko: '노영훈', en: 'Younghoon Noh' },
+    oneLiner: {
+      ko: '뭔가 만드는 것, 개선하는 것, 문제를 풀어주는 것이 좋아서 창업의 길을 가려 하는데, 당분간은 탐색/휴지기 일 것 같습니다.',
+      en: 'I like building things, improving things, and solving problems — headed toward entrepreneurship.',
+    },
+    bio: [
+      {
+        ko: '서울과고 28기이고, MIT CS 학부 졸업을 5월에 앞두고 있습니다.',
+        en: 'Seoul Science High School class 28. Graduating from MIT CS in May.',
+      },
+      {
+        ko: '7월부터는 프런티어랩에서 엔지니어로 일하게 될 것 같습니다.',
+        en: 'Joining Frontier Lab as an engineer from July.',
+      },
+      {
+        ko: '지금부터 여름까지 시간이 비어서 이것저것 해볼 예정입니다.',
+        en: 'Free until summer, trying various things in the meantime.',
+      },
+    ],
+    dream: { ko: '스타트업', en: 'Startup' },
+    photo: '',
+    website: 'https://diuven.xyz',
+    linkedin: 'https://www.linkedin.com/in/yhunroh/',
+  },
+  {
+    id: 'yechan',
+    name: { ko: '서예찬', en: 'Yechan Seo' },
+    oneLiner: {
+      ko: 'Intuitive Surgical을 뛰어 넘는 회사를 우리나라에서 세우려고 합니다!',
+      en: "I'm going to build a company in Korea that surpasses Intuitive Surgical!",
+    },
+    bio: [
+      {
+        ko: '경기과고 졸업 후, 26년 기준 서울의대 본과 3학년입니다.',
+        en: 'Graduated from Gyeonggi Science High School. 3rd year at Seoul National University College of Medicine.',
+      },
+      {
+        ko: '로봇 크루인 rosota 리더이고, surgeon이 되어 직접 사용할 로봇들을 만들고 있습니다.',
+        en: 'Leader of rosota (robotics crew), building surgical robots to use as a surgeon.',
+      },
+      {
+        ko: '최근 몇년 간 Robotics, BCI 기술을 쭉 파고 있습니다.',
+        en: 'Been deep into Robotics and BCI (Brain-Computer Interface) for the past few years.',
+      },
+    ],
+    dream: {
+      ko: '대한민국을 대표하는 의료기기 대기업을 세울 작정입니다.',
+      en: "To build Korea's leading medtech conglomerate.",
+    },
+    photo: '/members/yechan.jpg',
+    website: 'https://yechxn.github.io',
+    website2: { url: 'https://www.rosota.run', label: 'rosota' },
+  },
+  {
+    id: 'taekyu',
+    name: { ko: '송태규', en: 'Taekyu Song' },
+    oneLiner: {
+      ko: '20년 전부터 지금까지 평생 오직 로봇 하드웨어 한 우물만 판 사람.',
+      en: "Someone who's been digging one well — robot hardware — for 20 years straight.",
+    },
+    bio: [
+      {
+        ko: 'LLM과 Physical AI의 시대지만, 오히려 그렇기에 \'기본\'의 중요성을 믿습니다.',
+        en: 'In the era of LLMs and Physical AI, I believe in the importance of fundamentals more than ever.',
+      },
+      {
+        ko: '기계가 아니라 사람을 대체하기 위한 로봇 하드웨어 설계로 국한한다면, 우리나라에서 실력은 열 손가락 안에 든다고 자부합니다. (애초에 이걸 하는 사람이 우리나라엔 아직 얼마 없습니다..)',
+        en: "When it comes to designing robot hardware to replace humans, I'd say I'm in the top 10 in Korea. (Not many people do this here yet..)",
+      },
+      {
+        ko: '로봇은 전산/전자/기계가 더럽게 얽힌 분야라, 조직 내 분야 간 협업이 그 조직의 실력 그 자체라고 믿습니다.',
+        en: 'Robotics is where CS, EE, and ME are deeply intertwined — cross-discipline collaboration IS the capability.',
+      },
+      {
+        ko: '역사를 좋아합니다.',
+        en: 'I love history.',
+      },
+    ],
+    dream: {
+      ko: '로봇공학의 전 분야에서 충분한 지식과 경험을 쌓은 뒤, 노련한 정치로 조직의 효율을 극한으로 끌어올릴 수 있는 리더가 되고 싶습니다.',
+      en: 'A leader who maximizes organizational efficiency through deep expertise across all areas of robotics.',
+    },
+    photo: '/members/taekyu.jpg',
   },
 ]

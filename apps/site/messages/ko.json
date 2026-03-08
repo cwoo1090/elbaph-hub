@@ -1,18 +1,18 @@
 {
   "Nav": {
-    "members": "Giants",
+    "members": "Crew",
     "meetups": "밋업",
     "blog": "블로그"
   },
   "Hero": {
     "headline": "Elbaph",
-    "subtext": "A Land of Giants",
-    "cta": "Giants 보기"
+    "subtext": "Standing on each other's shoulders",
+    "cta": "크루 보기"
   },
   "WhoWeAre": {
     "label": "Our Story",
     "title": "Who We Are",
-    "description": "우리는, 다음 시대를 만들어가는 젊은 거인들입니다.\n깊이 생각하고, 멀리 꿈꾸는 이들이 모였습니다.\n서로의 어깨 위에 서서 함께 세상을 바라보고, 함께 미래를 만들어 갑니다."
+    "description": "깊이 생각하고, 멀리 꿈꾸는 이들이 모였습니다.\n서로의 어깨 위에 서서 함께 세상을 바라보고, 함께 미래를 만들어 갑니다."
   },
   "WhatWeValue": {
     "label": "Our Values",
@@ -25,8 +25,9 @@
     "togetherDesc": "같이 시간을 보내기 즐거운 사람들과 함께 하는 것"
   },
   "Members": {
-    "label": "The Giants",
-    "title": "Giants",
+    "label": "The Crew",
+    "title": "Crew",
+    "subtitle": "서로의 어깨 위에 선 5명.",
     "seeAll": "전체 보기",
     "dream": "꿈"
   },

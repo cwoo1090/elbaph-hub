@@ -18,7 +18,7 @@ export default function MembersPreview() {
             </h2>
           </div>
           <Link
-            href="/members"
+            href="/crew"
             className="text-sm text-[#737373] hover:text-[#1a1a1a] transition-colors duration-150"
           >
             {t('seeAll')} &rarr;
@@ -30,9 +30,17 @@ export default function MembersPreview() {
               key={m.id}
               className="bg-white p-6 text-center"
             >
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#f0ede8] text-base font-semibold text-[#1a1a1a] font-[family-name:var(--font-syne)]">
-                {m.name[locale].charAt(0)}
-              </div>
+              {m.photo ? (
+                <img
+                  src={m.photo}
+                  alt={m.name[locale]}
+                  className="mx-auto h-14 w-14 rounded-full object-cover"
+                />
+              ) : (
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#f0ede8] text-base font-semibold text-[#1a1a1a]">
+                  {m.name[locale].charAt(0)}
+                </div>
+              )}
               <h3 className="mt-4 text-sm font-semibold text-[#1a1a1a] font-[family-name:var(--font-syne)]">
                 {m.name[locale]}
               </h3>

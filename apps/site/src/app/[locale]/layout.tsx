@@ -15,7 +15,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: 'Elbaph',
-  description: 'A Land of Giants — Standing on each other\'s shoulders to see a wider world',
+  description: 'Standing on each other\'s shoulders to see a wider world',
 }
 
 type Props = {
