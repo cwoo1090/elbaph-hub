@@ -63,6 +63,46 @@ export async function postMessage(channelId: string, content: string) {
   }
 }
 
+export async function fetchMessages(channelId: string, fetchAll = false): Promise<string> {
+  const token = process.env.DISCORD_BOT_TOKEN?.trim();
+  if (!token) return "";
+
+  try {
+    type Msg = { id: string; author: { username: string; bot?: boolean }; content: string };
+    const allMessages: Msg[] = [];
+
+    if (fetchAll) {
+      // Paginate to get all messages in a thread
+      let before: string | undefined;
+      while (true) {
+        const url = `${DISCORD_API}/channels/${channelId}/messages?limit=100${before ? `&before=${before}` : ""}`;
+        const res = await fetch(url, { headers: { Authorization: `Bot ${token}` } });
+        if (!res.ok) break;
+        const batch = await res.json() as Msg[];
+        if (batch.length === 0) break;
+        allMessages.push(...batch);
+        if (batch.length < 100) break;
+        before = batch[batch.length - 1].id;
+      }
+    } else {
+      // Get last 10 messages in a regular channel
+      const url = `${DISCORD_API}/channels/${channelId}/messages?limit=10`;
+      const res = await fetch(url, { headers: { Authorization: `Bot ${token}` } });
+      if (!res.ok) return "";
+      const batch = await res.json() as Msg[];
+      allMessages.push(...batch);
+    }
+
+    return allMessages
+      .reverse()
+      .filter(m => m.content)
+      .map(m => `${m.author.bot ? "Loki" : m.author.username}: ${m.content}`)
+      .join("\n");
+  } catch {
+    return "";
+  }
+}
+
 function splitMessage(text: string, maxLen: number): string[] {
   if (text.length <= maxLen) return [text];
   const chunks: string[] = [];
