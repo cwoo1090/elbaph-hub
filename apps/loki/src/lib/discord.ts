@@ -1,6 +1,13 @@
 import nacl from "tweetnacl";
 
 const DISCORD_API = "https://discord.com/api/v10";
+const THREAD_CHANNEL_TYPES = new Set([10, 11, 12]);
+const RECENT_MESSAGE_LIMIT = 10;
+
+type DiscordChannel = {
+  type?: number;
+  parent_id?: string | null;
+};
 
 export function verifyDiscordRequest(
   publicKey: string,
@@ -63,12 +70,35 @@ export async function postMessage(channelId: string, content: string) {
   }
 }
 
+export async function resolveIsThread(
+  channelId: string,
+  interactionChannel?: DiscordChannel
+): Promise<boolean> {
+  if (isThreadChannel(interactionChannel)) return true;
+  if (interactionChannel?.type !== undefined) return false;
+
+  const channel = await fetchChannel(channelId);
+  return isThreadChannel(channel ?? undefined);
+}
+
 export async function fetchMessages(channelId: string, fetchAll = false): Promise<string> {
   const token = process.env.DISCORD_BOT_TOKEN?.trim();
   if (!token) return "";
 
   try {
-    type Msg = { id: string; author: { username: string; bot?: boolean }; content: string };
+    type Msg = {
+      id: string;
+      author: {
+        username: string;
+        global_name?: string | null;
+        bot?: boolean;
+      };
+      member?: {
+        nick?: string | null;
+      };
+      content: string;
+      attachments?: Array<{ filename: string }>;
+    };
     const allMessages: Msg[] = [];
 
     if (fetchAll) {
@@ -86,7 +116,7 @@ export async function fetchMessages(channelId: string, fetchAll = false): Promis
       }
     } else {
       // Get last 10 messages in a regular channel
-      const url = `${DISCORD_API}/channels/${channelId}/messages?limit=10`;
+      const url = `${DISCORD_API}/channels/${channelId}/messages?limit=${RECENT_MESSAGE_LIMIT}`;
       const res = await fetch(url, { headers: { Authorization: `Bot ${token}` } });
       if (!res.ok) return "";
       const batch = await res.json() as Msg[];
@@ -95,12 +125,48 @@ export async function fetchMessages(channelId: string, fetchAll = false): Promis
 
     return allMessages
       .reverse()
-      .filter(m => m.content)
-      .map(m => `${m.author.bot ? "Loki" : m.author.username}: ${m.content}`)
+      .map(formatMessage)
+      .filter(Boolean)
       .join("\n");
   } catch {
     return "";
   }
+}
+
+function isThreadChannel(channel?: DiscordChannel): boolean {
+  if (!channel) return false;
+  if (channel.parent_id) return true;
+  return channel.type !== undefined && THREAD_CHANNEL_TYPES.has(channel.type);
+}
+
+async function fetchChannel(channelId: string): Promise<DiscordChannel | null> {
+  const token = process.env.DISCORD_BOT_TOKEN?.trim();
+  if (!token) return null;
+
+  try {
+    const url = `${DISCORD_API}/channels/${channelId}`;
+    const res = await fetch(url, { headers: { Authorization: `Bot ${token}` } });
+    if (!res.ok) return null;
+    return await res.json() as DiscordChannel;
+  } catch {
+    return null;
+  }
+}
+
+function formatMessage(message: {
+  author: { username: string; global_name?: string | null; bot?: boolean };
+  member?: { nick?: string | null };
+  content: string;
+  attachments?: Array<{ filename: string }>;
+}): string {
+  const authorName = message.member?.nick || message.author.global_name || message.author.username;
+  const attachmentSummary = message.attachments?.length
+    ? ` [attachments: ${message.attachments.map(attachment => attachment.filename).join(", ")}]`
+    : "";
+  const content = message.content.trim();
+
+  if (!content && !attachmentSummary) return "";
+  return `${authorName}: ${content || "[attachment only]"}${attachmentSummary}`;
 }
 
 function splitMessage(text: string, maxLen: number): string[] {
