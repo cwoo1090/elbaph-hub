@@ -17,6 +17,7 @@ You have Google Search available. Follow these rules:
    - It would require investigating 10+ different sources
    - A single Google Search cannot produce a reasonable answer
    Do NOT use [DEEP_RESEARCH] for factual questions, opinions, summaries, or anything you can answer with one or two searches.
+5. If previous conversation context is provided, use it to resolve follow-up questions and implied references before answering. Ignore the context only when it is clearly unrelated.
 
 Always respond in Korean. Be concise and use bullet points where appropriate.`;
 

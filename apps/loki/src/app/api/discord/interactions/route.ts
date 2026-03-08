@@ -57,6 +57,16 @@ async function handleQuestion(
   try {
     const isThread = await resolveIsThread(channelId, interactionChannel);
     const threadContext = await fetchMessages(channelId, isThread);
+
+    if (!threadContext && (isThread || questionNeedsConversationContext(question))) {
+      await editOriginalResponse(
+        applicationId,
+        interactionToken,
+        `> **${displayName}:** ${question}\n\n⚠️ 이전 대화를 읽지 못했습니다. 배포 환경에 \`DISCORD_BOT_TOKEN\`이 설정되어 있는지, 그리고 봇에 이 채널/스레드의 메시지 읽기 권한이 있는지 확인해주세요. 비공개 스레드라면 봇이 해당 스레드에 참여되어 있어야 합니다.`
+      );
+      return;
+    }
+
     const result = await askGemini(question, threadContext);
 
     if (result.type === "answer") {
@@ -85,4 +95,27 @@ async function handleQuestion(
       `> **${displayName}:** ${question}\n\n⚠️ 잠시 문제가 생겼습니다. 다시 시도해주세요.`
     );
   }
+}
+
+function questionNeedsConversationContext(question: string): boolean {
+  const normalized = question.toLowerCase();
+  const contextDependentPatterns = [
+    "이 스레드",
+    "이 쓰레드",
+    "이 대화",
+    "위 대화",
+    "윗대화",
+    "이 채널",
+    "이 메시지",
+    "앞 대화",
+    "이전 대화",
+    "this thread",
+    "the thread",
+    "this conversation",
+    "above conversation",
+    "above messages",
+    "these messages",
+  ];
+
+  return contextDependentPatterns.some(pattern => normalized.includes(pattern));
 }

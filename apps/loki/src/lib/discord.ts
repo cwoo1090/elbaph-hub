@@ -83,7 +83,10 @@ export async function resolveIsThread(
 
 export async function fetchMessages(channelId: string, fetchAll = false): Promise<string> {
   const token = process.env.DISCORD_BOT_TOKEN?.trim();
-  if (!token) return "";
+  if (!token) {
+    console.error("DISCORD_BOT_TOKEN is missing; Loki cannot read Discord message history.", { channelId, fetchAll });
+    return "";
+  }
 
   try {
     type Msg = {
@@ -107,7 +110,10 @@ export async function fetchMessages(channelId: string, fetchAll = false): Promis
       while (true) {
         const url = `${DISCORD_API}/channels/${channelId}/messages?limit=100${before ? `&before=${before}` : ""}`;
         const res = await fetch(url, { headers: { Authorization: `Bot ${token}` } });
-        if (!res.ok) break;
+        if (!res.ok) {
+          await logDiscordApiFailure("fetch thread messages", channelId, res);
+          break;
+        }
         const batch = await res.json() as Msg[];
         if (batch.length === 0) break;
         allMessages.push(...batch);
@@ -118,7 +124,10 @@ export async function fetchMessages(channelId: string, fetchAll = false): Promis
       // Get last 10 messages in a regular channel
       const url = `${DISCORD_API}/channels/${channelId}/messages?limit=${RECENT_MESSAGE_LIMIT}`;
       const res = await fetch(url, { headers: { Authorization: `Bot ${token}` } });
-      if (!res.ok) return "";
+      if (!res.ok) {
+        await logDiscordApiFailure("fetch recent channel messages", channelId, res);
+        return "";
+      }
       const batch = await res.json() as Msg[];
       allMessages.push(...batch);
     }
@@ -128,7 +137,8 @@ export async function fetchMessages(channelId: string, fetchAll = false): Promis
       .map(formatMessage)
       .filter(Boolean)
       .join("\n");
-  } catch {
+  } catch (error) {
+    console.error("Failed to fetch Discord message history.", { channelId, fetchAll, error });
     return "";
   }
 }
@@ -141,14 +151,21 @@ function isThreadChannel(channel?: DiscordChannel): boolean {
 
 async function fetchChannel(channelId: string): Promise<DiscordChannel | null> {
   const token = process.env.DISCORD_BOT_TOKEN?.trim();
-  if (!token) return null;
+  if (!token) {
+    console.error("DISCORD_BOT_TOKEN is missing; Loki cannot resolve Discord channel type.", { channelId });
+    return null;
+  }
 
   try {
     const url = `${DISCORD_API}/channels/${channelId}`;
     const res = await fetch(url, { headers: { Authorization: `Bot ${token}` } });
-    if (!res.ok) return null;
+    if (!res.ok) {
+      await logDiscordApiFailure("resolve channel", channelId, res);
+      return null;
+    }
     return await res.json() as DiscordChannel;
-  } catch {
+  } catch (error) {
+    console.error("Failed to resolve Discord channel.", { channelId, error });
     return null;
   }
 }
@@ -167,6 +184,16 @@ function formatMessage(message: {
 
   if (!content && !attachmentSummary) return "";
   return `${authorName}: ${content || "[attachment only]"}${attachmentSummary}`;
+}
+
+async function logDiscordApiFailure(operation: string, channelId: string, response: Response) {
+  const body = await response.text().catch(() => "");
+  console.error(`Discord API failed to ${operation}.`, {
+    channelId,
+    status: response.status,
+    statusText: response.statusText,
+    body,
+  });
 }
 
 function splitMessage(text: string, maxLen: number): string[] {
