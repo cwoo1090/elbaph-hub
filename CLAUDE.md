@@ -10,23 +10,31 @@ For member profiles, see [members.md](members.md).
 
 ## Loki Bot
 
-AI Discord bot (`apps/loki/`) — members tag @Loki to get answers or deep research. Deployed on Railway.
+AI Discord bot (`apps/loki/`) — members use `/ask` to get answers or deep research. Deployed on Vercel (free).
 
 - **Triage**: Gemini 3 Flash Preview (free) answers most questions with Google Search grounding
 - **Deep research**: Only for questions explicitly requiring comprehensive reports across 10+ sources — routes to Manus API (Pro subscription), results posted via webhook
-- **State**: In-memory Map for Manus task context (persistent process on Railway)
-- **Interaction**: @Loki mention or `/ask` slash command
+- **State**: Upstash Redis (free tier) for Manus task context across serverless invocations
+- **Interaction**: `/ask` slash command (works in channels and threads)
+- **Context**: Reads thread messages (all) or channel messages (last 10) before answering
 
-**Env vars** (Railway): `DISCORD_BOT_TOKEN`, `DISCORD_APPLICATION_ID`, `GEMINI_API_KEY`, `MANUS_API_KEY`
+**Env vars** (Vercel): `DISCORD_BOT_TOKEN`, `DISCORD_APPLICATION_ID`, `DISCORD_PUBLIC_KEY`, `GEMINI_API_KEY`, `MANUS_API_KEY`, `KV_REST_API_URL`, `KV_REST_API_TOKEN`
 
 **Architecture**:
-- discord.js Gateway (WebSocket) — listens for @mentions and slash commands
-- Express HTTP server — receives Manus webhook callbacks at `POST /manus/webhook`
+- Next.js on Vercel — Discord Interactions Endpoint (HTTP, not Gateway)
+- Ed25519 signature verification via `tweetnacl`
+- Deferred responses (type 5) + `waitUntil` from `@vercel/functions` for background processing
+
+**Endpoints**:
+- `POST /api/discord/interactions` — Discord Interactions API (slash commands)
+- `POST /api/manus/webhook` — Manus task completion callback
 
 **Gotchas**:
+- `after()` from next/server does NOT work on Vercel — use `waitUntil` from `@vercel/functions`
 - Manus results are in attachment files, not output_text
 - Discord messages max 2000 chars — bot splits long responses automatically
-- If Railway restarts during a Manus task, the in-memory context is lost (rare, ~5 min window)
+- Bot needs Administrator permission in the server to read message history
+- Vercel project is NOT connected to Git — deploy manually via `cd apps/loki && npx vercel --prod --yes`
 
 ## Discord
 
