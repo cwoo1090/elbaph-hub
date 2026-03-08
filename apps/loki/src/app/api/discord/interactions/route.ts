@@ -54,12 +54,12 @@ async function handleQuestion(
     const result = await askGemini(question, "");
 
     if (result.type === "answer") {
-      await editOriginalResponse(applicationId, interactionToken, result.text);
+      await editOriginalResponse(applicationId, interactionToken, `> **Q:** ${question}\n\n${result.text}`);
     } else {
       await editOriginalResponse(
         applicationId,
         interactionToken,
-        "🔍 리서치 중입니다... 잠시만 기다려주세요."
+        `> **Q:** ${question}\n\n🔍 리서치 중입니다... 잠시만 기다려주세요.`
       );
 
       try {
@@ -78,7 +78,7 @@ async function handleQuestion(
     await editOriginalResponse(
       applicationId,
       interactionToken,
-      "⚠️ 잠시 문제가 생겼습니다. 다시 시도해주세요."
+      `> **Q:** ${question}\n\n⚠️ 잠시 문제가 생겼습니다. 다시 시도해주세요.`
     );
   }
 }
