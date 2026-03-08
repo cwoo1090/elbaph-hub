@@ -1,9 +1,0 @@
-{
-  "name": "archive-slack",
-  "private": true,
-  "type": "module",
-  "dependencies": {
-    "@slack/web-api": "^7.0.0",
-    "@google/genai": "^1.0.0"
-  }
-}

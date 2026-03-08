@@ -45,66 +45,66 @@ Run 2 queries per topic. Replace `[month]` and `[year]` with the current month a
 - If the same story appears from multiple sources, pick the most informative version
 - Deduplicate across topics
 
-## D. Slack Message Template
+## D. Discord Message Template
 
 No links in the message — keep it clean and scannable. Write in Korean.
 
 ```
-📰 *Elbaph Daily Briefing — [Mon DD, YYYY]*
+📰 **Elbaph Daily Briefing — [Mon DD, YYYY]**
 
 ---
 
-*🤖 AI / LLM*
-• *[Company/Product]* — 한 줄 요약
-• *[Company/Product]* — 한 줄 요약
-• *[Company/Product]* — 한 줄 요약
+**🤖 AI / LLM**
+• **[Company/Product]** — 한 줄 요약
+• **[Company/Product]** — 한 줄 요약
+• **[Company/Product]** — 한 줄 요약
 
-*🦾 Robotics / Physical AI*
-• *[Company/Product]* — 한 줄 요약
-• *[Company/Product]* — 한 줄 요약
-• *[Company/Product]* — 한 줄 요약
+**🦾 Robotics / Physical AI**
+• **[Company/Product]** — 한 줄 요약
+• **[Company/Product]** — 한 줄 요약
+• **[Company/Product]** — 한 줄 요약
 
-*🧠 BCI (Brain-Computer Interface)*
-• *[Company/Product]* — 한 줄 요약
-• *[Company/Product]* — 한 줄 요약
+**🧠 BCI (Brain-Computer Interface)**
+• **[Company/Product]** — 한 줄 요약
+• **[Company/Product]** — 한 줄 요약
 
-*🏥 Medtech / Surgical Robotics*
-• *[Company/Product]* — 한 줄 요약
-• *[Company/Product]* — 한 줄 요약
+**🏥 Medtech / Surgical Robotics**
+• **[Company/Product]** — 한 줄 요약
+• **[Company/Product]** — 한 줄 요약
 
-*🇰🇷 Korea Startup / Tech*
-• *[Company/Product]* — 한 줄 요약
-• *[Company/Product]* — 한 줄 요약
-• *[Company/Product]* — 한 줄 요약
+**🇰🇷 Korea Startup / Tech**
+• **[Company/Product]** — 한 줄 요약
+• **[Company/Product]** — 한 줄 요약
+• **[Company/Product]** — 한 줄 요약
 
 ---
-_Curated by Elbaph News Bot_ 🤖
+*Curated by Elbaph News Bot* 🤖
 ```
 
 Rules:
 - Bold the company/product name, then a concise one-line summary in Korean
 - Company/product names stay in English; summaries in Korean
-- If a topic has no stories within 24h, show the topic header with `• _최근 24시간 내 주요 뉴스가 없습니다_` instead of skipping
-- No links in the Slack message
+- If a topic has no stories within 24h, show the topic header with `• *최근 24시간 내 주요 뉴스가 없습니다*` instead of skipping
+- No links in the Discord message
 
 ## E. Thread Reply Template
 
-Post ONE thread reply containing all detailed breakdowns + source links. Use `slack_reply_to_thread` with the main message's `ts`. Write in Korean.
+Post ONE thread reply containing all detailed breakdowns + source links. Use `discord_reply_to_thread` with the main message's `id`. Write in Korean.
 
 ```
-🔗 *상세 내용 & 소스*
+🔗 **상세 내용 & 소스**
 
-*🤖 AI / LLM*
+**🤖 AI / LLM**
 
-*<URL|Company/Product>*
+**[Company/Product](URL)**
 2-3문장 상세 설명 — 무슨 일이 있었는지, 왜 중요한지
 
-*<URL|Company/Product>*
+**[Company/Product](URL)**
 2-3문장 상세 설명
 
-*🦾 Robotics / Physical AI*
+**🦾 Robotics / Physical AI**
 
-*<URL|Company/Product>*
+**[Company/Product](URL)**
 2-3문장 상세 설명
 
 (각 토픽별로 반복)
@@ -112,22 +112,22 @@ Post ONE thread reply containing all detailed breakdowns + source links. Use `sl
 
 Rules:
 - All topics in a single thread reply
-- Use Slack link syntax `<URL|display text>` for source links
+- Use standard markdown link syntax `[display text](URL)` for source links
 - Company/product names in English, descriptions in Korean
 - Only include topics that have actual stories (skip topics with no 24h news from thread reply)
 - Keep breakdowns concise — 2-3 sentences max per story
 
 ## F. Lounge Cross-Post Template
 
-Post to #lounge (`C0AA15Q77FS`) via `slack_post_message`. Write in Korean.
+Post to #lounge (`1480085107174936697`) via `discord_post_message`. Write in Korean.
 
 ```
-💡 *오늘의 픽*
-*[Company/Product]* — 가장 임팩트 있는 헤드라인 한 줄 요약
+💡 **오늘의 픽**
+**[Company/Product]** — 가장 임팩트 있는 헤드라인 한 줄 요약
 
 [오늘 뉴스에서 영감을 받은 생각을 자극하는 질문이나 코멘트]
 
-<https://elbaph.slack.com/archives/C0AFH9SQ857/p{ts_without_dot}|오늘의 전체 브리핑 보기> 📰
+[오늘의 전체 브리핑 보기](https://discord.com/channels/1480074652884795462/1480085235315114195/{message_id}) 📰
 ```
 
 Rules:
@@ -136,7 +136,7 @@ Rules:
 - The question should connect the news to topics the Elbaph members care about (robotics, medtech, BCI, startups, Korea tech)
 - Keep it short — 3-4 lines max
 - No details — just enough to hook curiosity
-- Construct the permalink by removing the dot from the main message `ts` and prepending `p` (e.g., ts `1234567890.123456` → `p1234567890123456`)
+- Construct the Discord message link using the main message `id` returned from `discord_post_message` (format: `https://discord.com/channels/1480074652884795462/1480085235315114195/{message_id}`)
 - If ALL topics were empty (no 24h news), skip the lounge post entirely
 
 ## G. Archive Format
@@ -146,5 +146,5 @@ Save to `archive/YYYY-MM-DD.md`:
 ```markdown
 # Daily Briefing — YYYY-MM-DD
 
-[same content as Slack message, in plain markdown without Slack formatting]
+[same content as Discord message, in plain markdown]
 ```

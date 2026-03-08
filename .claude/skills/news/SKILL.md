@@ -1,6 +1,6 @@
 ---
 name: news
-description: Daily news briefing for Elbaph Slack. Fetches curated sources and searches the web for latest news across AI, robotics, BCI, medtech, and Korea startups. Posts briefing to #news. Trigger with "/news", "daily briefing", "news briefing".
+description: Daily news briefing for Elbaph Discord. Fetches curated sources and searches the web for latest news across AI, robotics, BCI, medtech, and Korea startups. Posts briefing to #news. Trigger with "/news", "daily briefing", "news briefing".
 disable-model-invocation: true
 ---
 
@@ -39,13 +39,13 @@ When invoked, follow these steps in order:
 
 3. **Collect results:** Wait for all 5 subagents to complete using `TaskOutput`. Gather the structured output from each.
 
-4. **Compose main message:** Assemble the 5 topic results into the main message template from reference.md. For topics with `STORIES_FOUND: 0`, show `• _최근 24시간 내 주요 뉴스가 없습니다_`. Clean one-liners, no links. Write in Korean.
+4. **Compose main message:** Assemble the 5 topic results into the main message template from reference.md. For topics with `STORIES_FOUND: 0`, show `• *최근 24시간 내 주요 뉴스가 없습니다*`. Clean one-liners, no links. Write in Korean.
 
-5. **Post main message:** Post to #news channel (`C0AFH9SQ857`) via `slack_post_message`. **Capture the returned `ts`.**
+5. **Post main message:** Post to #news channel (`1480085235315114195`) via `discord_post_message`. **Capture the returned message `id`.**
 
-6. **Compose & post thread reply:** Format a single thread reply using the thread template in reference.md — all topics in one reply, with source links and detailed breakdowns. Only include topics that have actual stories. Post via `slack_reply_to_thread` using the captured `ts` as `thread_ts`.
+6. **Compose & post thread reply:** Format a single thread reply using the thread template in reference.md — all topics in one reply, with source links and detailed breakdowns. Only include topics that have actual stories. Post via `discord_reply_to_thread` using the captured message `id` as `message_id`.
 
-7. **Cross-post to #lounge:** Compose a short hook message using the lounge template in reference.md. Pick the single most impactful headline as a teaser, add a provocative question or comment related to today's news. **Construct a Slack permalink from the main message `ts`** (remove the dot, prepend `p`, format: `https://elbaph.slack.com/archives/C0AFH9SQ857/p{ts_without_dot}`) and include it as a link to the full briefing. Post to #lounge channel (`C0AA15Q77FS`) via `slack_post_message`.
+7. **Cross-post to #lounge:** Compose a short hook message using the lounge template in reference.md. Pick the single most impactful headline as a teaser, add a provocative question or comment related to today's news. **Construct a Discord message link** using the format `https://discord.com/channels/1480074652884795462/1480085235315114195/{message_id}` and include it as a link to the full briefing. Post to #lounge channel (`1480085107174936697`) via `discord_post_message`.
 
 8. **Archive:** Save the briefing to `archive/YYYY-MM-DD.md` using the archive template in reference.md.
 

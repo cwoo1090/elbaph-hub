@@ -1,7 +1,0 @@
-{
-  "functions": {
-    "src/app/api/slack/events/route.ts": {
-      "maxDuration": 300
-    }
-  }
-}

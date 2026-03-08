@@ -8,42 +8,45 @@ For member profiles, see [members.md](members.md).
 
 - `/news` — daily news briefing posted to #news
 
-## Slack Archive
-
-Weekly GitHub Actions job (`scripts/archive-slack/`) archives #ideas and #projects to `archive/<channel>/<date>.md`. Generates thread summaries via Gemini Flash. Runs Sundays 9am KST, also manual via `gh workflow run archive-slack.yml`.
-
-**Secrets** (GitHub Actions): `SLACK_BOT_TOKEN`, `GEMINI_API_KEY`
-
 ## Loki Bot
 
-AI Slack bot (`apps/loki/`) — members tag @Loki to get answers or deep research. Deployed on Vercel.
+AI Discord bot (`apps/loki/`) — members tag @Loki to get answers or deep research. Deployed on Railway.
 
 - **Triage**: Gemini 3 Flash Preview (free) answers most questions with Google Search grounding
 - **Deep research**: Only for questions explicitly requiring comprehensive reports across 10+ sources — routes to Manus API (Pro subscription), results posted via webhook
-- **State**: Upstash Redis stores task context across serverless invocations
-- **Formatting**: `src/lib/format.ts` converts markdown → Slack mrkdwn
+- **State**: In-memory Map for Manus task context (persistent process on Railway)
+- **Interaction**: @Loki mention or `/ask` slash command
 
-**Env vars** (Vercel): `SLACK_BOT_TOKEN`, `SLACK_SIGNING_SECRET`, `GEMINI_API_KEY`, `MANUS_API_KEY`, `KV_REST_API_URL`, `KV_REST_API_TOKEN`
+**Env vars** (Railway): `DISCORD_BOT_TOKEN`, `DISCORD_APPLICATION_ID`, `GEMINI_API_KEY`, `MANUS_API_KEY`
 
-**Endpoints**:
-- `POST /api/slack/events` — Slack Events API (signature verified)
-- `POST /api/manus/webhook` — Manus task completion callback
+**Architecture**:
+- discord.js Gateway (WebSocket) — listens for @mentions and slash commands
+- Express HTTP server — receives Manus webhook callbacks at `POST /manus/webhook`
 
 **Gotchas**:
-- `after()` from next/server does NOT work on Vercel — process inline
-- Slack disables event delivery after >95% failure rate in 60 min — re-save Request URL to fix
 - Manus results are in attachment files, not output_text
+- Discord messages max 2000 chars — bot splits long responses automatically
+- If Railway restarts during a Manus task, the in-memory context is lost (rare, ~5 min window)
 
-## Slack
+## Discord
 
-- Workspace: ELBAPH
-- Team ID: `T0A96RV9SSE`
+- Server: ELBAPH
+- Server ID: `1480074652884795462`
 
-| Channel | ID | Purpose |
-|---------|----|---------|
-| #news | `C0AFH9SQ857` | Daily news briefings |
-| #announcements | `C0A98L4HTHT` | Important updates |
-| #meetups | `C0AA6BW3ERW` | Monthly meetup coordination |
-| #lounge | `C0AA15Q77FS` | Casual conversation |
-| #projects | `C0A95QN2DNX` | Project discussions |
-| #intros | `C0AAJF8TWP2` | Member introductions |
+| Channel | ID | Type | Purpose |
+|---------|----|------|---------|
+| #announcements | `1480075434749067264` | text | Important updates (read-only) |
+| #intros | `1480085087797117050` | text | Member introductions |
+| #lounge | `1480085107174936697` | text | Casual conversation |
+| #meetups | `1480085195570024468` | text | Monthly meetup coordination |
+| #news | `1480085235315114195` | text | Daily news briefings |
+| #projects | `1480085442283049041` | forum | Project discussions |
+| #ideas | `1480085417393918043` | forum | Idea discussions |
+
+## Discord MCP
+
+Custom MCP server at `packages/discord-mcp/` — gives Claude Code tools to read and post in Discord.
+
+**Tools**: `discord_list_channels`, `discord_read_channel`, `discord_read_thread`, `discord_post_message`, `discord_reply_to_thread`, `discord_add_reaction`
+
+**Setup**: `claude mcp add discord-mcp -- node /path/to/packages/discord-mcp/dist/index.js` (requires `DISCORD_BOT_TOKEN` env var)
