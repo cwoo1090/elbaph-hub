@@ -1,10 +1,26 @@
-const MANUS_API_URL = "https://api.manus.ai/v1/tasks";
+import { Redis } from "@upstash/redis";
 
-const taskContexts = new Map<string, { channelId: string; messageId: string }>();
+const MANUS_API_URL = "https://api.manus.ai/v1/tasks";
+const CONTEXT_TTL = 30 * 60; // 30 minutes
+
+let redis: Redis;
+function getRedis() {
+  if (!redis) {
+    redis = new Redis({
+      url: process.env.KV_REST_API_URL!,
+      token: process.env.KV_REST_API_TOKEN!,
+    });
+  }
+  return redis;
+}
+
+interface TaskContext {
+  channelId: string;
+}
 
 export async function createManusTask(
   prompt: string,
-  discordContext: { channelId: string; messageId: string }
+  context: TaskContext
 ): Promise<string> {
   const res = await fetch(MANUS_API_URL, {
     method: "POST",
@@ -21,17 +37,17 @@ export async function createManusTask(
   if (!res.ok) throw new Error(`Manus API error: ${res.status}`);
   const data = await res.json();
 
-  taskContexts.set(data.task_id, discordContext);
-  // Auto-cleanup after 30 minutes
-  setTimeout(() => taskContexts.delete(data.task_id), 30 * 60 * 1000);
+  await getRedis().set(`manus:${data.task_id}`, JSON.stringify(context), { ex: CONTEXT_TTL });
 
   return data.task_id;
 }
 
-export function getDiscordContext(taskId: string): { channelId: string; messageId: string } | null {
-  return taskContexts.get(taskId) || null;
+export async function getTaskContext(taskId: string): Promise<TaskContext | null> {
+  const raw = await getRedis().get<string>(`manus:${taskId}`);
+  if (!raw) return null;
+  return typeof raw === "string" ? JSON.parse(raw) : raw;
 }
 
-export function deleteDiscordContext(taskId: string) {
-  taskContexts.delete(taskId);
+export async function deleteTaskContext(taskId: string) {
+  await getRedis().del(`manus:${taskId}`);
 }
