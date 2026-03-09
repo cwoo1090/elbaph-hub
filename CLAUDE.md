@@ -44,12 +44,13 @@ AI Discord bot (`apps/loki/`) — members use `/ask` to get answers or deep rese
 | Channel | ID | Type | Purpose |
 |---------|----|------|---------|
 | #announcements | `1480075434749067264` | text | Important updates (read-only) |
+| #meetups | `1480085195570024468` | text | Monthly meetup coordination |
 | #intros | `1480085087797117050` | text | Member introductions |
 | #lounge | `1480085107174936697` | text | Casual conversation |
-| #meetups | `1480085195570024468` | text | Monthly meetup coordination |
 | #news | `1480085235315114195` | text | Daily news briefings |
-| #projects | `1480085442283049041` | forum | Project discussions |
-| #ideas | `1480085417393918043` | forum | Idea discussions |
+| #ideas | `1480209431563337912` | forum | Idea discussions |
+| #projects | `1480209476769419294` | forum | Project discussions |
+| dorm room | `1480074656290570474` | voice | Voice hangout |
 
 ## Discord MCP
 

@@ -1,6 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { Client, GatewayIntentBits, TextChannel, ThreadChannel } from "discord.js";
+import { Client, ChannelType, GatewayIntentBits, TextChannel, ThreadChannel } from "discord.js";
 import { z } from "zod";
 
 const token = process.env.DISCORD_BOT_TOKEN;
@@ -37,8 +37,8 @@ server.tool(
       const fetched = await guild.channels.fetch();
       for (const ch of fetched.values()) {
         if (!ch) continue;
-        if (ch.isTextBased() || ch.type === 15) {
-          channels.push(`#${ch.name} (${ch.id}) [${ch.type === 15 ? "forum" : "text"}]`);
+        if (ch.type === ChannelType.GuildText || ch.type === ChannelType.GuildForum) {
+          channels.push(`#${ch.name} (${ch.id}) [${ch.type === ChannelType.GuildForum ? "forum" : "text"}]`);
         }
       }
     }
@@ -62,7 +62,13 @@ server.tool(
     const messages = await (channel as TextChannel).messages.fetch({ limit: Math.min(limit, 100) });
     const formatted = [...messages.values()]
       .reverse()
-      .map((m) => `[${m.createdAt.toISOString()}] ${m.author.displayName}: ${m.content}`)
+      .map((m) => {
+        let line = `[${m.createdAt.toISOString()}] (${m.id}) ${m.author.displayName}: ${m.content}`;
+        if (m.thread) {
+          line += ` [thread: ${m.thread.id}]`;
+        }
+        return line;
+      })
       .join("\n");
     return { content: [{ type: "text", text: formatted || "No messages" }] };
   }
