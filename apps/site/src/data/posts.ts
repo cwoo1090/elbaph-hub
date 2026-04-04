@@ -1,10 +1,10 @@
 export type Post = {
   slug: string
-  title: { ko: string; en: string }
-  summary: { ko: string; en: string }
+  meetupId: string
+  memberId: string
   date: string
-  author: string
+  title: { ko: string; en: string }
+  subtitle: { ko: string; en: string }
+  summary: { ko: string; en: string }
   body: { ko: string; en: string }
 }
-
-export const posts: Post[] = []
