@@ -40,10 +40,6 @@ export function getAllPosts(): Post[] {
           ko: data.subtitle?.ko ?? '',
           en: data.subtitle?.en ?? data.subtitle?.ko ?? '',
         },
-        summary: {
-          ko: data.summary.ko,
-          en: data.summary.en ?? data.summary.ko,
-        },
         body: {
           ko: koBody,
           en: enBody,

@@ -23,9 +23,11 @@ export default function BlogCard({ post, locale, readMoreLabel }: Props) {
           <span>{post.date}</span>
         </div>
       </div>
-      <p className="mt-4 text-sm leading-relaxed text-[#737373]">
-        {post.summary[locale]}
-      </p>
+      {post.subtitle[locale] && (
+        <p className="mt-4 text-sm leading-relaxed text-[#737373]">
+          {post.subtitle[locale]}
+        </p>
+      )}
       <Link
         href={`/blog/${post.slug}`}
         className="mt-5 inline-block text-sm font-medium text-[#1a1a1a] hover:text-[#737373] transition-colors duration-150"

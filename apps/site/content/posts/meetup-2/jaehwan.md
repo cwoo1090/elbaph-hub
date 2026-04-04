@@ -5,8 +5,6 @@ title:
   ko: autoresearch는 연구자를 대체할까
 subtitle:
   ko: 아직은 아니다. 하지만 밤새 일시키기엔 이미 충분히 유용하다
-summary:
-  ko: AI agent가 연구 loop를 자동화하는 autoresearch — 연구자를 대체하진 못하지만, 야간 근무를 대신할 수 있을 만큼은 이미 유용하다.
 ---
 
 요즘 AI를 쓰는 방식은 빠르게 바뀌고 있다.

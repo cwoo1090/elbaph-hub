@@ -5,6 +5,5 @@ export type Post = {
   date: string
   title: { ko: string; en: string }
   subtitle: { ko: string; en: string }
-  summary: { ko: string; en: string }
   body: { ko: string; en: string }
 }
