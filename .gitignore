@@ -3,10 +3,13 @@ node_modules/
 .next/
 .vercel
 *.tsbuildinfo
+dist/
+output/
 
 # Environment / secrets
 .env*
 !.env.example
+.mcp.json
 
 # Python
 .venv/
@@ -21,6 +24,7 @@ node_modules/
 
 # Claude Code local config
 .claude/settings.local.json
+apps/site/.claude/
 
 # Docs
 docs/

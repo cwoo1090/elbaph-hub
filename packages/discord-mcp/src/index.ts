@@ -1,6 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { Client, ChannelType, GatewayIntentBits, TextChannel, ThreadChannel } from "discord.js";
+import { Client, ChannelType, GatewayIntentBits, TextChannel, ThreadChannel, ForumChannel } from "discord.js";
 import { z } from "zod";
 
 const token = process.env.DISCORD_BOT_TOKEN;
@@ -99,15 +99,29 @@ server.tool(
 // --- post_message ---
 server.tool(
   "discord_post_message",
-  "Post a message to a Discord channel",
+  "Post a message to a Discord channel. For forum channels, thread_name is required to create a new forum post.",
   {
     channel_id: z.string().describe("The Discord channel ID"),
     content: z.string().describe("The message content (supports markdown)"),
+    thread_name: z.string().optional().describe("Thread/post title (required for forum channels)"),
   },
-  async ({ channel_id, content }) => {
+  async ({ channel_id, content, thread_name }) => {
     const channel = await client.channels.fetch(channel_id);
-    if (!channel || !channel.isTextBased()) {
-      return { content: [{ type: "text", text: "Channel not found or not a text channel" }] };
+    if (!channel) {
+      return { content: [{ type: "text", text: "Channel not found" }] };
+    }
+    if (channel.type === ChannelType.GuildForum) {
+      if (!thread_name) {
+        return { content: [{ type: "text", text: "thread_name is required for forum channels" }] };
+      }
+      const thread = await (channel as ForumChannel).threads.create({
+        name: thread_name,
+        message: { content },
+      });
+      return { content: [{ type: "text", text: `Forum post created (thread_id: ${thread.id})` }] };
+    }
+    if (!channel.isTextBased()) {
+      return { content: [{ type: "text", text: "Channel is not a text channel" }] };
     }
     const msg = await (channel as TextChannel).send(content);
     return { content: [{ type: "text", text: `Message sent (id: ${msg.id})` }] };
