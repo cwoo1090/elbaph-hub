@@ -1,6 +1,8 @@
+import Image from 'next/image'
 import { Link } from '@/i18n/navigation'
 import type { Post } from '@/data/posts'
 import { members } from '@/data/members'
+import { meetups } from '@/data/meetups'
 
 type Props = {
   post: Post
@@ -11,29 +13,48 @@ type Props = {
 export default function BlogCard({ post, locale, readMoreLabel }: Props) {
   const member = members.find((m) => m.id === post.memberId)
   const authorName = member ? member.name[locale] : post.memberId
+  const meetup = meetups.find((m) => m.id === post.meetupId)
+  const meetupLabel = meetup ? meetup.title[locale] : post.meetupId
 
   return (
-    <article className="bg-white p-8 transition-colors duration-150 hover:bg-[#faf9f6]">
-      <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-        <h2 className="text-xl font-semibold text-[#1a1a1a] font-[family-name:var(--font-syne)]">
-          {post.title[locale]}
-        </h2>
-        <div className="flex shrink-0 items-center gap-3 text-xs text-[#737373]">
-          <span>{authorName}</span>
-          <span>{post.date}</span>
-        </div>
-      </div>
+    <article className="bg-white p-6 transition-colors duration-150 hover:bg-[#faf9f6] md:p-8">
+      <span className="inline-block rounded-full bg-[#f0efec] px-2.5 py-0.5 text-xs text-[#737373]">
+        {meetupLabel}
+      </span>
+      <h2 className="mt-3 font-[family-name:var(--font-syne)] text-[1.9rem] font-semibold leading-tight text-[#1a1a1a] md:text-xl">
+        {post.title[locale]}
+      </h2>
       {post.subtitle[locale] && (
-        <p className="mt-4 text-sm leading-relaxed text-[#737373]">
+        <p className="mt-3 text-[15px] leading-7 text-[#737373] md:mt-2 md:text-sm md:leading-relaxed">
           {post.subtitle[locale]}
         </p>
       )}
-      <Link
-        href={`/blog/${post.slug}`}
-        className="mt-5 inline-block text-sm font-medium text-[#1a1a1a] hover:text-[#737373] transition-colors duration-150"
-      >
-        {readMoreLabel} &rarr;
-      </Link>
+      <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-2">
+          {member?.photo ? (
+            <Image
+              src={member.photo}
+              alt={authorName}
+              width={24}
+              height={24}
+              className="h-6 w-6 rounded-full object-cover"
+            />
+          ) : (
+            <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#e5e5e5] text-[10px] text-[#737373]">
+              {authorName.charAt(0)}
+            </div>
+          )}
+          <span className="text-xs text-[#737373]">{authorName}</span>
+          <span className="text-xs text-[#d4d4d4]">·</span>
+          <span className="text-xs text-[#737373]">{post.date}</span>
+        </div>
+        <Link
+          href={`/blog/${post.slug}`}
+          className="inline-flex items-center gap-1 text-sm font-medium text-[#1a1a1a] transition-colors duration-150 hover:text-[#737373]"
+        >
+          {readMoreLabel} &rarr;
+        </Link>
+      </div>
     </article>
   )
 }

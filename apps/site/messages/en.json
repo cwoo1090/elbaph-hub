@@ -5,14 +5,15 @@
     "blog": "Blog"
   },
   "Hero": {
-    "headline": "Elbaph",
-    "subtext": "Standing on each other's shoulders",
+    "headline": "Become Giants\nfor Each Other",
+    "subtext": "\"If I have seen further, it is by\nstanding on the shoulders of giants.\"\n— Isaac Newton",
     "cta": "Meet the Crew"
   },
   "WhoWeAre": {
     "label": "Our Story",
     "title": "Who We Are",
-    "description": "Deep thinkers and far dreamers, gathered together.\nStanding on each other's shoulders, we see the world and build the future together."
+    "description": "Builders at the frontier of\nrobotics, software, medicine, and mathematics.\nPushing each other to go further.",
+    "body": "Deep thinkers and far dreamers, gathered together.\nStanding on each other's shoulders, we see the world and build the future together."
   },
   "WhatWeValue": {
     "label": "Our Values",
@@ -35,7 +36,8 @@
     "label": "Recent Gathering",
     "title": "Meetups",
     "speakers": "Speakers",
-    "takeaways": "Key Takeaways"
+    "takeaways": "Key Takeaways",
+    "allMeetups": "All meetups"
   },
   "Blog": {
     "label": "Writing",

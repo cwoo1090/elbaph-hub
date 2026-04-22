@@ -54,4 +54,40 @@ export const meetups: Meetup[] = [
     ],
     takeaways: [],
   },
+  {
+    id: 'meetup-2',
+    date: '2026-03-28',
+    title: { ko: '2nd 밋업', en: '2nd Meetup' },
+    speakers: [
+      {
+        memberId: 'chulwoo',
+        topic: {
+          ko: '사이드 프로젝트 현황 & 이 시대에 대한 고민',
+          en: 'Side project updates & reflections on this era',
+        },
+      },
+      {
+        memberId: 'jaehwan',
+        topic: {
+          ko: 'Auto Research, 그리고 이를 활용한 트레이딩',
+          en: 'Auto Research & applying it to trading',
+        },
+      },
+      {
+        memberId: 'taekyu',
+        topic: {
+          ko: '한국 로봇 이대로 괜찮은가',
+          en: 'Is Korean robotics on the right track?',
+        },
+      },
+      {
+        memberId: 'younghoon',
+        topic: {
+          ko: 'AI 칩 시장 동향과 관련 이야기들',
+          en: 'AI chip market trends & what it means',
+        },
+      },
+    ],
+    takeaways: [],
+  },
 ]

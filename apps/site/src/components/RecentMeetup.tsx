@@ -3,21 +3,31 @@ import { Link } from '@/i18n/navigation'
 import { meetups } from '@/data/meetups'
 import { members } from '@/data/members'
 
+function formatDate(dateStr: string, locale: string) {
+  const d = new Date(dateStr + 'T12:00:00')
+  return d.toLocaleDateString(locale === 'ko' ? 'ko-KR' : 'en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  })
+}
+
 export default function RecentMeetup() {
   const t = useTranslations('Meetups')
   const locale = useLocale() as 'ko' | 'en'
 
   const latest = meetups[meetups.length - 1]
+  const meetupNumber = meetups.length
   if (!latest) return null
 
   return (
-    <section className="px-6 py-32">
-      <div className="section-divider mb-32" />
+    <section className="px-4 py-20 sm:px-6 md:py-32">
+      <div className="section-divider mb-16 md:mb-32" />
       <div className="mx-auto max-w-5xl">
-        <div className="flex items-end justify-between mb-14">
+        <div className="mb-10 flex flex-col gap-4 sm:mb-14 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <span className="section-label">{t('label')}</span>
-            <h2 className="text-3xl font-bold tracking-normal text-[#1a1a1a] md:text-4xl">
+            <h2 className="font-[family-name:var(--font-syne)] text-3xl font-bold tracking-tight text-[#1a1a1a] md:text-4xl">
               {t('title')}
             </h2>
           </div>
@@ -25,51 +35,40 @@ export default function RecentMeetup() {
             href="/meetups"
             className="text-sm text-[#737373] hover:text-[#1a1a1a] transition-colors duration-150"
           >
-            All meetups &rarr;
+            {t('allMeetups')} &rarr;
           </Link>
         </div>
 
-        <div className="border border-[#e5e5e5] bg-white p-8">
-          <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
-            <h3 className="text-base font-semibold text-[#1a1a1a] font-[family-name:var(--font-syne)]">
-              {latest.title[locale]}
-            </h3>
-            <span className="shrink-0 text-xs text-[#737373]">
-              {latest.date}
-            </span>
+        <div className="reveal grid gap-6 border-t border-[#e5e5e5] pt-6 md:grid-cols-[120px_1fr] md:gap-x-16 md:pt-8">
+          {/* Left: number + date */}
+          <div className="flex items-end justify-between gap-4 pt-0.5 md:block">
+            <p className="font-[family-name:var(--font-syne)] text-4xl font-black leading-none text-[#1a1a1a] sm:text-5xl md:text-7xl">
+              #{String(meetupNumber).padStart(2, '0')}
+            </p>
+            <p className="text-xs text-[#737373] md:mt-3">
+              {formatDate(latest.date, locale)}
+            </p>
           </div>
 
-          {latest.speakers.length > 0 && (
-            <div className="mt-7">
-              <span className="section-label">{t('speakers')}</span>
-              <ul className="space-y-2">
-                {latest.speakers.map((s, i) => {
-                  const member = members.find((m) => m.id === s.memberId)
-                  return (
-                    <li key={i} className="flex items-baseline gap-2 text-sm">
-                      <span className="font-medium text-[#1a1a1a]">{member?.name[locale] ?? s.memberId}</span>
-                      <span className="text-[#d4d4d4]">&mdash;</span>
-                      <span className="text-[#737373]">{s.topic[locale]}</span>
-                    </li>
-                  )
-                })}
-              </ul>
-            </div>
-          )}
-
-          {latest.takeaways.length > 0 && (
-            <div className="mt-7">
-              <span className="section-label">{t('takeaways')}</span>
-              <ul className="space-y-2">
-                {latest.takeaways.map((tw, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm text-[#737373]">
-                    <span className="mt-2 h-px w-3 shrink-0 bg-[#d4d4d4]" />
-                    {tw[locale]}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          {/* Right: speaker rows */}
+          <div className="border-t border-[#e5e5e5]">
+            {latest.speakers.map((s, i) => {
+              const member = members.find((m) => m.id === s.memberId)
+              return (
+                <div
+                  key={i}
+                  className="grid gap-1.5 border-b border-[#e5e5e5] py-4 md:grid-cols-[140px_1fr] md:gap-4 md:py-3.5"
+                >
+                  <span className="text-sm font-semibold text-[#1a1a1a] font-[family-name:var(--font-syne)]">
+                    {member?.name[locale] ?? s.memberId}
+                  </span>
+                  <span className="text-[15px] leading-7 text-[#737373] md:text-sm md:leading-relaxed">
+                    {s.topic[locale]}
+                  </span>
+                </div>
+              )
+            })}
+          </div>
         </div>
       </div>
     </section>

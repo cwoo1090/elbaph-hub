@@ -5,14 +5,15 @@
     "blog": "블로그"
   },
   "Hero": {
-    "headline": "Elbaph",
-    "subtext": "Standing on each other's shoulders",
+    "headline": "서로의\n거인이 되자",
+    "subtext": "\"내가 더 멀리 볼 수 있었던 것은\n거인들의 어깨 위에 서 있었기 때문입니다.\"\n— 아이작 뉴턴",
     "cta": "크루 보기"
   },
   "WhoWeAre": {
     "label": "Our Story",
     "title": "Who We Are",
-    "description": "깊이 생각하고, 멀리 꿈꾸는 이들이 모였습니다.\n서로의 어깨 위에 서서 함께 세상을 바라보고, 함께 미래를 만들어 갑니다."
+    "description": "로봇공학, 소프트웨어, 의학, 수학의 최전선.\n서로를 더 멀리 밀어붙이는 빌더들.",
+    "body": "깊이 생각하고, 멀리 꿈꾸는 이들이 모였습니다.\n서로의 어깨 위에 서서 함께 세상을 바라보고, 함께 미래를 만들어 갑니다."
   },
   "WhatWeValue": {
     "label": "Our Values",
@@ -35,7 +36,8 @@
     "label": "Recent Gathering",
     "title": "밋업",
     "speakers": "발표자",
-    "takeaways": "핵심 포인트"
+    "takeaways": "핵심 포인트",
+    "allMeetups": "전체 밋업"
   },
   "Blog": {
     "label": "Writing",

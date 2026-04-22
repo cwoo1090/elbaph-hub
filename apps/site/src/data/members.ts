@@ -4,6 +4,7 @@ export type Member = {
   oneLiner: { ko: string; en: string }
   bio: { ko: string; en: string }[]
   dream: { ko: string; en: string }
+  fields?: string[]
   photo: string
   linkedin?: string
   website?: string
@@ -33,6 +34,7 @@ export const members: Member[] = [
       },
     ],
     dream: { ko: '세계정복', en: 'World domination' },
+    fields: ['Medicine', 'Software', 'Building'],
     photo: '/members/chulwoo.png',
     linkedin: 'https://www.linkedin.com/in/chulwoo-ahn-3016a8236',
     website2: { url: 'https://amenable-yak-89c.notion.site/Library-24a6e2948d6080b1b773c9fe1881cc2a', label: 'Library' },
@@ -55,6 +57,7 @@ export const members: Member[] = [
       },
     ],
     dream: { ko: '인생 재밌게살기', en: 'Live an interesting life' },
+    fields: ['Mathematics', 'Physics', 'Robotics'],
     photo: '/members/jaehwan.png',
   },
   {
@@ -79,6 +82,7 @@ export const members: Member[] = [
       },
     ],
     dream: { ko: '스타트업', en: 'Startup' },
+    fields: ['CS', 'Entrepreneurship'],
     photo: '',
     website: 'https://diuven.xyz',
     linkedin: 'https://www.linkedin.com/in/yhunroh/',
@@ -108,6 +112,7 @@ export const members: Member[] = [
       ko: '대한민국을 대표하는 의료기기 대기업을 세울 작정입니다.',
       en: "To build Korea's leading medtech conglomerate.",
     },
+    fields: ['Medicine', 'Robotics', 'BCI'],
     photo: '/members/yechan.jpg',
     website: 'https://yechxn.github.io',
     website2: { url: 'https://www.rosota.run', label: 'rosota' },
@@ -141,6 +146,7 @@ export const members: Member[] = [
       ko: '로봇공학의 전 분야에서 충분한 지식과 경험을 쌓은 뒤, 노련한 정치로 조직의 효율을 극한으로 끌어올릴 수 있는 리더가 되고 싶습니다.',
       en: 'A leader who maximizes organizational efficiency through deep expertise across all areas of robotics.',
     },
+    fields: ['Robotics', 'Hardware', 'Mechanical Engineering'],
     photo: '/members/taekyu.jpg',
   },
 ]

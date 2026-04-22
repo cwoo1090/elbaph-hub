@@ -7,20 +7,18 @@ export default function CrewPage() {
   const locale = useLocale() as 'ko' | 'en'
 
   return (
-    <section className="px-6 py-24">
+    <section className="px-4 py-20 sm:px-6 md:py-24">
       <div className="mx-auto max-w-5xl">
         <span className="section-label">{t('label')}</span>
-        <h1 className="text-4xl font-bold tracking-normal text-[#1a1a1a] md:text-5xl">
+        <h1 className="font-[family-name:var(--font-syne)] text-4xl font-bold tracking-tight text-[#1a1a1a] md:text-5xl">
           {t('title')}
         </h1>
-        <div className="mt-16 grid gap-px border border-[#e5e5e5] md:grid-cols-2">
-          {members.map((m, i) => (
+        <div className="mt-10 grid gap-px border border-[#e5e5e5] md:mt-16 md:grid-cols-2">
+          {members.map((m) => (
             <MemberCard
               key={m.id}
               member={m}
               locale={locale}
-              dreamLabel={t('dream')}
-              index={i}
             />
           ))}
         </div>

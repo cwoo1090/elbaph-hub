@@ -9,7 +9,7 @@ export default function BlogPage() {
   const posts = getAllPosts()
 
   return (
-    <section className="px-6 py-24">
+    <section className="px-4 py-20 sm:px-6 md:py-24">
       <div className="mx-auto max-w-5xl">
         <span className="section-label">{t('label')}</span>
         <h1 className="text-4xl font-bold tracking-normal text-[#1a1a1a] md:text-5xl">
@@ -21,7 +21,7 @@ export default function BlogPage() {
             <p className="text-sm text-[#737373]">{t('empty')}</p>
           </div>
         ) : (
-          <div className="mt-14 space-y-px border border-[#e5e5e5]">
+          <div className="mt-10 space-y-px border border-[#e5e5e5] md:mt-14">
             {posts.map((p) => (
               <BlogCard
                 key={p.slug}

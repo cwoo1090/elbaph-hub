@@ -54,3 +54,7 @@ export function getAllPosts(): Post[] {
 export function getPostBySlug(slug: string): Post | undefined {
   return getAllPosts().find((p) => p.slug === slug)
 }
+
+export function readingTime(text: string): number {
+  return Math.max(1, Math.round(text.trim().split(/\s+/).length / 200))
+}

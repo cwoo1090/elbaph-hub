@@ -4,15 +4,15 @@ export default function WhoWeAre() {
   const t = useTranslations('WhoWeAre')
 
   return (
-    <section className="px-6 py-32">
-      <div className="section-divider mb-32" />
-      <div className="mx-auto max-w-4xl">
+    <section className="px-4 py-20 sm:px-6 md:py-32">
+      <div className="section-divider mb-16 md:mb-32" />
+      <div className="mx-auto max-w-5xl">
         <span className="section-label">{t('label')}</span>
-        <h2 className="text-3xl font-bold tracking-normal text-[#1a1a1a] md:text-4xl">
-          {t('title')}
-        </h2>
-        <p className="mt-8 text-lg leading-[1.85] text-[#737373] whitespace-pre-line">
+        <blockquote className="reveal mt-2 whitespace-normal [text-wrap:balance] font-[family-name:var(--font-syne)] text-[1.9rem] font-bold leading-[1.15] tracking-tight text-[#1a1a1a] sm:text-3xl sm:leading-[1.2] md:whitespace-pre-line md:text-4xl lg:text-5xl">
           {t('description')}
+        </blockquote>
+        <p className="mt-6 whitespace-normal [text-wrap:pretty] text-base leading-8 text-[#525252] sm:mt-8 sm:text-lg sm:leading-[1.85] md:whitespace-pre-line">
+          {t('body')}
         </p>
       </div>
     </section>
