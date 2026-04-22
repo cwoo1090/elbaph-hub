@@ -55,6 +55,19 @@ export async function editOriginalResponse(
   });
 }
 
+export async function editOriginalResponseWithFollowups(
+  applicationId: string,
+  interactionToken: string,
+  content: string
+) {
+  const chunks = splitMessage(content, 1900);
+  await editOriginalResponse(applicationId, interactionToken, chunks[0]);
+
+  for (const chunk of chunks.slice(1)) {
+    await sendFollowup(applicationId, interactionToken, chunk);
+  }
+}
+
 export async function postMessage(channelId: string, content: string) {
   const url = `${DISCORD_API}/channels/${channelId}/messages`;
   const chunks = splitMessage(content, 1900);

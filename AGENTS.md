@@ -7,15 +7,16 @@ For member profiles, see [members.md](members.md).
 ## Skills
 
 - `/news` — daily news briefing posted to #news
+- `/news_codex` — Codex-native daily news briefing using the same sources/templates with Discord MCP when available
 
 ## Loki Bot
 
-AI Discord bot (`apps/loki/`) — members use `/ask` to get concise Gemini answers with search grounding. Deployed on Vercel (free).
+AI Discord bot (`apps/loki/`) — members use `/ask` to get concise Gemini answers with search grounding. Deployed on Vercel.
 
 - **Answering**: Gemini 3 Flash Preview (free) answers with Google Search grounding for current or volatile facts
 - **Source handling**: Time-sensitive answers require grounding metadata sources; otherwise Loki refuses to answer confidently
-- **Interaction**: `/ask` slash command (works in channels and threads)
-- **Context**: Reads thread messages (all) or channel messages (last 10) before answering
+- **Interaction**: `/ask` slash command
+- **State**: Stateless for answer handling; no Manus, Redis, Upstash, or background research queue
 
 **Env vars** (Vercel): `DISCORD_BOT_TOKEN`, `DISCORD_APPLICATION_ID`, `DISCORD_PUBLIC_KEY`, `GEMINI_API_KEY`
 
@@ -24,14 +25,9 @@ AI Discord bot (`apps/loki/`) — members use `/ask` to get concise Gemini answe
 - Ed25519 signature verification via `tweetnacl`
 - Deferred responses (type 5) + `waitUntil` from `@vercel/functions` for background processing
 
-**Endpoints**:
-- `POST /api/discord/interactions` — Discord Interactions API (slash commands)
-
 **Gotchas**:
-- `after()` from next/server does NOT work on Vercel — use `waitUntil` from `@vercel/functions`
 - Discord messages max 2000 chars — bot splits long responses automatically
-- Bot needs Administrator permission in the server to read message history
-- Vercel project is NOT connected to Git — deploy manually via `cd apps/loki && npx vercel --prod --yes`
+- Bot needs permission to read message history for channel/thread context
 
 ## Discord
 
@@ -41,18 +37,17 @@ AI Discord bot (`apps/loki/`) — members use `/ask` to get concise Gemini answe
 | Channel | ID | Type | Purpose |
 |---------|----|------|---------|
 | #announcements | `1480075434749067264` | text | Important updates (read-only) |
-| #meetups | `1480085195570024468` | text | Monthly meetup coordination |
 | #intros | `1480085087797117050` | text | Member introductions |
 | #lounge | `1480085107174936697` | text | Casual conversation |
+| #meetups | `1480085195570024468` | text | Monthly meetup coordination |
 | #news | `1480085235315114195` | text | Daily news briefings |
-| #ideas | `1480209431563337912` | forum | Idea discussions |
-| #projects | `1480209476769419294` | forum | Project discussions |
-| dorm room | `1480074656290570474` | voice | Voice hangout |
+| #projects | `1480085442283049041` | forum | Project discussions |
+| #ideas | `1480085417393918043` | forum | Idea discussions |
 
 ## Discord MCP
 
-Custom MCP server at `packages/discord-mcp/` — gives Claude Code tools to read and post in Discord.
+Custom MCP server at `packages/discord-mcp/` — gives Codex tools to read and post in Discord.
 
 **Tools**: `discord_list_channels`, `discord_read_channel`, `discord_read_thread`, `discord_post_message`, `discord_reply_to_thread`, `discord_add_reaction`
 
-**Setup**: `claude mcp add discord-mcp -- node /path/to/packages/discord-mcp/dist/index.js` (requires `DISCORD_BOT_TOKEN` env var)
+**Setup**: `Codex mcp add discord-mcp -- node /path/to/packages/discord-mcp/dist/index.js` (requires `DISCORD_BOT_TOKEN` env var)

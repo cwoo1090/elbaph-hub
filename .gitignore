@@ -2,6 +2,7 @@
 node_modules/
 .next/
 .vercel
+*.tsbuildinfo
 
 # Environment / secrets
 .env*
@@ -12,7 +13,11 @@ node_modules/
 
 # Local tools
 .omc/
+.omx/
 .playwright-mcp/
+
+# macOS
+.DS_Store
 
 # Claude Code local config
 .claude/settings.local.json

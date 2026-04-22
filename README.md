@@ -4,8 +4,8 @@ Automation hub for Elbaph — a community of ambitious builders.
 
 ## What's in here
 
-- **Loki Bot** (`apps/loki/`) — AI Slack bot that answers questions (Gemini) and does deep research (Manus) when tagged
-- **Slack Archive** (`scripts/archive-slack/`) — weekly auto-archive of #ideas and #projects to searchable markdown, with AI thread summaries
+- **Loki Bot** (`apps/loki/`) — AI Discord bot that answers `/ask` questions with Gemini and Google Search grounding
+- **Slack Archive** (`scripts/archive-slack/`) — legacy weekly auto-archive of #ideas and #projects to searchable markdown, with AI thread summaries
 - **News Skill** (`.claude/skills/news/`) — daily news briefing posted to #news via Claude Code
 
 ## Local Setup
@@ -61,10 +61,10 @@ Loki is deployed on **Vercel**. Pushes to `main` auto-deploy.
 
 ```
 elbaph-hub/
-├── apps/loki/              # Loki Slack bot (Next.js)
+├── apps/loki/              # Loki Discord bot (Next.js)
 │   ├── src/
-│   │   ├── app/api/        # API routes (Slack events, Manus webhook)
-│   │   └── lib/            # Shared utilities (format, Gemini, Manus, Redis)
+│   │   ├── app/api/        # Discord Interactions API route
+│   │   └── lib/            # Shared utilities (Discord, Gemini)
 │   └── .env.example        # Required env vars
 ├── scripts/archive-slack/  # Weekly Slack archive (GitHub Actions)
 ├── archive/                # Archived Slack messages (auto-generated)
