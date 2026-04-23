@@ -1,0 +1,43 @@
+id: meetup-1
+date: 2026-02-28
+title:
+  ko: 1st 밋업
+  en: 1st Meetup
+location:
+language: ko
+recording_storage: google_drive
+stt_provider: clovanote
+status: materials-collected
+
+presentations:
+  - order: 0
+    speaker: elbaph
+    type: overview
+    title:
+      ko: 지난달 Elbaph 활동 및 논의 주제
+      en: Last-month Elbaph activity and discussion topics
+  - order: 1
+    speaker: chulwoo
+    title:
+      ko: Claude Code & Codex 탐방기 및 사이드 프로젝트 현황
+      en: Claude Code & Codex deep-dive + side project updates
+  - order: 2
+    speaker: jaehwan
+    title:
+      ko: Binance Alpha Strategy
+      en: Binance Alpha Strategy
+  - order: 3
+    speaker: younghoon
+    title:
+      ko: 스타트업 빌딩과 엑싯 게임플랜 — Acquihire, Open Source, Hiring 동향
+      en: Startup building & exit gameplan — Acquihire, Open Source, Hiring trends
+  - order: 4
+    speaker: yechan
+    title:
+      ko: 수술로봇 인공지능 연구 현황
+      en: AI in surgical robotics — current research landscape
+  - order: 5
+    speaker: taekyu
+    title:
+      ko: 로봇 손 업계 동향 및 내가 만드는 손 현황
+      en: Robot hand industry trends & building my own

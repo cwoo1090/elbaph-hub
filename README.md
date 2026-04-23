@@ -1,75 +1,121 @@
 # Elbaph Hub
 
-Automation hub for Elbaph — a community of ambitious builders.
+Automation and publishing workspace for Elbaph, a small builder community that meets monthly.
 
-## What's in here
+For member profiles, see `members.md`.
 
-- **Loki Bot** (`apps/loki/`) — AI Discord bot that answers `/ask` questions with Gemini and Google Search grounding
-- **Slack Archive** (`scripts/archive-slack/`) — legacy weekly auto-archive of #ideas and #projects to searchable markdown, with AI thread summaries
-- **News Skill** (`.claude/skills/news/`) — daily news briefing posted to #news via Claude Code
+## Main Areas
+
+- `apps/site/` - public Next.js site for Elbaph, meetup pages, and blog content.
+- `apps/loki/` - Discord `/ask` bot using Gemini with Google Search grounding.
+- `packages/discord-mcp/` - local Discord MCP server for reading and posting in Discord.
+- `meetups/` - canonical meetup workspace for materials, recording links, transcripts, and blog outputs.
+- `.agents/skills/news/` and `.agents/skills/news_codex/` - daily news briefing skills.
+
+## Meetup Workflow
+
+Use `meetups/README.md` as the source of truth.
+
+Current convention:
+
+```text
+meetups/
+  YYYY-MM-meetup-N/
+    meetup.yaml
+    presentations/
+      00-overview/
+        materials/
+          slides.pdf
+      01-member/
+        materials/
+          slides.pdf
+          slides.pptx
+        recording.md
+        transcript.md
+        blog.md
+```
+
+Rules:
+
+- `meetup-N` must match `apps/site/src/data/meetups.ts` and `apps/site/content/posts/meetup-N`.
+- Presentation folders use order plus member only, for example `01-chulwoo`.
+- Use `00-overview` for the short opening deck about recent Elbaph activity and discussion topics.
+- Store raw video/audio in Google Drive and link it from `recording.md`.
+- `transcript.md` is ClovaNote STT output.
+- `blog.md` is the final Korean blog post.
 
 ## Local Setup
 
-### Prerequisites
+Prerequisites:
 
 - Node.js 18+
 - npm
-- [Vercel CLI](https://vercel.com/docs/cli) (`npm i -g vercel`)
 
-### 1. Clone the repo
+## Run The Site
 
 ```bash
-git clone https://github.com/cwoo1090/elbaph-hub.git
-cd elbaph-hub
+cd apps/site
+npm install
+npm run dev
 ```
 
-### 2. Install dependencies
+Runs on `http://localhost:3001`.
+
+## Run Loki
 
 ```bash
 cd apps/loki
 npm install
-```
-
-### 3. Set up environment variables
-
-Link the Vercel project and pull env vars automatically:
-
-```bash
-vercel link
-vercel env pull .env.local
-```
-
-If you don't have Vercel access, copy the example and ask Chulwoo for the keys:
-
-```bash
 cp .env.example .env.local
-```
-
-### 4. Run locally
-
-```bash
 npm run dev
 ```
 
-The app runs at `http://localhost:3000`.
+Runs on `http://localhost:3000`.
 
-## Deployment
+Required env vars:
 
-Loki is deployed on **Vercel**. Pushes to `main` auto-deploy.
+- `DISCORD_BOT_TOKEN`
+- `DISCORD_APPLICATION_ID`
+- `DISCORD_PUBLIC_KEY`
+- `GEMINI_API_KEY`
 
-## Project Structure
+Register slash commands:
 
+```bash
+cd apps/loki
+npm run register-commands
 ```
-elbaph-hub/
-├── apps/loki/              # Loki Discord bot (Next.js)
-│   ├── src/
-│   │   ├── app/api/        # Discord Interactions API route
-│   │   └── lib/            # Shared utilities (Discord, Gemini)
-│   └── .env.example        # Required env vars
-├── scripts/archive-slack/  # Weekly Slack archive (GitHub Actions)
-├── archive/                # Archived Slack messages (auto-generated)
-├── .claude/skills/         # Claude Code automation skills
-│   └── news/               # Daily news briefing
-├── CLAUDE.md               # Project context for Claude Code
-└── members.md              # Member profiles
+
+## Run Discord MCP
+
+```bash
+cd packages/discord-mcp
+npm install
+npm run build
 ```
+
+Then add it to Codex or Claude with:
+
+```bash
+node /path/to/packages/discord-mcp/dist/index.js
+```
+
+Requires `DISCORD_BOT_TOKEN`.
+
+## Discord
+
+- Server: ELBAPH
+- Server ID: `1480074652884795462`
+
+Key channels:
+
+- `#meetups` - `1480085195570024468`
+- `#news` - `1480085235315114195`
+- `#projects` - `1480085442283049041`
+- `#ideas` - `1480085417393918043`
+
+## Repo Notes
+
+- Keep guidance files simple and current.
+- Do not commit raw meetup recordings or extracted audio.
+- Presentation materials under `meetups/**/materials/` are intended to be committed, including PDFs and PPTX files.

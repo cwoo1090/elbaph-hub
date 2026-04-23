@@ -1,0 +1,81 @@
+# Meetups
+
+This directory is the canonical workspace for Elbaph meetup materials, recordings, transcripts, and blog outputs.
+
+Keep the structure small. Each meetup has one `meetup.yaml` and one folder per presentation or session item.
+
+Published site posts are copied manually from:
+
+```text
+meetups/{meetup}/presentations/{presentation}/blog.md
+```
+
+to:
+
+```text
+apps/site/content/posts/{meetup-id}/
+```
+
+## Structure
+
+```text
+meetups/
+  2026-02-meetup-1/
+    meetup.yaml
+
+    presentations/
+      00-overview/
+        materials/
+          slides.pdf
+
+      01-speaker/
+        materials/
+          slides.pdf
+          slides.pptx
+        recording.md
+        transcript.md
+        blog.md
+```
+
+Only create files when they are useful. For example, do not add `transcript.md` before the ClovaNote export exists.
+
+## File Meanings
+
+- `materials/` - input files from the presenter, such as slides, PDFs, decks, papers, or source notes.
+- `recording.md` - Google Drive links to the raw video and extracted audio. Do not commit the media files.
+- `transcript.md` - ClovaNote STT output for that presentation.
+- `blog.md` - final Korean blog post for that presentation.
+- `00-overview/` - optional opening deck for last-month Elbaph activity, meetup framing, and discussion topics.
+
+## Git Policy
+
+Commit:
+
+- meetup metadata
+- presentation material files such as PDF and PPTX
+- ClovaNote transcript exports
+- final blog posts
+- source links to Google Drive recordings
+
+Do not commit raw recordings or extracted audio. Store those in Google Drive and record the link in `recording.md`.
+
+## Naming
+
+Use:
+
+```text
+YYYY-MM-meetup-N/
+presentations/01-speaker/
+```
+
+The `meetup-N` suffix should match the site meetup ID in `apps/site/src/data/meetups.ts` and the published post directory under `apps/site/content/posts/`.
+
+Presentation folder names should use order plus speaker only. Keep the talk topic in `meetup.yaml`, not in the folder name.
+
+Example:
+
+```text
+2026-02-meetup-1/presentations/01-chulwoo/
+```
+
+Use `presentations/00-overview/` for the short opening overview/discussion deck when the meetup has one.

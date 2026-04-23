@@ -1,58 +1,72 @@
 # Elbaph Hub
 
-Automation hub for Elbaph — a 5-member community of ambitious builders who meet monthly and push each other to grow.
+Automation and publishing workspace for Elbaph, a small builder community that meets monthly.
 
-For member profiles, see [members.md](members.md).
+For member profiles, see `members.md`.
 
-## Skills
+## Main Areas
 
-- `/news` — daily news briefing posted to #news
+- `apps/site/` - public Next.js site with meetup/blog content.
+- `apps/loki/` - Discord `/ask` bot using Gemini with search grounding.
+- `packages/discord-mcp/` - local Discord MCP server for reading and posting in Discord.
+- `meetups/` - canonical meetup workspace for materials, recordings, transcripts, and blog outputs.
+- `.claude/skills/news/` - daily news briefing skill.
+
+## Meetup Structure
+
+Use `meetups/README.md` as the source of truth.
+
+Current convention:
+
+```text
+meetups/
+  YYYY-MM-meetup-N/
+    meetup.yaml
+    presentations/
+      00-overview/
+        materials/
+          slides.pdf
+      01-member/
+        materials/
+          slides.pdf
+          slides.pptx
+        recording.md
+        transcript.md
+        blog.md
+```
+
+Rules:
+
+- `meetup-N` must match `apps/site/src/data/meetups.ts` and `apps/site/content/posts/meetup-N`.
+- Presentation folder names use order plus member only, for example `01-chulwoo`.
+- Use `00-overview` for the short opening deck about recent Elbaph activity and discussion topics.
+- Put talk titles and metadata in `meetup.yaml`, not folder names.
+- Store raw video/audio in Google Drive and link it from `recording.md`; do not commit media files.
+- `transcript.md` is ClovaNote STT output.
+- `blog.md` is the final Korean blog post.
 
 ## Loki Bot
 
-AI Discord bot (`apps/loki/`) — members use `/ask` to get concise Gemini answers with search grounding. Deployed on Vercel (free).
+`apps/loki/` is a Next.js app deployed on Vercel.
 
-- **Answering**: Gemini 3 Flash Preview (free) answers with Google Search grounding for current or volatile facts
-- **Source handling**: Time-sensitive answers require grounding metadata sources; otherwise Loki refuses to answer confidently
-- **Interaction**: `/ask` slash command (works in channels and threads)
-- **Context**: Reads thread messages (all) or channel messages (last 10) before answering
-
-**Env vars** (Vercel): `DISCORD_BOT_TOKEN`, `DISCORD_APPLICATION_ID`, `DISCORD_PUBLIC_KEY`, `GEMINI_API_KEY`
-
-**Architecture**:
-- Next.js on Vercel — Discord Interactions Endpoint (HTTP, not Gateway)
-- Ed25519 signature verification via `tweetnacl`
-- Deferred responses (type 5) + `waitUntil` from `@vercel/functions` for background processing
-
-**Endpoints**:
-- `POST /api/discord/interactions` — Discord Interactions API (slash commands)
-
-**Gotchas**:
-- `after()` from next/server does NOT work on Vercel — use `waitUntil` from `@vercel/functions`
-- Discord messages max 2000 chars — bot splits long responses automatically
-- Bot needs Administrator permission in the server to read message history
-- Vercel project is NOT connected to Git — deploy manually via `cd apps/loki && npx vercel --prod --yes`
+- Endpoint: `POST /api/discord/interactions`
+- Command: `/ask`
+- Required env vars: `DISCORD_BOT_TOKEN`, `DISCORD_APPLICATION_ID`, `DISCORD_PUBLIC_KEY`, `GEMINI_API_KEY`
+- Use `waitUntil` from `@vercel/functions` for deferred Discord responses.
+- Discord messages max 2000 chars, so long responses must be split.
 
 ## Discord
 
 - Server: ELBAPH
 - Server ID: `1480074652884795462`
+- Key channels:
+  - `#meetups` - `1480085195570024468`
+  - `#news` - `1480085235315114195`
+  - `#projects` - `1480085442283049041`
+  - `#ideas` - `1480085417393918043`
 
-| Channel | ID | Type | Purpose |
-|---------|----|------|---------|
-| #announcements | `1480075434749067264` | text | Important updates (read-only) |
-| #meetups | `1480085195570024468` | text | Monthly meetup coordination |
-| #intros | `1480085087797117050` | text | Member introductions |
-| #lounge | `1480085107174936697` | text | Casual conversation |
-| #news | `1480085235315114195` | text | Daily news briefings |
-| #ideas | `1480209431563337912` | forum | Idea discussions |
-| #projects | `1480209476769419294` | forum | Project discussions |
-| dorm room | `1480074656290570474` | voice | Voice hangout |
+## Git Notes
 
-## Discord MCP
-
-Custom MCP server at `packages/discord-mcp/` — gives Claude Code tools to read and post in Discord.
-
-**Tools**: `discord_list_channels`, `discord_read_channel`, `discord_read_thread`, `discord_post_message`, `discord_reply_to_thread`, `discord_add_reaction`
-
-**Setup**: `claude mcp add discord-mcp -- node /path/to/packages/discord-mcp/dist/index.js` (requires `DISCORD_BOT_TOKEN` env var)
+- Keep repo guidance simple and current.
+- Do not commit raw meetup recordings or extracted audio.
+- Presentation materials under `meetups/**/materials/` are intended to be committed, including PDFs and PPTX files.

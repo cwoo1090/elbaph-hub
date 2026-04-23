@@ -31,4 +31,16 @@ docs/
 
 # Binary files
 *.pptx
+!meetups/**/materials/*.pptx
 ~$*.pptx
+
+# Meetup recordings and extracted audio stay outside Git.
+meetups/**/*.mp4
+meetups/**/*.mov
+meetups/**/*.mkv
+meetups/**/*.webm
+meetups/**/*.m4a
+meetups/**/*.mp3
+meetups/**/*.wav
+meetups/**/*.aac
+meetups/**/*.flac
