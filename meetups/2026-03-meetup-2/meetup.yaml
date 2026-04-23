@@ -10,6 +10,12 @@ stt_provider: clovanote
 status: blog-final
 
 presentations:
+  - order: 0
+    speaker: elbaph
+    type: overview
+    title:
+      ko: 지난달 Elbaph 활동 및 논의 주제
+      en: Last-month Elbaph activity and discussion topics
   - order: 1
     speaker: chulwoo
     title:
