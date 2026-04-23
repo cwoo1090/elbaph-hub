@@ -1,6 +1,6 @@
 ---
 name: news_codex
-description: Codex-native daily news briefing for Elbaph Discord. Trigger with "/news_codex" or "news codex". Research the latest news across AI, robotics, BCI, medtech, and Korea startups, format the Korean briefing, post to #news and #lounge when Discord MCP tools are available, and archive the result.
+description: Codex-native daily news briefing for Elbaph Discord. Trigger with "/news_codex" or "news codex". Research the latest news across AI, robotics, BCI, medtech, and Korea startups, format the Korean briefing, and post to #news and #lounge when Discord MCP tools are available.
 ---
 
 # Daily News Briefing For Codex
@@ -36,7 +36,6 @@ When invoked, follow these steps in order:
    - Main #news message with no links
    - One thread reply containing detailed Korean breakdowns and source links
    - One short #lounge teaser built around the most impactful story
-   - Archive markdown
 
 6. If Discord MCP tools are available in the current session:
    - Post the main message to #news via `discord_post_message` and capture the returned message id.
@@ -45,12 +44,9 @@ When invoked, follow these steps in order:
    - Post the teaser to #lounge via `discord_post_message`.
 
 7. If Discord MCP tools are not available in the current session:
-   - Still generate the main message, thread reply, lounge teaser, and archive content.
+   - Still generate the main message, thread reply, and lounge teaser.
    - Return the prepared post content to the user and state that Discord posting could not be completed from this session.
 
-8. Save the archive to `../news/archive/YYYY-MM-DD.md` using the shared archive format.
-
-9. If all topics are empty after 24-hour filtering:
+8. If all topics are empty after 24-hour filtering:
    - Do not post to Discord.
    - Inform the user that no qualifying stories were found.
-   - Do not create an archive unless the user explicitly asks for it.

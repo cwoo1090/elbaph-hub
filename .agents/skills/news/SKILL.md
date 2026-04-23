@@ -46,6 +46,4 @@ When invoked, follow these steps in order:
 
 7. **Cross-post to #lounge:** Compose a short hook message using the lounge template in reference.md. Pick the single most impactful headline as a teaser, add a provocative question or comment related to today's news. **Construct a Discord message link** using the format `https://discord.com/channels/1480074652884795462/1480085235315114195/{message_id}` and include it as a link to the full briefing. Post to #lounge channel (`1480085107174936697`) via `discord_post_message`.
 
-8. **Archive:** Save the briefing to `archive/YYYY-MM-DD.md` using the archive template in reference.md.
-
 If ALL topics returned `STORIES_FOUND: 0`, do not post — inform the user instead.
