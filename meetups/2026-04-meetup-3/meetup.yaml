@@ -1,0 +1,38 @@
+id: meetup-3
+date: 2026-04-25
+title:
+  ko: 3rd 밋업
+  en: 3rd Meetup
+location:
+language: ko
+recording_storage: google_drive
+stt_provider: clovanote
+status: preparing
+
+presentations:
+  - order: 0
+    speaker: elbaph
+    type: overview
+    title:
+      ko: 지난달 Elbaph 활동 및 논의 주제
+      en: Last-month Elbaph activity and discussion topics
+  - order: 1
+    speaker: yechan
+    title:
+      ko: 지난 한 달 캐치업
+      en: Last-month catch-up
+  - order: 2
+    speaker: jaehwan
+    title:
+      ko: 트레이딩 관련 이야기
+      en: Trading notes
+  - order: 3
+    speaker: taekyu
+    title:
+      ko: 휴머노이드 로봇 산업 적용 방향성
+      en: Humanoid robot industrial application direction
+  - order: 4
+    speaker: chulwoo
+    title:
+      ko: Karpathy LLM Wiki와 하드웨어 프로젝트
+      en: Karpathy LLM Wiki and hardware project
