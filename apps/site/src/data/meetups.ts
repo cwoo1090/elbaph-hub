@@ -90,4 +90,40 @@ export const meetups: Meetup[] = [
     ],
     takeaways: [],
   },
+  {
+    id: 'meetup-3',
+    date: '2026-04-25',
+    title: { ko: '3rd 밋업', en: '3rd Meetup' },
+    speakers: [
+      {
+        memberId: 'yechan',
+        topic: {
+          ko: '의료 로봇 스타트업의 seed round 고민',
+          en: 'Seed round questions for a medical robotics startup',
+        },
+      },
+      {
+        memberId: 'jaehwan',
+        topic: {
+          ko: '호르무즈 해협과 Web3 오일 시장',
+          en: 'The Strait of Hormuz and Web3 oil markets',
+        },
+      },
+      {
+        memberId: 'taekyu',
+        topic: {
+          ko: '휴머노이드 로봇 산업 적용 방향성',
+          en: 'Humanoid robot industrial application direction',
+        },
+      },
+      {
+        memberId: 'chulwoo',
+        topic: {
+          ko: 'Karpathy식 LLM Wiki로 공부하기',
+          en: 'Studying with a Karpathy-style LLM Wiki',
+        },
+      },
+    ],
+    takeaways: [],
+  },
 ]
