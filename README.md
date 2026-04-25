@@ -10,9 +10,9 @@ For member profiles, see `members.md`.
 - `apps/loki/` - Discord `/ask` bot using Gemini with Google Search grounding.
 - `packages/discord-mcp/` - local Discord MCP server for reading and posting in Discord.
 - `meetups/` - canonical meetup workspace for materials, recording links, transcripts, and blog outputs.
-- `.agents/skills/news/` and `.agents/skills/news_codex/` - daily news briefing skills.
+- `.agents/skills/news/`, `.agents/skills/news_codex/`, and `.claude/skills/news/` - daily news briefing skills.
 
-## Meetup Workflow
+## Meetup Structure
 
 Use `meetups/README.md` as the source of truth.
 
@@ -26,10 +26,13 @@ meetups/
       00-overview/
         materials/
           slides.pdf
+          index.html
+          assets/
       01-member/
         materials/
           slides.pdf
           slides.pptx
+          outline.md
         recording.md
         transcript.md
         blog.md
@@ -37,85 +40,74 @@ meetups/
 
 Rules:
 
-- `meetup-N` must match `apps/site/src/data/meetups.ts` and `apps/site/content/posts/meetup-N`.
-- Presentation folders use order plus member only, for example `01-chulwoo`.
+- `meetup-N` must match `apps/site/src/data/meetups.ts`; published blog posts live under `apps/site/content/posts/meetup-N`.
+- Presentation folder names use order plus member only, for example `01-chulwoo`.
 - Use `00-overview` for the short opening deck about recent Elbaph activity and discussion topics.
-- Store raw video/audio in Google Drive and link it from `recording.md`.
+- Put talk titles and metadata in `meetup.yaml`, not folder names.
+- `materials/` can contain committed presenter inputs such as PDF/PPTX slides, HTML decks, source notes, papers, and deck assets.
+- Store raw video/audio in Google Drive and link it from `recording.md`; do not commit media files.
 - `transcript.md` is ClovaNote STT output.
 - `blog.md` is the final Korean blog post.
 
-## Local Setup
+## Local Commands
 
-Prerequisites:
+There is no root package manager workspace. Run commands inside the app/package directory.
 
-- Node.js 18+
-- npm
-
-## Run The Site
+Site:
 
 ```bash
 cd apps/site
 npm install
-npm run dev
+npm run dev      # http://localhost:3001
+npm run build
+npm run lint
 ```
 
-Runs on `http://localhost:3001`.
-
-## Run Loki
+Loki:
 
 ```bash
 cd apps/loki
 npm install
 cp .env.example .env.local
-npm run dev
-```
-
-Runs on `http://localhost:3000`.
-
-Required env vars:
-
-- `DISCORD_BOT_TOKEN`
-- `DISCORD_APPLICATION_ID`
-- `DISCORD_PUBLIC_KEY`
-- `GEMINI_API_KEY`
-
-Register slash commands:
-
-```bash
-cd apps/loki
+npm run dev      # http://localhost:3000
+npm run build
 npm run register-commands
 ```
 
-## Run Discord MCP
+Discord MCP:
+
+Requires `DISCORD_BOT_TOKEN`.
 
 ```bash
 cd packages/discord-mcp
 npm install
 npm run build
+npm run dev
 ```
 
-Then add it to Codex or Claude with:
+## Loki Bot
 
-```bash
-node /path/to/packages/discord-mcp/dist/index.js
-```
+`apps/loki/` is a Next.js app deployed on Vercel.
 
-Requires `DISCORD_BOT_TOKEN`.
+- Endpoint: `POST /api/discord/interactions`
+- Command: `/ask`
+- Required env vars: `DISCORD_BOT_TOKEN`, `DISCORD_APPLICATION_ID`, `DISCORD_PUBLIC_KEY`, `GEMINI_API_KEY`
+- Use `waitUntil` from `@vercel/functions` for deferred Discord responses.
+- Discord messages max 2000 chars, so long responses must be split.
 
 ## Discord
 
 - Server: ELBAPH
 - Server ID: `1480074652884795462`
+- Key channels:
+  - `#meetups` - `1480085195570024468`
+  - `#news` - `1480085235315114195`
+  - `#lounge` - `1480085107174936697`
+  - `#projects` - `1480209476769419294`
+  - `#ideas` - `1480209431563337912`
 
-Key channels:
+## Git Notes
 
-- `#meetups` - `1480085195570024468`
-- `#news` - `1480085235315114195`
-- `#projects` - `1480085442283049041`
-- `#ideas` - `1480085417393918043`
-
-## Repo Notes
-
-- Keep guidance files simple and current.
+- Keep repo guidance simple and current.
 - Do not commit raw meetup recordings or extracted audio.
-- Presentation materials under `meetups/**/materials/` are intended to be committed, including PDFs and PPTX files.
+- Presentation materials under `meetups/**/materials/` are intended to be committed, including PDFs, PPTX files, HTML decks, source notes, and assets.

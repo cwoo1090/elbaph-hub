@@ -1,6 +1,6 @@
 # Meetups
 
-This directory is the canonical workspace for Elbaph meetup materials, recordings, transcripts, and blog outputs.
+This directory is the canonical workspace for Elbaph meetup materials, recording links, transcripts, and blog outputs.
 
 Keep the structure small. Each meetup has one `meetup.yaml` and one folder per presentation or session item.
 
@@ -27,11 +27,14 @@ meetups/
       00-overview/
         materials/
           slides.pdf
+          index.html
+          assets/
 
       01-speaker/
         materials/
           slides.pdf
           slides.pptx
+          outline.md
         recording.md
         transcript.md
         blog.md
@@ -41,7 +44,7 @@ Only create files when they are useful. For example, do not add `transcript.md` 
 
 ## File Meanings
 
-- `materials/` - input files from the presenter, such as slides, PDFs, decks, papers, or source notes.
+- `materials/` - committed input files from the presenter, such as PDF/PPTX slides, HTML decks, source notes, papers, or deck assets.
 - `recording.md` - Google Drive links to the raw video and extracted audio. Do not commit the media files.
 - `transcript.md` - ClovaNote STT output for that presentation.
 - `blog.md` - final Korean blog post for that presentation.
@@ -52,7 +55,7 @@ Only create files when they are useful. For example, do not add `transcript.md` 
 Commit:
 
 - meetup metadata
-- presentation material files such as PDF and PPTX
+- presentation material files such as PDF, PPTX, HTML decks, source notes, and assets
 - ClovaNote transcript exports
 - final blog posts
 - source links to Google Drive recordings
