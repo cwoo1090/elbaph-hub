@@ -14,6 +14,7 @@
 
 - One-liner: Someone who's been digging one well — robot hardware — for 20 years straight.
 - Facts About Me
+  - Guinness World Record holder in robotics.
   - In the era of LLMs and Physical AI, I believe in the importance of fundamentals more than ever.
   - When it comes to designing robot hardware to replace humans (not machines), I'd say I'm in the top 10 in Korea. (There aren't many people doing this here yet..)
   - Robotics is a field where CS, EE, and ME are deeply intertwined — cross-discipline collaboration within an organization IS the organization's capability. That's why I value organizational politics (stakeholder alignment).
@@ -35,6 +36,7 @@
 
 - One-liner: I like building things, improving things, and solving problems — headed toward entrepreneurship, but in exploration mode for now.
 - Facts About Me
+  - International Olympiad in Informatics (IOI) gold medalist.
   - Seoul Science High School class 28. Graduating from MIT CS in May.
   - Joining Frontier Lab as an engineer from July.
   - Free until summer, trying various things in the meantime.
@@ -44,6 +46,7 @@
 
 - One-liner: Loved math and physics, but currently soul-searching. Trying to make money first.
 - Facts About Me
+  - International Physics Olympiad (IPhO) gold medalist.
   - Graduated from Seoul Science High School. Double-majored in Math and Physics at SNU, then entered Columbia's Math PhD program — currently on leave.
   - Love robotics. Will probably end up there eventually.
 - Dream: Live an interesting life
