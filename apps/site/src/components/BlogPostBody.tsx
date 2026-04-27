@@ -8,7 +8,7 @@ const STORAGE_KEY = 'elbaph:blog-lang'
 
 type LanguageContent = {
   title: string
-  subtitle: string
+  subtitle?: string
   body: string
 }
 
@@ -61,7 +61,8 @@ export default function BlogPostBody({ date, authorName, hasTranslation, ko, en 
             <button
               type="button"
               onClick={handleToggle}
-              className="text-left hover:text-[#1a1a1a] transition-colors duration-150"
+              aria-label={language === 'en' ? 'Switch to Korean' : 'Switch to English'}
+              className="text-left transition-colors duration-150 hover:text-[#1a1a1a] focus-visible:text-[#1a1a1a] focus-visible:outline-none focus-visible:underline"
             >
               {language === 'en' ? '한국어' : 'English'}
             </button>
