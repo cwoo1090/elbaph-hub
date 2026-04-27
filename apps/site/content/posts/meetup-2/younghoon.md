@@ -3,8 +3,10 @@ slug: meetup-2-younghoon
 date: 2026-03-28
 title:
   ko: AI 칩은 왜 점점 더 중요해지는가
+  en: Why AI chips keep getting more important
 subtitle:
   ko: 모델의 시대를 넘어, 인프라의 시대를 이해하는 법
+  en: Past the era of models, into the era of infrastructure.
 ---
 
 요즘 AI를 이야기할 때 반도체와 칩 이야기를 피하기는 어렵다. NVIDIA GPU, Google TPU, HBM, CUDA 같은 단어들은 이제 업계 내부의 기술 용어를 넘어, AI를 조금이라도 따라가는 사람이라면 한 번쯤은 접하게 되는 언어가 됐다.
