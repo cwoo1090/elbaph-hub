@@ -3,8 +3,10 @@ slug: meetup-2-jaehwan
 date: 2026-03-28
 title:
   ko: autoresearch는 연구자를 대체할까
+  en: Will autoresearch replace researchers?
 subtitle:
   ko: 아직은 아니다. 하지만 밤새 일시키기엔 이미 충분히 유용하다
+  en: Not yet. But useful enough to take the night shift.
 ---
 
 요즘 AI를 쓰는 방식은 빠르게 바뀌고 있다.
