@@ -1,6 +1,6 @@
 # Elbaph Site
 
-Next.js 15 public site for Elbaph — bilingual (ko/en), deployed on Vercel.
+Next.js 15 public site for Elbaph — English-first, with per-post Korean toggle on blog posts. Deployed on Vercel.
 
 ## Dev
 
@@ -30,5 +30,5 @@ Direct, no-filler, high-standards. What the crew has built speaks for itself. Ko
 1. **Credibility over persuasion** — Show the people, the work, the ideas
 2. **Every pixel earns its place** — No decorative elements without meaning; restraint signals confidence
 3. **Typographic hierarchy does the work** — Bold display headlines, muted labels, clear body; no icons or illustrations
-4. **Korean-first, English-equal** — Both locales must feel native; accommodate Korean character density
+4. **English-first site, Korean-capable blog** — Site UI is English. Blog posts are written in Korean and AI-translated to English before publishing; readers default to English with a per-post toggle to Korean. Both languages must feel native, and layouts must accommodate Korean character density.
 5. **Bold but not loud** — Ambition lives in ideas and people, not visual effects; motion and color are purposeful and rare
