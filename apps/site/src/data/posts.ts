@@ -6,4 +6,5 @@ export type Post = {
   title: { ko: string; en: string }
   subtitle: { ko: string; en: string }
   body: { ko: string; en: string }
+  hasTranslation: boolean
 }
