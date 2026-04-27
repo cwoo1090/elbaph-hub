@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { Link } from '@/i18n/navigation'
 
@@ -21,12 +21,16 @@ type Props = {
 }
 
 export default function BlogPostBody({ date, authorName, hasTranslation, ko, en }: Props) {
-  const [language, setLanguage] = useState<'ko' | 'en'>(() => {
-    if (!hasTranslation) return 'en'
-    if (typeof window === 'undefined') return 'en'
+  const [language, setLanguage] = useState<'ko' | 'en'>('en')
+
+  useEffect(() => {
+    if (!hasTranslation) return
     const saved = localStorage.getItem(STORAGE_KEY)
-    return saved === 'ko' || saved === 'en' ? saved : 'en'
-  })
+    if (saved === 'ko' || saved === 'en') {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- hydration-safe localStorage read; see https://react.dev/reference/react/useState#avoiding-recreating-the-initial-state
+      setLanguage(saved)
+    }
+  }, [hasTranslation])
 
   const showKorean = hasTranslation && language === 'ko'
   const current = showKorean ? ko : en
