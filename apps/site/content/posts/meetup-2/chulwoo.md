@@ -3,8 +3,10 @@ slug: meetup-2-chulwoo
 date: 2026-03-28
 title:
   ko: 만들 수 있는 시대에, 무엇을 만들 것인가
+  en: In an era where anything can be built, what do you build?
 subtitle:
   ko: 한 달 반의 사이드 프로젝트가 남긴 질문
+  en: A question left behind by a month-and-a-half side project
 ---
 
 최근 한 달 반 정도, 나는 영어 writing을 다루는 작은 사이드 프로젝트를 운영해봤다.
