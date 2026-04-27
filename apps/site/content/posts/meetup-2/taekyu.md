@@ -3,8 +3,10 @@ slug: meetup-2-taekyu
 date: 2026-03-28
 title:
   ko: 한국 로봇은 어디서 살아남을 수 있는가
+  en: Where can Korean robotics survive?
 subtitle:
   ko: 범용의 환상보다, 짬과 안보의 현실에 대하여
+  en: Less general-purpose fantasy, more jjam and national security.
 ---
 
 요즘 로봇 영상을 보면 누구나 쉽게 압도된다.
