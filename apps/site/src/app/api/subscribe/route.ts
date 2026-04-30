@@ -25,15 +25,17 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'invalid_email' }, { status: 400 })
   }
 
+  const sourceUrl = new URL('/blog', request.url).toString()
+
   try {
     const res = await fetch(`https://${publication}.substack.com/api/v1/free`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         email,
-        first_url: 'https://elbaph.dev/blog',
+        first_url: sourceUrl,
         first_referrer: '',
-        current_url: 'https://elbaph.dev/blog',
+        current_url: sourceUrl,
         current_referrer: '',
         referral_code: '',
         source: 'embed',
