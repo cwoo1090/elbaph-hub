@@ -45,6 +45,16 @@
     "empty": "First post coming soon",
     "readMore": "Read more"
   },
+  "Newsletter": {
+    "label": "Newsletter",
+    "headline": "Get our writing in your inbox.",
+    "description": "Monthly dispatches from the crew — meetup recaps, essays, ideas. Korean and English in one email.",
+    "placeholder": "your@email.com",
+    "cta": "Subscribe",
+    "loading": "Subscribing…",
+    "success": "Thanks. Check your inbox to confirm.",
+    "error": "Something went wrong. Try again?"
+  },
   "Footer": {
     "contact": "Contact",
     "rights": "All rights reserved."
