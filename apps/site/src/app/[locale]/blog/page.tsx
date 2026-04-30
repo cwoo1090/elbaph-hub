@@ -6,7 +6,7 @@ import NewsletterSignup from '@/components/NewsletterSignup'
 export default async function BlogPage() {
   const t = await getTranslations('Blog')
   const posts = getAllPosts()
-  const showNewsletter = Boolean(process.env.SUBSTACK_PUBLICATION)
+  const publication = process.env.SUBSTACK_PUBLICATION?.trim().toLowerCase()
 
   return (
     <section className="px-4 py-20 sm:px-6 md:py-24">
@@ -18,9 +18,9 @@ export default async function BlogPage() {
           empty={t('empty')}
           readMoreLabel={t('readMore')}
         />
-        {showNewsletter && (
+        {publication && (
           <div className="mt-20 md:mt-24">
-            <NewsletterSignup />
+            <NewsletterSignup publication={publication} />
           </div>
         )}
       </div>
