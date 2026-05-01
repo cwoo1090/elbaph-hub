@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Fraunces, DM_Sans } from 'next/font/google'
+import { Fraunces, DM_Sans, Noto_Sans_KR } from 'next/font/google'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
@@ -19,6 +19,13 @@ const dmSans = DM_Sans({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-sans',
+})
+
+const notoSansKr = Noto_Sans_KR({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-kr-sans',
+  weight: ['400', '500', '600', '700', '800'],
 })
 
 export const metadata: Metadata = {
@@ -41,7 +48,7 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <html lang={locale} className="scroll-smooth">
-      <body className={`${fraunces.variable} ${dmSans.variable} font-[family-name:var(--font-sans)] bg-[#faf9f6] text-[#1a1a1a] antialiased`}>
+      <body className={`${fraunces.variable} ${dmSans.variable} ${notoSansKr.variable} site-body-font bg-[#faf9f6] text-[#1a1a1a] antialiased`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <a
             href="#main-content"

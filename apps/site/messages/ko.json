@@ -5,14 +5,14 @@
     "blog": "블로그"
   },
   "Hero": {
-    "headline": "서로의\n거인이 되자",
+    "headline": "이곳에서는,\n서로가 서로의 거인이 되어 줍니다.",
     "subtext": "\"내가 더 멀리 볼 수 있었던 것은\n거인들의 어깨 위에 서 있었기 때문입니다.\"\n— 아이작 뉴턴",
-    "cta": "크루 보기"
+    "cta": "Meet the Crew"
   },
   "WhoWeAre": {
     "label": "Our Story",
     "title": "Who We Are",
-    "description": "로봇공학, 소프트웨어, 의학, 수학의 최전선.\n서로를 더 멀리 밀어붙이는 빌더들.",
+    "description": "우리는 로봇, 소프트웨어, 의학, 수학 등 각 분야에서\n다음 시대를 만들어가는 젊은 거인들입니다.",
     "body": "깊이 생각하고, 멀리 꿈꾸는 이들이 모였습니다.\n서로의 어깨 위에 서서 함께 세상을 바라보고, 함께 미래를 만들어 갑니다."
   },
   "WhatWeValue": {
@@ -44,6 +44,12 @@
     "title": "블로그",
     "empty": "첫 번째 포스트가 곧 올라옵니다",
     "readMore": "더 읽기"
+  },
+  "AuthorArchive": {
+    "label": "Crew Writing",
+    "title": "{name}의 글",
+    "empty": "아직 발행된 글이 없습니다.",
+    "backToCrew": "크루로 돌아가기"
   },
   "Newsletter": {
     "label": "뉴스레터",

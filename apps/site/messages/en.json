@@ -45,6 +45,12 @@
     "empty": "First post coming soon",
     "readMore": "Read more"
   },
+  "AuthorArchive": {
+    "label": "Crew Writing",
+    "title": "Posts by {name}",
+    "empty": "No posts published yet.",
+    "backToCrew": "Back to crew"
+  },
   "Newsletter": {
     "label": "Newsletter",
     "headline": "Get our writing in your inbox.",

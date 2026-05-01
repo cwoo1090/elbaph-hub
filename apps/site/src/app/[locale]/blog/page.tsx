@@ -1,10 +1,11 @@
-import { getTranslations } from 'next-intl/server'
+import { getLocale, getTranslations } from 'next-intl/server'
 import { getAllPosts } from '@/lib/posts'
 import BlogList from '@/components/BlogList'
 import NewsletterSignup from '@/components/NewsletterSignup'
 
 export default async function BlogPage() {
   const t = await getTranslations('Blog')
+  const locale = (await getLocale()) as 'ko' | 'en'
   const posts = getAllPosts()
   const publication = process.env.SUBSTACK_PUBLICATION?.trim().toLowerCase()
 
@@ -13,6 +14,7 @@ export default async function BlogPage() {
       <div className="mx-auto max-w-5xl">
         <BlogList
           posts={posts}
+          locale={locale}
           label={t('label')}
           title={t('title')}
           empty={t('empty')}

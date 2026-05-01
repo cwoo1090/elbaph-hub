@@ -1,27 +1,19 @@
-'use client'
-
 import BlogCard from './BlogCard'
-import LanguageToggle from './LanguageToggle'
-import { useBlogLanguage } from '@/lib/useBlogLanguage'
 import type { Post } from '@/data/posts'
 
 type Props = {
   posts: Post[]
+  locale: 'ko' | 'en'
   label: string
   title: string
   empty: string
   readMoreLabel: string
 }
 
-export default function BlogList({ posts, label, title, empty, readMoreLabel }: Props) {
-  const [language, setLanguage] = useBlogLanguage()
-
+export default function BlogList({ posts, locale, label, title, empty, readMoreLabel }: Props) {
   return (
     <>
-      <div className="flex items-center justify-between gap-4">
-        <span className="section-label">{label}</span>
-        <LanguageToggle language={language} onChange={setLanguage} />
-      </div>
+      <span className="section-label">{label}</span>
       <h1 className="text-4xl font-bold tracking-normal text-[#1a1a1a] md:text-5xl">
         {title}
       </h1>
@@ -36,7 +28,7 @@ export default function BlogList({ posts, label, title, empty, readMoreLabel }: 
             <BlogCard
               key={p.slug}
               post={p}
-              locale={language}
+              locale={locale}
               readMoreLabel={readMoreLabel}
             />
           ))}

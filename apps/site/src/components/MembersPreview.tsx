@@ -14,7 +14,7 @@ export default function MembersPreview() {
         <div className="mb-10 flex flex-col gap-4 sm:mb-14 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <span className="section-label">{t('label')}</span>
-            <h2 className="font-[family-name:var(--font-syne)] text-3xl font-bold tracking-tight text-[#1a1a1a] md:text-4xl">
+            <h2 className="font-display text-3xl font-bold tracking-tight text-[#1a1a1a] md:text-4xl">
               {t('title')}
             </h2>
           </div>
@@ -28,8 +28,9 @@ export default function MembersPreview() {
 
         <div className="reveal grid grid-cols-1 gap-px bg-[#e5e5e5] sm:grid-cols-2 lg:grid-cols-3">
           {members.map((m) => (
-            <div
+            <Link
               key={m.id}
+              href={`/crew#${m.id}`}
               className="group bg-[#faf9f6] p-6 transition-colors duration-200 hover:bg-white md:p-8"
             >
               {/* Avatar */}
@@ -43,14 +44,14 @@ export default function MembersPreview() {
                     className="h-14 w-14 rounded-full object-cover"
                   />
                 ) : (
-                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#e8e5df] text-lg font-semibold text-[#1a1a1a] font-[family-name:var(--font-syne)]">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#e8e5df] text-lg font-semibold text-[#1a1a1a] font-display">
                     {m.name.en.charAt(0)}
                   </div>
                 )}
               </div>
 
               {/* Name */}
-              <p className="font-[family-name:var(--font-syne)] text-lg font-bold text-[#1a1a1a] md:text-base">
+              <p className="font-display text-lg font-bold text-[#1a1a1a] md:text-base">
                 {m.name[locale]}
               </p>
 
@@ -72,7 +73,7 @@ export default function MembersPreview() {
                   ))}
                 </div>
               )}
-            </div>
+            </Link>
           ))}
         </div>
       </div>

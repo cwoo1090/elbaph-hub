@@ -17,7 +17,7 @@ export const members: Member[] = [
     name: { ko: '안철우', en: 'Chulwoo Ahn' },
     oneLiner: {
       ko: '지금 존재하는, 그리고 앞으로 존재할 인류가 안철우가 있는 삶이 안철우가 없는 삶보다 더 좋았다고 말할 수 있을 만한 삶을 살고 싶습니다. 수신제가치국평천하',
-      en: 'I want to live a life where all of humanity can say the world was better with me in it.',
+      en: 'I want to live so that humanity can say the world was better for me being in it.',
     },
     bio: [
       {

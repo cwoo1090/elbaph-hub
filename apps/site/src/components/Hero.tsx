@@ -5,10 +5,10 @@ export default function Hero() {
   const t = useTranslations('Hero')
 
   return (
-    <section className="px-4 py-20 sm:px-6 sm:py-24 md:py-40">
+    <section className="hero-section px-4 py-20 sm:px-6 sm:py-24 md:py-40">
       <div className="mx-auto max-w-5xl">
         <h1
-          className="animate-fade-in-up whitespace-pre-line font-[family-name:var(--font-syne)] text-[2.75rem] font-bold leading-[0.98] tracking-tight text-[#1a1a1a] sm:text-5xl md:text-7xl lg:text-8xl"
+          className="hero-headline animate-fade-in-up whitespace-pre-line font-display text-[2.75rem] font-bold leading-[0.98] tracking-normal text-[#1a1a1a] sm:text-5xl md:text-7xl lg:text-8xl"
           style={{ animationDelay: '0s' }}
         >
           {t('headline')}

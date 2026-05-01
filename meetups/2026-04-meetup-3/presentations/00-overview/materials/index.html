@@ -1,0 +1,1067 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Elbaph 3rd Meetup Overview</title>
+  <link rel="icon" href="data:,">
+  <style>
+    :root {
+      --bg: #faf9f6;
+      --ink: #1a1a1a;
+      --muted: #737373;
+      --line: #dedbd2;
+      --soft: #f0ede5;
+      --white: #ffffff;
+      --accent: #c7442e;
+      --olive: #53684d;
+      --blue: #315f7c;
+      --gold: #b48a2c;
+      --shadow: 0 24px 80px rgba(26, 26, 26, 0.12);
+      font-family: Inter, Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    body {
+      overflow: hidden;
+    }
+
+    .deck {
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: clamp(10px, 2vw, 28px);
+    }
+
+    .slide {
+      display: none;
+      position: relative;
+      width: min(100vw - 32px, calc((100vh - 32px) * 16 / 9));
+      aspect-ratio: 16 / 9;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .slide.active {
+      display: block;
+    }
+
+    .grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(26, 26, 26, 0.055) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(26, 26, 26, 0.055) 1px, transparent 1px);
+      background-size: 80px 80px;
+      pointer-events: none;
+    }
+
+    .frame {
+      position: absolute;
+      inset: 38px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 24px;
+    }
+
+    header,
+    footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: 0;
+    }
+
+    .brand img {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+    }
+
+    .kicker {
+      font-size: 13px;
+      font-weight: 750;
+      color: var(--accent);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      max-width: 900px;
+      font-size: clamp(62px, 8.4vw, 104px);
+      line-height: 0.92;
+      letter-spacing: 0;
+      font-weight: 900;
+    }
+
+    h2 {
+      max-width: 880px;
+      font-size: clamp(42px, 5.5vw, 72px);
+      line-height: 0.98;
+      letter-spacing: 0;
+      font-weight: 900;
+    }
+
+    h3 {
+      font-size: 26px;
+      line-height: 1.15;
+      letter-spacing: 0;
+      font-weight: 850;
+    }
+
+    .lede {
+      max-width: 720px;
+      font-size: 24px;
+      line-height: 1.45;
+      color: #3d3d3d;
+      word-break: keep-all;
+    }
+
+    .content {
+      display: grid;
+      align-content: center;
+      gap: 28px;
+      min-height: 0;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 36px;
+      align-items: center;
+      min-height: 0;
+    }
+
+    .title-stack {
+      display: grid;
+      gap: 22px;
+      align-content: center;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 7px 12px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.48);
+      font-size: 14px;
+      font-weight: 700;
+      color: #383838;
+    }
+
+    .agenda {
+      display: grid;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .agenda-row {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      min-height: 86px;
+    }
+
+    .time {
+      display: flex;
+      align-items: center;
+      padding: 22px;
+      font-size: 18px;
+      font-weight: 850;
+      color: var(--muted);
+      background: rgba(240, 237, 229, 0.8);
+    }
+
+    .agenda-main {
+      display: grid;
+      align-content: center;
+      gap: 6px;
+      padding: 18px 22px;
+    }
+
+    .agenda-main strong {
+      font-size: 24px;
+      line-height: 1.15;
+    }
+
+    .agenda-main span {
+      font-size: 16px;
+      line-height: 1.45;
+      color: var(--muted);
+      word-break: keep-all;
+    }
+
+    .speaker-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .speaker {
+      position: relative;
+      min-height: 430px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.42);
+      overflow: hidden;
+    }
+
+    .speaker img {
+      width: 100%;
+      height: 215px;
+      display: block;
+      object-fit: cover;
+      filter: grayscale(100%);
+    }
+
+    .speaker:nth-child(1) {
+      border-top: 7px solid var(--blue);
+    }
+
+    .speaker:nth-child(2) {
+      border-top: 7px solid var(--olive);
+    }
+
+    .speaker:nth-child(3) {
+      border-top: 7px solid var(--gold);
+    }
+
+    .speaker:nth-child(4) {
+      border-top: 7px solid var(--accent);
+    }
+
+    .speaker-body {
+      padding: 18px;
+      display: grid;
+      gap: 13px;
+    }
+
+    .speaker small {
+      color: var(--muted);
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .speaker p {
+      font-size: 20px;
+      line-height: 1.38;
+      word-break: keep-all;
+    }
+
+    .note-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .note {
+      min-height: 184px;
+      padding: 26px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      align-content: space-between;
+      gap: 22px;
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .note strong {
+      display: block;
+      font-size: 28px;
+      line-height: 1.1;
+      word-break: keep-all;
+    }
+
+    .note span {
+      font-size: 18px;
+      line-height: 1.45;
+      color: var(--muted);
+      word-break: keep-all;
+    }
+
+    .update-layout {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .update-main,
+    .update-side {
+      display: grid;
+      gap: 18px;
+      min-height: 0;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.42);
+      padding: 22px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .panel h3 {
+      font-size: 25px;
+    }
+
+    .panel p,
+    .panel li {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.45;
+      word-break: keep-all;
+    }
+
+    .panel ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .pipeline {
+      display: grid;
+      gap: 9px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      align-items: center;
+      min-height: 42px;
+      border: 1px solid var(--line);
+      background: rgba(250, 249, 246, 0.72);
+    }
+
+    .step b {
+      height: 100%;
+      display: grid;
+      place-items: center;
+      border-right: 1px solid var(--line);
+      color: var(--accent);
+      font-size: 13px;
+    }
+
+    .step span {
+      padding: 0 12px;
+      font-size: 15px;
+      color: #3d3d3d;
+      word-break: keep-all;
+    }
+
+    .chart {
+      display: grid;
+      gap: 12px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 58px 1fr 52px;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--muted);
+    }
+
+    .bar-track {
+      height: 18px;
+      border: 1px solid var(--line);
+      background: rgba(250, 249, 246, 0.8);
+    }
+
+    .bar {
+      height: 100%;
+      background: var(--ink);
+    }
+
+    .bar.apr {
+      background: var(--accent);
+    }
+
+    .small-note {
+      font-size: 12px;
+      line-height: 1.45;
+      color: var(--muted);
+      word-break: keep-all;
+    }
+
+    .update-slide .frame {
+      gap: 14px;
+    }
+
+    .update-slide .content {
+      align-content: stretch;
+      gap: 16px;
+    }
+
+    .update-slide .title-stack {
+      gap: 8px;
+    }
+
+    .update-slide h2 {
+      font-size: 58px;
+      line-height: 0.94;
+    }
+
+    .update-slide .panel {
+      padding: 15px 20px;
+      gap: 8px;
+    }
+
+    .update-slide .panel h3 {
+      font-size: 23px;
+    }
+
+    .update-slide .panel p,
+    .update-slide .panel li {
+      font-size: 14px;
+      line-height: 1.38;
+    }
+
+    .update-slide .step {
+      min-height: 30px;
+    }
+
+    .update-slide .step span {
+      font-size: 13px;
+    }
+
+    .update-slide .pipeline {
+      gap: 7px;
+    }
+
+    .flow-slide .content {
+      align-content: center;
+    }
+
+    .focused-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .focused-grid .panel {
+      min-height: 0;
+    }
+
+    .big-chart {
+      gap: 22px;
+    }
+
+    .big-chart .bar-row {
+      grid-template-columns: 72px 1fr 64px;
+      gap: 18px;
+      font-size: 17px;
+    }
+
+    .big-chart .bar-track {
+      height: 32px;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .metric {
+      min-height: 150px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.42);
+      display: grid;
+      align-content: space-between;
+      gap: 18px;
+    }
+
+    .metric strong {
+      font-size: 34px;
+      line-height: 1;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.4;
+      word-break: keep-all;
+    }
+
+    .site-split {
+      display: grid;
+      grid-template-columns: 1.18fr 0.82fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .screenshot-card {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.42);
+      padding: 12px;
+      min-height: 0;
+    }
+
+    .screenshot-card img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 390px;
+      object-fit: cover;
+      object-position: top left;
+      border: 1px solid var(--line);
+    }
+
+    .screenshot-card.blog-shot img {
+      object-position: top center;
+    }
+
+    .topic-map {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .topic {
+      min-height: 170px;
+      padding: 28px;
+      border: 1px solid var(--line);
+      display: grid;
+      align-content: space-between;
+      gap: 18px;
+      background: rgba(255, 255, 255, 0.45);
+    }
+
+    .topic b {
+      font-size: 30px;
+      line-height: 1.1;
+    }
+
+    .topic span {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.45;
+      word-break: keep-all;
+    }
+
+    .prompt-list {
+      display: grid;
+      gap: 14px;
+      max-width: 850px;
+    }
+
+    .prompt {
+      display: grid;
+      grid-template-columns: 70px 1fr;
+      align-items: center;
+      min-height: 82px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.42);
+    }
+
+    .prompt em {
+      height: 100%;
+      display: grid;
+      place-items: center;
+      background: var(--soft);
+      color: var(--muted);
+      font-style: normal;
+      font-weight: 900;
+      border-right: 1px solid var(--line);
+    }
+
+    .prompt span {
+      padding: 0 24px;
+      font-size: 27px;
+      line-height: 1.25;
+      font-weight: 780;
+      word-break: keep-all;
+    }
+
+    .closing {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 18px;
+    }
+
+    .commit {
+      min-height: 310px;
+      border: 1px solid var(--line);
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.46);
+      display: grid;
+      align-content: space-between;
+      gap: 24px;
+    }
+
+    .commit .num {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--ink);
+      font-weight: 900;
+    }
+
+    .commit strong {
+      font-size: 30px;
+      line-height: 1.12;
+      word-break: keep-all;
+    }
+
+    .commit span {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.45;
+      word-break: keep-all;
+    }
+
+    .progress {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 5px;
+      width: var(--progress, 14.2%);
+      background: var(--ink);
+      transition: width 180ms ease;
+    }
+
+    @media print {
+      body {
+        overflow: visible;
+        background: var(--white);
+      }
+
+      .deck {
+        display: block;
+        width: auto;
+        height: auto;
+        padding: 0;
+      }
+
+      .slide,
+      .slide.active {
+        display: block;
+        width: 100vw;
+        height: 100vh;
+        page-break-after: always;
+        border: 0;
+        box-shadow: none;
+      }
+
+      .progress {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck" aria-live="polite">
+    <section class="slide active" data-title="Cover">
+      <div class="grid"></div>
+      <div class="frame">
+        <header>
+          <div class="brand"><img src="../../../../../apps/site/public/logo.png" alt=""> Elbaph</div>
+          <span>Meetup 03</span>
+        </header>
+        <div class="content split">
+          <div class="title-stack">
+            <div class="kicker">Overview</div>
+            <h1>3rd Meetup</h1>
+            <div class="meta-row">
+              <span class="pill">2026.04.25 Sat</span>
+              <span class="pill">10:00 KST</span>
+              <span class="pill">Online</span>
+            </div>
+          </div>
+          <div class="note-grid">
+            <div class="note"><strong>지난 1달 Elbaph update</strong><span>사이트, 블로그, Discord, Loki</span></div>
+            <div class="note"><strong>발표</strong><span>재환, 예찬, 태규, 철우</span></div>
+            <div class="note"><strong>논의할 것</strong><span>운영, 로봇, 에이전트, 다음 실험</span></div>
+            <div class="note"><strong>5월 일정 및 목표</strong><span>다음 달까지 가져갈 약속</span></div>
+          </div>
+        </div>
+        <footer><span>2026 April</span><span>01 / 10</span></footer>
+      </div>
+      <div class="progress"></div>
+    </section>
+
+    <section class="slide flow-slide" data-title="Flow">
+      <div class="grid"></div>
+      <div class="frame">
+        <header>
+          <div class="brand"><img src="../../../../../apps/site/public/logo.png" alt=""> Elbaph</div>
+          <span>Today</span>
+        </header>
+        <div class="content">
+          <div class="agenda">
+            <div class="agenda-row">
+              <div class="time">10:00</div>
+              <div class="agenda-main"><strong>지난 1달 Elbaph update</strong><span>사이트/블로그, Discord 활성화, Loki 업데이트</span></div>
+            </div>
+            <div class="agenda-row">
+              <div class="time">10:15</div>
+              <div class="agenda-main"><strong>발표</strong><span>재환 - 예찬 - 태규 - 철우 순서로 진행</span></div>
+            </div>
+            <div class="agenda-row">
+              <div class="time">11:25</div>
+              <div class="agenda-main"><strong>논의할 것</strong><span>발표에서 나온 판단 기준과 Elbaph 운영 개선점</span></div>
+            </div>
+            <div class="agenda-row">
+              <div class="time">11:50</div>
+              <div class="agenda-main"><strong>5월 일정 및 목표</strong><span>다음 밋업 날짜, 발표 후보, 각자 한 달 목표</span></div>
+            </div>
+          </div>
+        </div>
+        <footer><span>Overview</span><span>02 / 10</span></footer>
+      </div>
+      <div class="progress"></div>
+    </section>
+
+    <section class="slide update-slide" data-title="Site Update">
+      <div class="grid"></div>
+      <div class="frame">
+        <header>
+          <div class="brand"><img src="../../../../../apps/site/public/logo.png" alt=""> Elbaph</div>
+          <span>Site</span>
+        </header>
+        <div class="content">
+          <div class="title-stack">
+            <div class="kicker">Public Site</div>
+            <h2>이제 보여줄 수 있는 site가 있습니다.</h2>
+          </div>
+          <div class="site-split">
+            <div class="screenshot-card">
+              <img src="site-screenshots/site-home.png" alt="Elbaph public site homepage screenshot">
+            </div>
+            <div class="panel">
+              <h3>사이트의 용도</h3>
+              <ul>
+                <li>새 멤버 후보나 초대 발표자에게 Elbaph를 설명하는 public proof</li>
+                <li>우리가 어떤 사람들인지 한 화면에서 보여주는 shared context</li>
+                <li>밋업, 멤버, 블로그를 한 곳에서 묶는 archive</li>
+                <li>블로그 글을 모아 newsletter로 재활용</li>
+              </ul>
+              <h3>이번 달 산출물</h3>
+              <ul>
+                <li>밋업/멤버/블로그를 한 곳에서 보여주는 public site 제작</li>
+                <li>초대할 사람에게 링크 하나로 설명 가능</li>
+                <li>외부 구독자에게 보낼 newsletter 기반 마련</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <footer><span>Overview</span><span>03 / 10</span></footer>
+      </div>
+      <div class="progress"></div>
+    </section>
+
+    <section class="slide update-slide" data-title="Blog Update">
+      <div class="grid"></div>
+      <div class="frame">
+        <header>
+          <div class="brand"><img src="../../../../../apps/site/public/logo.png" alt=""> Elbaph</div>
+          <span>Blog</span>
+        </header>
+        <div class="content">
+          <div class="title-stack">
+            <div class="kicker">Blog Pipeline</div>
+            <h2>밋업 발표를 글로 남기는 flow</h2>
+          </div>
+          <div class="site-split">
+            <div class="screenshot-card blog-shot">
+              <img src="site-screenshots/site-blog.png" alt="Elbaph blog page screenshot">
+            </div>
+            <div class="panel">
+              <h3>현재 블로그 제작 flow</h3>
+              <div class="pipeline">
+                <div class="step"><b>1</b><span>밋업 세션 녹음</span></div>
+                <div class="step"><b>2</b><span>ClovaNote STT로 transcript 생성</span></div>
+                <div class="step"><b>3</b><span>발표자료 + transcript + prompt를 LLM에 입력</span></div>
+                <div class="step"><b>4</b><span>발표자에게 공유 후 최종 편집</span></div>
+                <div class="step"><b>5</b><span>사이트 업로드, 이후 newsletter로 재활용</span></div>
+              </div>
+              <p>발표자료를 올려줘야 블로그 초안 품질이 올라갑니다. 정리된 글은 이후 newsletter 콘텐츠로 다시 씁니다.</p>
+            </div>
+          </div>
+        </div>
+        <footer><span>Overview</span><span>04 / 10</span></footer>
+      </div>
+      <div class="progress"></div>
+    </section>
+
+    <section class="slide update-slide" data-title="Discord Update">
+      <div class="grid"></div>
+      <div class="frame">
+        <header>
+          <div class="brand"><img src="../../../../../apps/site/public/logo.png" alt=""> Elbaph</div>
+          <span>Discord</span>
+        </header>
+        <div class="content">
+          <div class="title-stack">
+            <div class="kicker">Community Activity</div>
+            <h2>Discord activation</h2>
+          </div>
+          <div class="focused-grid">
+            <div class="panel">
+              <h3>전체 활동량 snapshot</h3>
+              <div class="chart big-chart">
+                <div class="bar-row"><span>Mar</span><div class="bar-track"><div class="bar" style="width: 42%"></div></div><span>50+</span></div>
+                <div class="bar-row"><span>Apr</span><div class="bar-track"><div class="bar apr" style="width: 100%"></div></div><span>120+</span></div>
+              </div>
+              <p>Discord MCP로 확인한 텍스트 채널/밋업 스레드 기준. 멤버별 지표는 보지 않고 전체 대화량만 봅니다.</p>
+            </div>
+            <div class="panel">
+              <h3>늘어난 대화의 성격</h3>
+              <ul>
+                <li>lounge에서 AI/로봇/스타트업 뉴스에 대한 즉석 토론 증가</li>
+                <li>4월 밋업 주제 조율 thread가 길게 이어짐</li>
+                <li>Loki 답변에 대한 품질 피드백이 실제 개선으로 연결됨</li>
+              </ul>
+              <p>다음 목표는 채널이 많아지는 것보다, 좋은 질문과 follow-up이 쌓이는 것입니다.</p>
+            </div>
+          </div>
+        </div>
+        <footer><span>Overview</span><span>05 / 10</span></footer>
+      </div>
+      <div class="progress"></div>
+    </section>
+
+    <section class="slide update-slide" data-title="Loki Update">
+      <div class="grid"></div>
+      <div class="frame">
+        <header>
+          <div class="brand"><img src="../../../../../apps/site/public/logo.png" alt=""> Elbaph</div>
+          <span>Loki</span>
+        </header>
+        <div class="content">
+          <div class="title-stack">
+            <div class="kicker">Bot Update</div>
+            <h2>Recent Loki update</h2>
+          </div>
+          <div class="metric-grid">
+            <div class="metric"><strong>Search</strong><span>최신성/변동 가능성이 있으면 Google Search 기반으로 답변</span></div>
+            <div class="metric"><strong>Sources</strong><span>검색을 쓴 답변에는 출처를 붙이도록 prompt 강화</span></div>
+            <div class="metric"><strong>Safety</strong><span>Discord 맥락은 참고하되 instruction으로 따르지 않게 분리</span></div>
+          </div>
+          <div class="focused-grid">
+            <div class="panel">
+              <h3>좋아진 점</h3>
+              <ul>
+                <li>최근 정보 질문에서 구체 날짜와 출처를 더 잘 남김</li>
+                <li>근거가 약하면 단정하지 않도록 조정</li>
+                <li>긴 답변은 Discord 제한에 맞게 split</li>
+              </ul>
+            </div>
+            <div class="panel">
+              <h3>아직 볼 것</h3>
+              <ul>
+                <li>검색 결과를 과신하는 hallucination은 계속 체크 필요</li>
+                <li>뉴스 요약과 /ask 답변 품질을 별도로 봐야 함</li>
+                <li>좋은 질문이 쌓일수록 Loki가 커뮤니티 메모리 역할을 할 수 있음</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <footer><span>Overview</span><span>06 / 10</span></footer>
+      </div>
+      <div class="progress"></div>
+    </section>
+
+    <section class="slide" data-title="Speakers">
+      <div class="grid"></div>
+      <div class="frame">
+        <header>
+          <div class="brand"><img src="../../../../../apps/site/public/logo.png" alt=""> Elbaph</div>
+          <span>Lineup</span>
+        </header>
+        <div class="content">
+          <div class="title-stack">
+            <div class="kicker">4 Speakers</div>
+            <h2>오늘의 발표 순서</h2>
+          </div>
+          <div class="speaker-grid">
+            <article class="speaker">
+              <img src="../../../../../apps/site/public/members/jaehwan.png" alt="Jaehwan Kim">
+              <div class="speaker-body">
+                <small>01</small>
+                <h3>재환</h3>
+                <p>트레이딩 관련 이야기</p>
+              </div>
+            </article>
+            <article class="speaker">
+              <img src="../../../../../apps/site/public/members/yechan.jpg" alt="Yechan Seo">
+              <div class="speaker-body">
+                <small>02</small>
+                <h3>예찬</h3>
+                <p>지난 한 달 캐치업</p>
+              </div>
+            </article>
+            <article class="speaker">
+              <img src="../../../../../apps/site/public/members/taekyu.jpg" alt="Taekyu Song">
+              <div class="speaker-body">
+                <small>03</small>
+                <h3>태규</h3>
+                <p>휴머노이드 로봇 산업 적용 방향성</p>
+              </div>
+            </article>
+            <article class="speaker">
+              <img src="../../../../../apps/site/public/members/chulwoo.png" alt="Chulwoo Ahn">
+              <div class="speaker-body">
+                <small>04</small>
+                <h3>철우</h3>
+                <p>Karpathy LLM Wiki, 하드웨어 프로젝트</p>
+              </div>
+            </article>
+          </div>
+        </div>
+        <footer><span>Overview</span><span>07 / 10</span></footer>
+      </div>
+      <div class="progress"></div>
+    </section>
+
+    <section class="slide" data-title="Themes">
+      <div class="grid"></div>
+      <div class="frame">
+        <header>
+          <div class="brand"><img src="../../../../../apps/site/public/logo.png" alt=""> Elbaph</div>
+          <span>Themes</span>
+        </header>
+        <div class="content">
+          <div class="title-stack">
+            <div class="kicker">Discussion Axes</div>
+            <h2>이번 달 대화의 네 축</h2>
+          </div>
+          <div class="topic-map">
+            <div class="topic"><b>Trading</b><span>시장, 리서치, 의사결정, 그리고 실제 돈이 걸릴 때의 감각</span></div>
+            <div class="topic"><b>Catch-up</b><span>새로 시작한 일, 한 달 동안 생긴 변화, 다음 행동</span></div>
+            <div class="topic"><b>Humanoids</b><span>specific to general인가, general to specific인가</span></div>
+            <div class="topic"><b>LLM + Hardware</b><span>Karpathy LLM Wiki에서 배운 것과 하드웨어 프로젝트로 이어지는 질문</span></div>
+          </div>
+        </div>
+        <footer><span>Overview</span><span>08 / 10</span></footer>
+      </div>
+      <div class="progress"></div>
+    </section>
+
+    <section class="slide" data-title="Prompts">
+      <div class="grid"></div>
+      <div class="frame">
+        <header>
+          <div class="brand"><img src="../../../../../apps/site/public/logo.png" alt=""> Elbaph</div>
+          <span>Prompts</span>
+        </header>
+        <div class="content split">
+          <div class="title-stack">
+            <div class="kicker">For Every Talk</div>
+            <h2>발표를 들을 때 남기고 싶은 질문</h2>
+            <p class="lede">좋은 발표는 정보보다 판단 기준을 남깁니다. 오늘은 각자 무엇을 보고, 무엇을 버리고, 무엇을 다음 달까지 검증할지에 집중합니다.</p>
+          </div>
+          <div class="prompt-list">
+            <div class="prompt"><em>01</em><span>지난 한 달 동안 실제로 바뀐 것은?</span></div>
+            <div class="prompt"><em>02</em><span>처음 생각과 달라진 판단은?</span></div>
+            <div class="prompt"><em>03</em><span>지금 막혀 있는 병목은?</span></div>
+            <div class="prompt"><em>04</em><span>우리가 줄 수 있는 피드백은?</span></div>
+          </div>
+        </div>
+        <footer><span>Overview</span><span>09 / 10</span></footer>
+      </div>
+      <div class="progress"></div>
+    </section>
+
+    <section class="slide" data-title="Close">
+      <div class="grid"></div>
+      <div class="frame">
+        <header>
+          <div class="brand"><img src="../../../../../apps/site/public/logo.png" alt=""> Elbaph</div>
+          <span>Close</span>
+        </header>
+        <div class="content">
+          <div class="title-stack">
+            <div class="kicker">Before We Leave</div>
+            <h2>다음 밋업까지 하나씩만 들고 갑시다.</h2>
+          </div>
+          <div class="closing">
+            <div class="commit"><div class="num">1</div><strong>한 가지 액션</strong><span>5월 전까지 실제로 끝낼 수 있는 것</span></div>
+            <div class="commit"><div class="num">2</div><strong>한 가지 요청</strong><span>그룹에서 받을 수 있는 도움이나 소개</span></div>
+            <div class="commit"><div class="num">3</div><strong>한 가지 질문</strong><span>다음 달에도 다시 검증하고 싶은 판단</span></div>
+          </div>
+        </div>
+        <footer><span>Elbaph 3rd Meetup</span><span>10 / 10</span></footer>
+      </div>
+      <div class="progress"></div>
+    </section>
+  </main>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    let index = 0;
+
+    function show(next) {
+      index = Math.max(0, Math.min(slides.length - 1, next));
+      slides.forEach((slide, i) => {
+        slide.classList.toggle("active", i === index);
+        slide.style.setProperty("--progress", `${((i + 1) / slides.length) * 100}%`);
+      });
+      document.title = `${slides[index].dataset.title} - Elbaph 3rd Meetup`;
+    }
+
+    document.addEventListener("keydown", (event) => {
+      if (["ArrowRight", "PageDown", " "].includes(event.key)) {
+        event.preventDefault();
+        show(index + 1);
+      }
+      if (["ArrowLeft", "PageUp", "Backspace"].includes(event.key)) {
+        event.preventDefault();
+        show(index - 1);
+      }
+      if (event.key === "Home") show(0);
+      if (event.key === "End") show(slides.length - 1);
+    });
+
+    show(0);
+  </script>
+</body>
+</html>

@@ -60,6 +60,83 @@
   color: #faf9f6;
 }
 
+.site-body-font {
+  font-family: var(--font-sans), var(--font-kr-sans), system-ui, sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-syne), var(--font-kr-sans), Georgia, serif;
+}
+
+html[lang="ko"] .site-body-font {
+  font-family: var(--font-kr-sans), var(--font-sans), system-ui, sans-serif;
+  word-break: keep-all;
+}
+
+html[lang="ko"] .font-display {
+  font-family: var(--font-kr-sans), var(--font-sans), system-ui, sans-serif;
+  letter-spacing: 0;
+  word-break: keep-all;
+}
+
+html[lang="ko"] .hero-section {
+  padding-top: 7rem;
+  padding-bottom: 7rem;
+}
+
+html[lang="ko"] .hero-headline {
+  max-width: 64rem;
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.18;
+}
+
+html[lang="ko"] .story-headline {
+  max-width: 64rem;
+  font-size: 1.85rem;
+  font-weight: 700;
+  line-height: 1.32;
+}
+
+html[lang="ko"] .story-body {
+  max-width: 44rem;
+}
+
+@media (min-width: 640px) {
+  html[lang="ko"] .hero-headline {
+    font-size: 2.8rem;
+  }
+
+  html[lang="ko"] .story-headline {
+    font-size: 2.15rem;
+  }
+}
+
+@media (min-width: 768px) {
+  html[lang="ko"] .hero-section {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
+
+  html[lang="ko"] .hero-headline {
+    font-size: 3.4rem;
+  }
+
+  html[lang="ko"] .story-headline {
+    font-size: 2.45rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  html[lang="ko"] .hero-headline {
+    font-size: 3.75rem;
+  }
+
+  html[lang="ko"] .story-headline {
+    font-size: 2.75rem;
+  }
+}
+
 ::-webkit-scrollbar {
   width: 6px;
 }

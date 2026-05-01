@@ -11,7 +11,7 @@ export default function NewsletterSignup({ publication }: Props) {
   return (
     <section className="border border-[#e5e5e5] bg-white p-8 sm:p-10 md:p-12">
       <span className="section-label">{t('label')}</span>
-      <h2 className="font-[family-name:var(--font-syne)] text-[1.75rem] font-bold leading-tight tracking-tight text-[#1a1a1a] sm:text-3xl md:text-[2.25rem]">
+      <h2 className="font-display text-[1.75rem] font-bold leading-tight tracking-tight text-[#1a1a1a] sm:text-3xl md:text-[2.25rem]">
         {t('headline')}
       </h2>
       <p className="mt-3 max-w-xl text-[15px] leading-7 text-[#737373] sm:text-base sm:leading-relaxed">

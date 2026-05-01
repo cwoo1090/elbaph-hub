@@ -111,7 +111,7 @@ export default function NewsletterModal({ publication }: Props) {
         <span className="section-label">{t('label')}</span>
         <h2
           id="newsletter-modal-title"
-          className="pr-10 font-[family-name:var(--font-syne)] text-3xl font-bold leading-tight tracking-tight text-[#1a1a1a] sm:text-4xl"
+          className="pr-10 font-display text-3xl font-bold leading-tight tracking-tight text-[#1a1a1a] sm:text-4xl"
         >
           {t('headline')}
         </h2>

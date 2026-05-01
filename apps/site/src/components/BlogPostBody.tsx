@@ -1,9 +1,5 @@
-'use client'
-
 import ReactMarkdown from 'react-markdown'
 import { Link } from '@/i18n/navigation'
-import { useBlogLanguage } from '@/lib/useBlogLanguage'
-import LanguageToggle from './LanguageToggle'
 
 type LanguageContent = {
   title: string
@@ -14,25 +10,17 @@ type LanguageContent = {
 type Props = {
   date: string
   authorName: string
-  hasTranslation: boolean
+  locale: 'ko' | 'en'
   ko: LanguageContent
   en: LanguageContent
 }
 
-export default function BlogPostBody({ date, authorName, hasTranslation, ko, en }: Props) {
-  const [language, setLanguage] = useBlogLanguage()
-
-  const showKorean = hasTranslation && language === 'ko'
-  const current = showKorean ? ko : en
+export default function BlogPostBody({ date, authorName, locale, ko, en }: Props) {
+  const current = locale === 'ko' ? ko : en
 
   return (
     <>
       <header>
-        {hasTranslation && (
-          <div className="mb-6 flex justify-end">
-            <LanguageToggle language={language} onChange={setLanguage} />
-          </div>
-        )}
         <h1 className="text-3xl font-bold tracking-normal text-[#1a1a1a] sm:text-4xl md:text-5xl">
           {current.title}
         </h1>

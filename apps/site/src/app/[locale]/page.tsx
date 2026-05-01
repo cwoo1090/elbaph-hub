@@ -1,6 +1,6 @@
 import Hero from '@/components/Hero'
 import WhoWeAre from '@/components/WhatWeDo'
-import WhatWeValue from '@/components/WhatWeValue'
+// import WhatWeValue from '@/components/WhatWeValue'
 import MembersPreview from '@/components/MembersPreview'
 import RecentMeetup from '@/components/RecentMeetup'
 
@@ -9,7 +9,7 @@ export default function Home() {
     <>
       <Hero />
       <WhoWeAre />
-      <WhatWeValue />
+      {/* <WhatWeValue /> */}
       <MembersPreview />
       <RecentMeetup />
     </>

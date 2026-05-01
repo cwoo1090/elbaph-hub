@@ -1,0 +1,1778 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Karpathy LLM Wiki와 USB Companion</title>
+  <link rel="icon" href="data:,">
+  <style>
+    :root {
+      --bg: #f7f5ef;
+      --paper: #fffdf8;
+      --ink: #171717;
+      --muted: #62605a;
+      --line: #d8d2c5;
+      --soft: #ece6d8;
+      --red: #ba3e2f;
+      --blue: #2c5f7f;
+      --green: #4f6f52;
+      --gold: #b7892b;
+      --violet: #67508a;
+      --shadow: 0 28px 80px rgba(20, 20, 20, 0.16);
+      font-family: Inter, Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(44, 95, 127, 0.08), transparent 34%),
+        linear-gradient(315deg, rgba(183, 137, 43, 0.1), transparent 36%),
+        var(--bg);
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+    }
+
+    button,
+    a {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+    }
+
+    .viewport {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 22px;
+    }
+
+    .deck {
+      width: 1280px;
+      height: 720px;
+      transform: scale(var(--deck-scale, 1));
+      transform-origin: center;
+      position: relative;
+    }
+
+    .slide {
+      display: none;
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .slide.active {
+      display: block;
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(23, 23, 23, 0.045) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(23, 23, 23, 0.045) 1px, transparent 1px);
+      background-size: 80px 80px;
+      pointer-events: none;
+    }
+
+    .slide::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 9px;
+      background: linear-gradient(90deg, var(--red), var(--blue), var(--green), var(--gold));
+    }
+
+    .frame {
+      position: absolute;
+      inset: 38px 46px 44px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 24px;
+      z-index: 1;
+    }
+
+    .topbar,
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.2;
+    }
+
+    .footer span:last-child {
+      text-align: right;
+      padding-right: 154px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--ink);
+      font-weight: 820;
+    }
+
+    .mark {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border: 2px solid var(--ink);
+      background: var(--soft);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .section-tag {
+      color: var(--red);
+      font-weight: 860;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .content {
+      min-height: 0;
+      display: grid;
+      align-content: center;
+      gap: 26px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      max-width: 980px;
+      font-size: 74px;
+      line-height: 0.98;
+      letter-spacing: 0;
+      font-weight: 920;
+      word-break: keep-all;
+    }
+
+    h2 {
+      max-width: 1000px;
+      font-size: 50px;
+      line-height: 1.06;
+      letter-spacing: 0;
+      font-weight: 900;
+      word-break: keep-all;
+    }
+
+    h3 {
+      font-size: 28px;
+      line-height: 1.18;
+      letter-spacing: 0;
+      font-weight: 860;
+      word-break: keep-all;
+    }
+
+    .lede {
+      max-width: 920px;
+      font-size: 24px;
+      line-height: 1.5;
+      color: #33312d;
+      word-break: keep-all;
+    }
+
+    .small {
+      font-size: 17px;
+      line-height: 1.58;
+      color: var(--muted);
+      word-break: keep-all;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1.02fr 0.98fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .split.wide-left {
+      grid-template-columns: 1.25fr 0.75fr;
+    }
+
+    .split.wide-right {
+      grid-template-columns: 0.82fr 1.18fr;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.62);
+      padding: 22px;
+      min-height: 118px;
+    }
+
+    .panel.tight {
+      padding: 18px;
+      min-height: 94px;
+    }
+
+    .panel.red {
+      border-top: 7px solid var(--red);
+    }
+
+    .panel.blue {
+      border-top: 7px solid var(--blue);
+    }
+
+    .panel.green {
+      border-top: 7px solid var(--green);
+    }
+
+    .panel.gold {
+      border-top: 7px solid var(--gold);
+    }
+
+    .panel.violet {
+      border-top: 7px solid var(--violet);
+    }
+
+    .label {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 9px;
+      border: 1px solid var(--line);
+      background: var(--soft);
+      color: #33312d;
+      font-size: 13px;
+      font-weight: 830;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .panel p,
+    .panel li {
+      font-size: 18px;
+      line-height: 1.48;
+      color: #3c3a35;
+      word-break: keep-all;
+    }
+
+    .panel strong {
+      color: var(--ink);
+      font-weight: 860;
+    }
+
+    ul,
+    ol {
+      margin: 0;
+      padding-left: 22px;
+    }
+
+    li + li {
+      margin-top: 10px;
+    }
+
+    .big-number {
+      display: block;
+      font-size: 76px;
+      line-height: 0.9;
+      font-weight: 930;
+      letter-spacing: 0;
+      color: var(--red);
+      margin-bottom: 12px;
+    }
+
+    .mono {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #24221f;
+      white-space: pre-wrap;
+    }
+
+    .path-box {
+      border: 1px solid var(--line);
+      background: #151515;
+      color: #f4f1e8;
+      padding: 20px;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 16px;
+      line-height: 1.48;
+      white-space: pre-wrap;
+      overflow: hidden;
+    }
+
+    .path-box .dim {
+      color: #9e9787;
+    }
+
+    .path-box .hot {
+      color: #f7c96f;
+    }
+
+    .path-box .cool {
+      color: #86c5e8;
+    }
+
+    .diagram {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.52);
+      padding: 24px;
+      min-height: 350px;
+      display: grid;
+      align-content: center;
+      gap: 18px;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: 1fr 58px 1fr 58px 1fr;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .node {
+      min-height: 116px;
+      padding: 18px;
+      display: grid;
+      align-content: center;
+      border: 2px solid var(--ink);
+      background: var(--paper);
+      text-align: center;
+    }
+
+    .node strong {
+      display: block;
+      font-size: 24px;
+      line-height: 1.1;
+      margin-bottom: 7px;
+    }
+
+    .node span {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.35;
+      word-break: keep-all;
+    }
+
+    .arrow {
+      text-align: center;
+      color: var(--red);
+      font-size: 34px;
+      font-weight: 900;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 11px;
+    }
+
+    .event {
+      display: grid;
+      grid-template-columns: 132px 1fr;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.62);
+      min-height: 74px;
+    }
+
+    .date {
+      display: grid;
+      place-items: center;
+      padding: 12px;
+      background: var(--soft);
+      color: #3e3a33;
+      font-size: 15px;
+      font-weight: 870;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .event-main {
+      padding: 14px 18px;
+      display: grid;
+      align-content: center;
+      gap: 3px;
+    }
+
+    .event-main strong {
+      font-size: 19px;
+      line-height: 1.2;
+    }
+
+    .event-main span {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.35;
+      word-break: keep-all;
+    }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.55);
+    }
+
+    .cell {
+      min-height: 96px;
+      padding: 16px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      align-content: start;
+      gap: 6px;
+    }
+
+    .cell.head {
+      min-height: 62px;
+      background: #191919;
+      color: #f9f4e8;
+      align-content: center;
+      font-weight: 860;
+    }
+
+    .cell strong {
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    .cell span {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.42;
+      word-break: keep-all;
+    }
+
+    .cell.head span {
+      color: #f9f4e8;
+    }
+
+    .quote {
+      border-left: 9px solid var(--red);
+      padding: 10px 0 10px 28px;
+      max-width: 880px;
+    }
+
+    .quote p {
+      font-size: 36px;
+      line-height: 1.26;
+      font-weight: 850;
+      word-break: keep-all;
+    }
+
+    .quote span {
+      display: block;
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .source-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px 20px;
+      font-size: 14px;
+      line-height: 1.38;
+    }
+
+    .source-list a {
+      color: #2b506c;
+      overflow-wrap: anywhere;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.72);
+      padding: 8px 12px;
+      font-size: 15px;
+      font-weight: 760;
+      color: #36332e;
+      min-height: 36px;
+    }
+
+    .mini-graph {
+      position: relative;
+      min-height: 380px;
+      border: 1px solid var(--line);
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 22% 26%, rgba(186, 62, 47, 0.18), transparent 20%),
+        radial-gradient(circle at 75% 34%, rgba(44, 95, 127, 0.16), transparent 20%),
+        radial-gradient(circle at 52% 72%, rgba(79, 111, 82, 0.16), transparent 22%),
+        rgba(255, 255, 255, 0.58);
+    }
+
+    .graph-node {
+      position: absolute;
+      min-width: 116px;
+      max-width: 180px;
+      min-height: 54px;
+      padding: 10px 12px;
+      border: 2px solid var(--ink);
+      background: var(--paper);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-size: 16px;
+      line-height: 1.16;
+      font-weight: 820;
+      word-break: keep-all;
+    }
+
+    .graph-node.a { left: 44px; top: 48px; border-color: var(--red); }
+    .graph-node.b { right: 46px; top: 76px; border-color: var(--blue); }
+    .graph-node.c { left: 262px; top: 158px; border-color: var(--green); }
+    .graph-node.d { left: 82px; bottom: 54px; border-color: var(--gold); }
+    .graph-node.e { right: 96px; bottom: 62px; border-color: var(--violet); }
+
+    .edge {
+      position: absolute;
+      height: 2px;
+      background: rgba(23, 23, 23, 0.42);
+      transform-origin: left center;
+    }
+
+    .edge.one { width: 245px; left: 154px; top: 110px; transform: rotate(18deg); }
+    .edge.two { width: 175px; left: 350px; top: 204px; transform: rotate(-28deg); }
+    .edge.three { width: 205px; left: 190px; top: 316px; transform: rotate(-35deg); }
+    .edge.four { width: 128px; left: 396px; top: 262px; transform: rotate(30deg); }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .stat {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.65);
+      padding: 18px;
+      min-height: 120px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 48px;
+      line-height: 0.92;
+      margin-bottom: 10px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.3;
+      word-break: keep-all;
+    }
+
+    .browser-shot {
+      border: 1px solid var(--line);
+      background: #fbfaf6;
+      min-height: 430px;
+      overflow: hidden;
+      box-shadow: 0 16px 50px rgba(23, 23, 23, 0.08);
+    }
+
+    .window-bar {
+      height: 46px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 0 18px;
+      border-bottom: 1px solid var(--line);
+      color: #2e2d2a;
+      font-size: 16px;
+      font-weight: 760;
+    }
+
+    .window-bar span:first-child {
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 650;
+    }
+
+    .obsidian-graph {
+      position: relative;
+      height: 392px;
+      background: #fbfaf6;
+      overflow: hidden;
+    }
+
+    .graph-line {
+      position: absolute;
+      height: 1px;
+      background: rgba(70, 70, 70, 0.16);
+      transform-origin: left center;
+    }
+
+    .graph-dot {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #5a5a5a;
+      box-shadow: 0 0 0 3px rgba(90, 90, 90, 0.08);
+    }
+
+    .graph-label {
+      position: absolute;
+      min-width: 120px;
+      max-width: 230px;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.18;
+      color: #333;
+      transform: translateX(-50%);
+      word-break: keep-all;
+    }
+
+    .graph-dot.large {
+      width: 25px;
+      height: 25px;
+      background: #4e4e4e;
+    }
+
+    .wiki-flow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .wiki-flow .panel {
+      min-height: 142px;
+    }
+
+    .image-strip {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .image-panel {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.62);
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .image-panel img {
+      width: 100%;
+      max-height: 220px;
+      object-fit: contain;
+      display: block;
+      background: #fff;
+      border: 1px solid rgba(23, 23, 23, 0.1);
+    }
+
+    .image-panel span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.28;
+      word-break: keep-all;
+    }
+
+    .controls {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 5;
+      color: var(--ink);
+    }
+
+    .controls button {
+      width: 38px;
+      height: 34px;
+      border: 1px solid rgba(23, 23, 23, 0.25);
+      background: rgba(255, 253, 248, 0.88);
+      color: var(--ink);
+      cursor: pointer;
+      font-weight: 860;
+    }
+
+    .counter {
+      min-width: 72px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(23, 23, 23, 0.25);
+      background: rgba(255, 253, 248, 0.88);
+      font-size: 13px;
+      font-weight: 820;
+    }
+
+    .notes {
+      display: none;
+    }
+
+    @media print {
+      html,
+      body {
+        width: auto;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+      }
+
+      .viewport {
+        display: block;
+        width: auto;
+        height: auto;
+        padding: 0;
+      }
+
+      .deck {
+        width: auto;
+        height: auto;
+        transform: none;
+      }
+
+      .slide,
+      .slide.active {
+        display: block;
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        page-break-after: always;
+        box-shadow: none;
+      }
+
+      .controls {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="viewport">
+    <main class="deck" aria-label="Karpathy LLM Wiki presentation deck">
+      <section class="slide active" data-title="Title">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">E</span><span>Elbaph 3rd Meetup</span></div>
+            <div>2026.04.25</div>
+          </div>
+          <div class="content">
+            <div class="section-tag">Personal Presentation</div>
+            <h1>Karpathy LLM Wiki와 USB Companion</h1>
+            <p class="lede">한 달 동안 두 트랙. (1) Karpathy LLM Wiki로 송태규 로봇 액추에이터 강의를 공부한 vault. (2) Ben James의 USB-Clawd에서 시작한 멀티세션 데스크 컴패니언 설계.</p>
+            <div class="chips">
+              <span class="chip">LLM Wiki</span>
+              <span class="chip">Knowledge Compiler</span>
+              <span class="chip">Obsidian Graph</span>
+              <span class="chip">USB Companion</span>
+              <span class="chip">3-Session Dock</span>
+              <span class="chip">Hardware Sketch</span>
+            </div>
+          </div>
+          <div class="footer">
+            <span>Chulwoo</span>
+            <span>Use arrow keys or click controls</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Thesis">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">E</span><span>핵심 주장</span></div>
+            <div>01</div>
+          </div>
+          <div class="content split">
+            <div>
+              <div class="section-tag">Thesis</div>
+              <h2>LLM Wiki는 "검색 도구"가 아니라 지식 컴파일 워크플로우다.</h2>
+            </div>
+            <div class="grid-2">
+              <div class="panel red">
+                <span class="label">기존 RAG</span>
+                <p>질문할 때마다 raw source를 검색하고, chunk를 모아, 그 자리에서 다시 합성한다.</p>
+              </div>
+              <div class="panel blue">
+                <span class="label">LLM Wiki</span>
+                <p>소스를 읽을 때 먼저 wiki로 컴파일하고, 다음 질문은 이미 정리된 구조에서 시작한다.</p>
+              </div>
+              <div class="panel green">
+                <span class="label">차이</span>
+                <p>답변이 채팅 로그에서 사라지지 않고, 다음 탐색을 위한 durable artifact가 된다.</p>
+              </div>
+              <div class="panel gold">
+                <span class="label">주의</span>
+                <p>모든 지식에 맞는 방식은 아니다. 정확한 숫자와 계약은 raw source로 다시 검증해야 한다.</p>
+              </div>
+            </div>
+          </div>
+          <div class="footer">
+            <span>컴파일 시점이 바뀌면 비용, 정확성, 운영 방식이 같이 바뀐다.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Original">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">E</span><span>Karpathy 원본</span></div>
+            <div>02</div>
+          </div>
+          <div class="content split wide-left">
+            <div>
+              <div class="section-tag">Original Gist</div>
+              <h2>2026년 4월, Karpathy가 던진 아이디어 파일</h2>
+              <p class="lede">GitHub Gist 하나로 출발했다. 프레임워크가 아니라, Codex나 Claude Code 같은 agent에게 복사해서 주는 "운영 지침"에 가깝다.</p>
+              <div class="chips">
+                <span class="chip">Created Apr 4, 2026</span>
+                <span class="chip">1 revision</span>
+                <span class="chip">5,000+ stars/forks</span>
+              </div>
+            </div>
+            <div class="path-box">raw/
+  articles/
+  papers/
+  screenshots/
+
+wiki/
+  index.md
+  log.md
+  entities/
+  concepts/
+  syntheses/
+
+schema/
+  <span class="hot">AGENTS.md</span>
+  <span class="cool">CLAUDE.md</span></div>
+          </div>
+          <div class="footer">
+            <span>Source: karpathy/llm-wiki.md</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Architecture">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">E</span><span>3 Layer Architecture</span></div>
+            <div>03</div>
+          </div>
+          <div class="content">
+            <div>
+              <div class="section-tag">Architecture</div>
+              <h2>raw source, wiki, schema: 세 레이어가 역할을 나눈다.</h2>
+            </div>
+            <div class="diagram">
+              <div class="flow">
+                <div class="node">
+                  <strong>raw/</strong>
+                  <span>원문, 논문, 이미지, 로그. LLM이 읽지만 수정하지 않는 source of truth.</span>
+                </div>
+                <div class="arrow">→</div>
+                <div class="node">
+                  <strong>wiki/</strong>
+                  <span>LLM이 유지하는 markdown 지식층. entity, concept, synthesis, comparison.</span>
+                </div>
+                <div class="arrow">→</div>
+                <div class="node">
+                  <strong>answers</strong>
+                  <span>질문 답변, 표, 슬라이드, 그래프. 좋은 답변은 다시 wiki에 저장.</span>
+                </div>
+              </div>
+              <div class="grid-3">
+                <div class="panel tight red"><p><strong>Ingest</strong><br>새 소스를 읽고 관련 페이지 10-15개를 업데이트한다.</p></div>
+                <div class="panel tight blue"><p><strong>Query</strong><br>index를 보고 관련 페이지에서 답하고, 좋은 분석은 저장한다.</p></div>
+                <div class="panel tight green"><p><strong>Lint</strong><br>모순, stale claim, orphan page, missing link를 점검한다.</p></div>
+              </div>
+            </div>
+          </div>
+          <div class="footer">
+            <span>Obsidian is the IDE. The LLM is the maintainer. The wiki is the codebase.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Community Timeline">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">E</span><span>Community Updates</span></div>
+            <div>04</div>
+          </div>
+          <div class="content split wide-left">
+            <div>
+              <div class="section-tag">What Changed After Karpathy</div>
+              <h2>커뮤니티 업데이트는 "예쁜 wiki"보다 운영 레이어에 집중했다.</h2>
+              <p class="lede">원본은 좋은 출발점이었다. 이후 논의는 신뢰성, lifecycle, graph, automation, source governance로 빠르게 이동했다.</p>
+            </div>
+            <div class="timeline">
+              <div class="event">
+                <div class="date">Apr 4</div>
+                <div class="event-main"><strong>Karpathy LLM Wiki</strong><span>raw/wiki/schema와 ingest/query/lint 패턴을 제안.</span></div>
+              </div>
+              <div class="event">
+                <div class="date">Apr 8-12</div>
+                <div class="event-main"><strong>LLM Wiki v2</strong><span>confidence, supersession, forgetting, memory tier, graph, automation 추가.</span></div>
+              </div>
+              <div class="event">
+                <div class="date">Apr 11-20</div>
+                <div class="event-main"><strong>Critical essays</strong><span>"second brain인가?", "RAG 대체가 맞나?", "schema가 제품이다" 논의.</span></div>
+              </div>
+              <div class="event">
+                <div class="date">Apr 15-24</div>
+                <div class="event-main"><strong>Implementations</strong><span>Obsidian local, session wiki, MCP server, graph-first compiler, QMD hybrid search.</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="footer">
+            <span>원본은 seed. 커뮤니티 업데이트는 운영체계.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="V2">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">E</span><span>LLM Wiki v2</span></div>
+            <div>05</div>
+          </div>
+          <div class="content">
+            <div>
+              <div class="section-tag">Critical Update</div>
+              <h2>v2의 핵심: wiki가 썩지 않도록 지식의 lifecycle을 설계한다.</h2>
+            </div>
+            <div class="grid-4">
+              <div class="panel red">
+                <span class="label">Confidence</span>
+                <p>각 claim이 몇 개의 source로 지지되는지, 얼마나 최근에 확인됐는지 점수화한다.</p>
+              </div>
+              <div class="panel blue">
+                <span class="label">Supersession</span>
+                <p>새 정보가 이전 claim을 대체하면 old claim을 지우지 않고 stale로 연결한다.</p>
+              </div>
+              <div class="panel green">
+                <span class="label">Forgetting</span>
+                <p>모든 정보를 영원히 동일하게 보지 않는다. 접근과 재확인에 따라 우선순위가 바뀐다.</p>
+              </div>
+              <div class="panel gold">
+                <span class="label">Memory Tiers</span>
+                <p>working, episodic, semantic, procedural memory로 관찰을 점점 압축한다.</p>
+              </div>
+            </div>
+            <div class="quote">
+              <p>원본이 "지식을 컴파일하자"였다면, v2는 "컴파일된 지식을 어떻게 신뢰할 것인가"에 답한다.</p>
+            </div>
+          </div>
+          <div class="footer">
+            <span>Source: rohitg00, LLM Wiki v2</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Graph">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">E</span><span>Graph & Search</span></div>
+            <div>06</div>
+          </div>
+          <div class="content split">
+            <div>
+              <div class="section-tag">Scale Problem</div>
+              <h2>index.md는 시작점이고, graph는 두 번째 navigation layer다.</h2>
+              <p class="lede">내 vault는 아직 38페이지 규모라 index가 잘 동작한다. 하지만 링크가 쌓이기 시작하면 Obsidian graph가 "어디가 허브인지"를 훨씬 빨리 보여준다.</p>
+              <div class="grid-3">
+                <div class="panel tight red"><p><strong>BM25</strong><br>정확한 용어 검색</p></div>
+                <div class="panel tight blue"><p><strong>Vector</strong><br>의미적으로 가까운 문서</p></div>
+                <div class="panel tight green"><p><strong>Graph</strong><br>의존, 원인, 대체 관계 탐색</p></div>
+              </div>
+            </div>
+            <div class="mini-graph" aria-label="knowledge graph diagram">
+              <div class="edge one"></div>
+              <div class="edge two"></div>
+              <div class="edge three"></div>
+              <div class="edge four"></div>
+              <div class="graph-node a">lecture-03<br>motor-driver</div>
+              <div class="graph-node b">spmsm<br>d-q equations</div>
+              <div class="graph-node c">motor-current<br>control</div>
+              <div class="graph-node d">space-vector<br>PWM</div>
+              <div class="graph-node e">motor-driver<br>inverter</div>
+            </div>
+          </div>
+          <div class="footer">
+            <span>v2 pattern: BM25 + vector + graph traversal, fused with RRF.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Implementation Map">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">E</span><span>Implementation Map</span></div>
+            <div>07</div>
+          </div>
+          <div class="content">
+            <div>
+              <div class="section-tag">Community Variations</div>
+              <h2>구현체들은 서로 다른 병목을 풀고 있다.</h2>
+            </div>
+            <div class="matrix">
+              <div class="cell head"><span>Variation</span></div>
+              <div class="cell head"><span>What It Optimizes</span></div>
+              <div class="cell head"><span>Why It Matters</span></div>
+
+              <div class="cell"><strong>Pratiyush/llm-wiki</strong><span>Codex, Claude, Cursor, Gemini session history를 static wiki로 변환</span></div>
+              <div class="cell"><span>AI-consumable export: llms.txt, JSON-LD, per-page txt/json, MCP tools</span></div>
+              <div class="cell"><span>agent가 과거 작업을 다시 사용할 수 있는 표준 출구를 만든다.</span></div>
+
+              <div class="cell"><strong>obsidian-llm-wiki-local</strong><span>Ollama 기반 local-first Obsidian vault</span></div>
+              <div class="cell"><span>review queue, rejection feedback, selective recompile, git safety</span></div>
+              <div class="cell"><span>개인 자료를 외부 API 없이 유지하려는 사용자를 겨냥한다.</span></div>
+
+              <div class="cell"><strong>atomicmemory compiler</strong><span>npm CLI + MCP server</span></div>
+              <div class="cell"><span>source attribution, confidence, contradicted pages, review candidates</span></div>
+              <div class="cell"><span>agent가 pipeline을 직접 호출할 수 있게 만든다.</span></div>
+
+              <div class="cell"><strong>graphifyy</strong><span>graph-first, multimodal folder compiler</span></div>
+              <div class="cell"><span>code AST, papers, images, videos, confidence-tagged edges</span></div>
+              <div class="cell"><span>강의, transcript, pdf, diagram처럼 파일 종류가 섞인 공부 corpus에 유용하다.</span></div>
+            </div>
+          </div>
+          <div class="footer">
+            <span>업데이트 방향: wiki only에서 graph, MCP, local, review, provenance로 확장.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Critiques">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">E</span><span>Critical Takes</span></div>
+            <div>08</div>
+          </div>
+          <div class="content">
+            <div>
+              <div class="section-tag">Failure Modes</div>
+              <h2>커뮤니티가 지적한 위험은 꽤 실전적이다.</h2>
+            </div>
+            <div class="grid-3">
+              <div class="panel red">
+                <span class="label">Lossy Compile</span>
+                <p>ingest 시점에 summary가 숫자, 조건, 예외를 잃으면 wiki는 보기 좋지만 틀린 지식층이 된다.</p>
+              </div>
+              <div class="panel blue">
+                <span class="label">Lint Blind Spot</span>
+                <p>lint가 wiki끼리의 일관성만 보면 원문과의 불일치를 못 잡는다.</p>
+              </div>
+              <div class="panel green">
+                <span class="label">Not Always PKM</span>
+                <p>LLM이 글을 쓰면 "내 생각"이라기보다 내가 읽은 외부 지식의 research index에 가깝다.</p>
+              </div>
+              <div class="panel gold">
+                <span class="label">Team Scale</span>
+                <p>여러 agent와 사람이 동시에 쓰면 attribution, conflict, ownership 규칙이 필요하다.</p>
+              </div>
+              <div class="panel violet">
+                <span class="label">Stale Graph</span>
+                <p>코드나 설계가 바뀌었는데 graph/wiki가 업데이트되지 않으면 두 번째 source of truth가 된다.</p>
+              </div>
+              <div class="panel red">
+                <span class="label">Schema Drift</span>
+                <p>schema가 약하면 LLM이 상태값, 태그, 파일명을 매번 새로 invent하면서 지식층이 흐트러진다.</p>
+              </div>
+            </div>
+          </div>
+          <div class="footer">
+            <span>핵심: wiki를 source of truth로 착각하지 말고, chain of custody를 유지해야 한다.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Synthesis Time">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">E</span><span>Synthesis-Time Decision</span></div>
+            <div>09</div>
+          </div>
+          <div class="content">
+            <div>
+              <div class="section-tag">Decision Guide</div>
+              <h2>LLM Wiki vs RAG가 아니라, 어떤 지식을 언제 합성할지의 문제다.</h2>
+            </div>
+            <div class="matrix">
+              <div class="cell head"><span>Use Case</span></div>
+              <div class="cell head"><span>Better Default</span></div>
+              <div class="cell head"><span>Rule</span></div>
+
+              <div class="cell"><strong>구조적 지식</strong><span>아키텍처, 설계 원칙, domain glossary, 반복되는 decision</span></div>
+              <div class="cell"><strong>LLM Wiki</strong><span>ingest-time synthesis</span></div>
+              <div class="cell"><span>자주 물어보고, 한번 정리하면 계속 재사용되는 지식.</span></div>
+
+              <div class="cell"><strong>권위 있는 문서</strong><span>계약, 규정, 금액, 날짜, threshold, spec limit</span></div>
+              <div class="cell"><strong>Raw/RAG</strong><span>query-time synthesis</span></div>
+              <div class="cell"><span>정확한 span citation 없이는 답하지 않는 것이 낫다.</span></div>
+
+              <div class="cell"><strong>내 생각</strong><span>회고, 판단, 취향, 아직 정리되지 않은 가설</span></div>
+              <div class="cell"><strong>Human-authored</strong><span>LLM maintains around it</span></div>
+              <div class="cell"><span>LLM은 rewrite보다 link, diff, contradiction surfacing에 집중.</span></div>
+            </div>
+            <div class="quote">
+              <p>질문: "이건 wiki로 컴파일할 지식인가, 원문을 매번 봐야 하는 지식인가?"</p>
+            </div>
+          </div>
+          <div class="footer">
+            <span>Source: Ranjan Kumar, "LLM Wiki Is Not a RAG Replacement"</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Schema">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">E</span><span>Schema First</span></div>
+            <div>10</div>
+          </div>
+          <div class="content split">
+            <div>
+              <div class="section-tag">The Schema Is The Product</div>
+              <h2>진짜 제품은 wiki가 아니라 AGENTS.md다.</h2>
+              <p class="lede">wiki는 output이다. schema는 LLM에게 어떤 지식 구조를 만들고, 어떤 품질 기준으로 유지할지 알려주는 compiler spec이다.</p>
+            </div>
+            <div class="panel blue">
+              <span class="label">Schema Checklist</span>
+              <ul>
+                <li>entity type과 relationship type 정의</li>
+                <li>source별 ingest policy: 논문, datasheet, 회의록, 실험 로그</li>
+                <li>새 페이지 생성 vs 기존 페이지 업데이트 규칙</li>
+                <li>citation, confidence, provenance frontmatter</li>
+                <li>숫자, 날짜, 법적 문구는 raw source 검증</li>
+                <li>conflict, supersession, stale claim 처리 규칙</li>
+                <li>lint 주기와 자동 수정 범위</li>
+              </ul>
+            </div>
+          </div>
+          <div class="footer">
+            <span>Schema가 약하면 LLM이 매번 자기만의 wiki 문법을 만든다.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="My Vault">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">E</span><span>Actual Use Case</span></div>
+            <div>11</div>
+          </div>
+          <div class="content">
+            <div>
+              <div class="section-tag">robot-hardware-wiki</div>
+              <h2>지금 쓰고 있는 LLM Wiki: 송태규 로봇 액추에이터 강의 공부용 vault</h2>
+            </div>
+            <div class="stat-row">
+              <div class="stat"><strong>38</strong><span>compiled wiki pages in `index.md`</span></div>
+              <div class="stat"><strong>24</strong><span>canonical concept pages</span></div>
+              <div class="stat"><strong>9</strong><span>source-level lecture and reference summaries</span></div>
+              <div class="stat"><strong>31</strong><span>derived visual assets extracted for study</span></div>
+            </div>
+            <div class="path-box">/Users/ahnchulwoo/robot-hardware-wiki
+├── raw/          <span class="dim">lecture notes, transcripts, PDFs, references</span>
+├── wiki/
+│   ├── concepts/  <span class="cool">motor-current-control, motor-constant...</span>
+│   ├── summaries/ <span class="cool">lecture-03-motor-driver...</span>
+│   ├── guides/    <span class="cool">lecture-03-study-path...</span>
+│   └── assets/    <span class="cool">extracted lecture figures</span>
+├── index.md
+├── log.md
+└── <span class="hot">AGENTS.md / schema.md</span></div>
+          </div>
+          <div class="footer">
+            <span>현재 범위: LLM Wiki 사용 방식과 실제 공부 vault.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Study Loop">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">E</span><span>Study Loop</span></div>
+            <div>12</div>
+          </div>
+          <div class="content">
+            <div>
+              <div class="section-tag">How I Use It</div>
+              <h2>강의 하나를 세 겹으로 쪼갠다.</h2>
+            </div>
+            <div class="wiki-flow">
+              <div class="panel red">
+                <span class="label">1. raw</span>
+                <p>송태규 강의 노트, transcript, slide PDF, homework를 원본으로 보관한다.</p>
+              </div>
+              <div class="panel blue">
+                <span class="label">2. summary</span>
+                <p>`lecture-03-motor-driver`처럼 강의 단위의 핵심 질문과 흐름을 정리한다.</p>
+              </div>
+              <div class="panel green">
+                <span class="label">3. concepts</span>
+                <p>`motor-current-control`, `space-vector-pwm`처럼 재사용되는 개념 페이지를 만든다.</p>
+              </div>
+              <div class="panel gold">
+                <span class="label">4. guide</span>
+                <p>`lecture-03-study-path`가 어떤 순서로 읽어야 하는지 연결한다.</p>
+              </div>
+            </div>
+            <div class="image-strip">
+              <div class="image-panel">
+                <img src="assets/lecture-03-current-control-loop.png" alt="Lecture 3 d-q current control loop figure">
+                <span>Concept page: `wiki/concepts/motor-current-control.md` embeds the lecture figure beside the explanation.</span>
+              </div>
+              <div class="panel violet">
+                <span class="label">Example Chain</span>
+                <p><strong>Lecture 3: Motor Driver</strong> → inverter → SVPWM → current sensing → current control → nonidealities.</p>
+                <p class="small">이게 LLM Wiki의 장점이다. 한 강의가 단일 요약으로 끝나지 않고, 다음 질문에서 다시 쓸 수 있는 concept graph가 된다.</p>
+              </div>
+            </div>
+          </div>
+          <div class="footer">
+            <span>원문을 버리는 게 아니라, 공부용 navigation layer를 위에 만든다.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Obsidian Graph">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">E</span><span>Obsidian Graph View</span></div>
+            <div>13</div>
+          </div>
+          <div class="content split wide-right">
+            <div>
+              <div class="section-tag">What It Looks Like</div>
+              <h2>링크가 쌓이면 강의가 그래프처럼 보이기 시작한다.</h2>
+              <p class="lede">Obsidian graph view에서 `index`와 lecture summary, concept page들이 허브를 만든다. 여기서 내가 어느 개념을 아직 고립시켰는지 바로 보인다.</p>
+            </div>
+            <div class="browser-shot">
+              <div class="window-bar"><span>‹  ›</span><strong>Graph view</strong><span></span></div>
+              <div class="obsidian-graph" aria-label="Obsidian-style graph using real robot hardware wiki node names">
+                <div class="graph-line" style="width:220px;left:255px;top:190px;transform:rotate(-18deg);"></div>
+                <div class="graph-line" style="width:175px;left:395px;top:198px;transform:rotate(24deg);"></div>
+                <div class="graph-line" style="width:190px;left:295px;top:260px;transform:rotate(-42deg);"></div>
+                <div class="graph-line" style="width:150px;left:495px;top:150px;transform:rotate(54deg);"></div>
+                <div class="graph-line" style="width:210px;left:260px;top:300px;transform:rotate(-7deg);"></div>
+                <div class="graph-line" style="width:155px;left:470px;top:275px;transform:rotate(-42deg);"></div>
+                <div class="graph-line" style="width:145px;left:205px;top:230px;transform:rotate(35deg);"></div>
+                <div class="graph-line" style="width:170px;left:365px;top:118px;transform:rotate(52deg);"></div>
+                <div class="graph-line" style="width:170px;left:345px;top:330px;transform:rotate(-48deg);"></div>
+
+                <div class="graph-dot large" style="left:382px;top:224px;"></div>
+                <div class="graph-label" style="left:394px;top:253px;">index</div>
+
+                <div class="graph-dot" style="left:210px;top:128px;"></div>
+                <div class="graph-label" style="left:218px;top:150px;">lecture-03-motor-driver</div>
+
+                <div class="graph-dot" style="left:530px;top:126px;"></div>
+                <div class="graph-label" style="left:540px;top:148px;">spmsm-dq-voltage-equations</div>
+
+                <div class="graph-dot" style="left:288px;top:262px;"></div>
+                <div class="graph-label" style="left:292px;top:284px;">motor-current-control</div>
+
+                <div class="graph-dot" style="left:560px;top:300px;"></div>
+                <div class="graph-label" style="left:574px;top:322px;">motor-driver-inverter</div>
+
+                <div class="graph-dot" style="left:170px;top:308px;"></div>
+                <div class="graph-label" style="left:178px;top:330px;">space-vector-pwm</div>
+
+                <div class="graph-dot" style="left:455px;top:82px;"></div>
+                <div class="graph-label" style="left:464px;top:104px;">lecture-02-study-path</div>
+
+                <div class="graph-dot" style="left:126px;top:216px;"></div>
+                <div class="graph-label" style="left:128px;top:238px;">motor-current-sensing</div>
+
+                <div class="graph-dot" style="left:430px;top:342px;"></div>
+                <div class="graph-label" style="left:436px;top:364px;">motor-constant</div>
+
+                <div class="graph-dot" style="left:620px;top:196px;"></div>
+                <div class="graph-label" style="left:628px;top:218px;">bldc-pmsm-spmsm</div>
+              </div>
+            </div>
+          </div>
+          <div class="footer">
+            <span>실제 Obsidian graph view에서 보이는 구조를 발표용으로 재구성.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="What Changed">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">E</span><span>What Changed In My Study</span></div>
+            <div>14</div>
+          </div>
+          <div class="content">
+            <div>
+              <div class="section-tag">Using It For Learning</div>
+              <h2>LLM Wiki를 쓰면 "강의 정리"가 아니라 학습 경로가 생긴다.</h2>
+            </div>
+            <div class="grid-4">
+              <div class="panel red">
+                <span class="big-number">1</span>
+                <h3>반복 질문 감소</h3>
+                <p>매번 transcript를 다시 읽히지 않고, concept page에서 시작한다.</p>
+              </div>
+              <div class="panel blue">
+                <span class="big-number">2</span>
+                <h3>용어 연결</h3>
+                <p>SVPWM, MOR, d-q equation, current loop가 서로 링크된다.</p>
+              </div>
+              <div class="panel green">
+                <span class="big-number">3</span>
+                <h3>공백 발견</h3>
+                <p>graph에서 고립된 노드나 너무 큰 허브가 다음 공부 주제가 된다.</p>
+              </div>
+              <div class="panel gold">
+                <span class="big-number">4</span>
+                <h3>원문 유지</h3>
+                <p>숫자와 공식은 raw slide/transcript로 다시 확인할 수 있다.</p>
+              </div>
+            </div>
+            <div class="quote">
+              <p>내가 원하는 건 "AI가 대신 공부한 결과"가 아니라, 내가 공부할 수 있게 정리된 지도다.</p>
+            </div>
+          </div>
+          <div class="footer">
+            <span>다음 단계: 실제 질문 몇 개를 wiki 기반으로 풀어보고 raw-only 방식과 비교.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Track 2 Pivot">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">E</span><span>Track 2</span></div>
+            <div>16</div>
+          </div>
+          <div class="content split wide-right">
+            <div>
+              <div class="section-tag">Hardware Project</div>
+              <h2>두 번째 트랙: USB-Clawd에서 시작한 데스크 컴패니언.</h2>
+              <p class="lede">Ben James가 4월 초에 올린 USB-Clawd가 1.3M view를 찍었다. Claude Code가 응답을 끝내면 책상 위 작은 피규어가 물리적으로 뽁 튀어오른다. 단순하지만 강력했다.</p>
+              <div class="chips">
+                <span class="chip">Ben James, Apr 6, 2026</span>
+                <span class="chip">1.3M views</span>
+                <span class="chip">Single figurine</span>
+                <span class="chip">One-way alert</span>
+              </div>
+            </div>
+            <div class="image-panel">
+              <img src="assets/clawd-trio-orange.png" alt="Three orange Clawd-style figurines on aluminum base, middle one popped up">
+              <span>3마리 진화 컨셉 렌더 — Anthropic 권장 3-5 세션을 한 번에 시각화.</span>
+            </div>
+          </div>
+          <div class="footer">
+            <span>Source: x.com/BenJames_____/status/2041157626155741272</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Product Concept">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">E</span><span>Product Concept</span></div>
+            <div>17</div>
+          </div>
+          <div class="content">
+            <div>
+              <div class="section-tag">One-Sentence Spec</div>
+              <h2>책상 위 세 마리 피규어가 Claude Code 세션을 한 마리씩 담당한다.</h2>
+              <p class="lede">어느 세션이 뭘 하는지 LED 눈으로 보여주고, 입력이 필요하면 물리적으로 뽁 튀어오르고, 머리를 누르면 그 세션에 승인 신호가 전송된다.</p>
+            </div>
+            <div class="grid-3">
+              <div class="panel red">
+                <span class="label">Evolution 1</span>
+                <p><strong>1마리 → 3마리</strong></p>
+                <p>병렬 세션을 동시에 굴리는 파워유저를 위한 multi-agent dock.</p>
+              </div>
+              <div class="panel blue">
+                <span class="label">Evolution 2</span>
+                <p><strong>눈 없음 → LED 눈</strong></p>
+                <p>idle, thinking, waiting, done, error를 색과 리듬으로 구분.</p>
+              </div>
+              <div class="panel green">
+                <span class="label">Evolution 3</span>
+                <p><strong>단방향 → 양방향</strong></p>
+                <p>머리를 톡 누르면 해당 세션에 Enter. 키보드로 창 전환할 필요 없음.</p>
+              </div>
+            </div>
+          </div>
+          <div class="footer">
+            <span>타겟: Claude Code 멀티세션 파워유저. 귀여움과 실용성의 균형.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Core Functions">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">E</span><span>Core Functions</span></div>
+            <div>18</div>
+          </div>
+          <div class="content">
+            <div>
+              <div class="section-tag">What It Does</div>
+              <h2>한 솔레노이드, 두 LED 눈, 한 택트 스위치로 다 한다.</h2>
+            </div>
+            <div class="grid-4">
+              <div class="panel red">
+                <span class="label">Eye Animation</span>
+                <p><strong>상태 시각화</strong></p>
+                <p>idle 숨쉬기, thinking 부드러운 깜빡, waiting 빠른 깜빡, done 초록 1회, error 빨강 2회.</p>
+              </div>
+              <div class="panel blue">
+                <span class="label">Solenoid Pop</span>
+                <p><strong>알림 리듬</strong></p>
+                <p>입력 필요 "뽁뽁뽁" 3회, 작업 완료 "뽁" 1회, 에러는 느린 "뽁..." 1회.</p>
+              </div>
+              <div class="panel green">
+                <span class="label">Head Press</span>
+                <p><strong>물리적 승인</strong></p>
+                <p>튀어오른 피규어 머리를 누르면 세션에 Enter 전송. 시각·청각·촉각이 한 번에.</p>
+              </div>
+              <div class="panel gold">
+                <span class="label">Auto Mapping</span>
+                <p><strong>제로 설정</strong></p>
+                <p>새 세션 시작하면 빈 피규어 한 마리에 자동 할당. USB 꽂고 끝.</p>
+              </div>
+            </div>
+            <div class="quote">
+              <p>"3 is enough" — 4번째 세션이 생기면 LRU로 가장 오래 idle인 피규어를 재할당. 인지 한계를 존중하는 의도된 제약.</p>
+            </div>
+          </div>
+          <div class="footer">
+            <span>의도적 제외: 서보, 스피커, 화면, Wi-Fi, 자이로. 미니멀이 본질.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Use Flow">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">E</span><span>End-to-End Flow</span></div>
+            <div>19</div>
+          </div>
+          <div class="content split wide-left">
+            <div>
+              <div class="section-tag">Use Scenario</div>
+              <h2>USB 꽂는 순간부터 세션 종료까지 한 사이클.</h2>
+              <p class="lede">설치 화면도, 페어링도 없다. macOS가 인식하면 그 자리에서 일을 시작한다.</p>
+            </div>
+            <div class="timeline">
+              <div class="event">
+                <div class="date">USB-C plug</div>
+                <div class="event-main"><strong>Boot wink</strong><span>모든 피규어 눈이 한 번 깜빡 후 꺼짐.</span></div>
+              </div>
+              <div class="event">
+                <div class="date">claude run</div>
+                <div class="event-main"><strong>피규어 1 → 파랑</strong><span>천천히 숨쉬기. 두 번째 세션은 자동으로 피규어 2 (주황).</span></div>
+              </div>
+              <div class="event">
+                <div class="date">Permission</div>
+                <div class="event-main"><strong>피규어 2 뽁뽁뽁</strong><span>밝은 빠른 깜빡 + 솔레노이드 3회.</span></div>
+              </div>
+              <div class="event">
+                <div class="date">Tap head</div>
+                <div class="event-main"><strong>Enter 전송</strong><span>해당 세션에 승인. 피규어는 숨쉬기로 복귀.</span></div>
+              </div>
+              <div class="event">
+                <div class="date">Done</div>
+                <div class="event-main"><strong>초록 1회 + 뽁</strong><span>피규어 1 작업 완료. 세션 종료 시 눈 꺼짐, 슬롯 비워짐.</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="footer">
+            <span>"USB 꽂고 그냥 쓰면 됨" 원칙 유지.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Design Variations">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">E</span><span>Design Variations</span></div>
+            <div>20</div>
+          </div>
+          <div class="content split">
+            <div>
+              <div class="section-tag">Five Axes</div>
+              <h2>다섯 개의 축에서 variation이 갈라진다.</h2>
+              <ul>
+                <li>맥북에 어떻게 붙느냐 — 직결, 짧은 브릿지, 독립 dock</li>
+                <li>피규어의 캐릭터성 — soft cubic, monolith, keycap, ceramic</li>
+                <li>베이스의 제품성 — unibody bar, recessed tray, numbered</li>
+                <li>소재와 색감의 고급도 — alu+orange, ceramic, metal-only</li>
+                <li>튀어오름의 드라마 — 잔잔 vs 액션 hero</li>
+              </ul>
+            </div>
+            <div class="image-panel">
+              <img src="assets/clawd-variations-grid.png" alt="Six design variations of the multi-session figurine dock" style="max-height: 460px;">
+              <span>6 후보를 동일 시점에서 시각화. 다음 슬라이드에서 TOP 3 추림.</span>
+            </div>
+          </div>
+          <div class="footer">
+            <span>같은 제품 컨셉, 6가지 산업디자인 해석.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Top 3 Candidates">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">E</span><span>Top 3 Candidates</span></div>
+            <div>21</div>
+          </div>
+          <div class="content">
+            <div>
+              <div class="section-tag">Shortlist</div>
+              <h2>여섯 후보 중 세 개를 다음 라운드 prototyping 후보로.</h2>
+            </div>
+            <div class="grid-3">
+              <div class="panel red">
+                <span class="label">1위 · Apple Sidecar</span>
+                <p><strong>Direct USB-C, alu unibody, soft cubic</strong></p>
+                <p>맥북 좌측에 직접 꽂힘. "Claude Code 전용 액세서리" 포지셔닝이 가장 직관적. 영상 설명도 쉬움.</p>
+                <p class="small">리스크: 좌측 포트 무게 부담, 케이스 간섭.</p>
+              </div>
+              <div class="panel blue">
+                <span class="label">2위 · Floating Trio</span>
+                <p><strong>Recessed deep slots, pop-up as hero</strong></p>
+                <p>평소엔 거의 숨어 있다가 요청이 오면 한 마리만 톡 올라옴. 제품의 본질 — 튀어오름 — 을 가장 예쁘게 살림.</p>
+                <p class="small">리스크: 평상시 귀여움이 약함.</p>
+              </div>
+              <div class="panel green">
+                <span class="label">3위 · Cute Hub</span>
+                <p><strong>USB-C hub + chubby characters</strong></p>
+                <p>passthrough 포트 1개를 추가해 실용성 정당화. "허브이자 컴패니언"이라는 두 이유 구매가 쉬움.</p>
+                <p class="small">리스크: 본질이 흐려질 수 있음.</p>
+              </div>
+            </div>
+          </div>
+          <div class="footer">
+            <span>다음 단계: 후보 3개에 대한 컨셉 시트 (형태/재질/색상/why) 정리.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Ask Elbaph">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">E</span><span>Ask From Elbaph</span></div>
+            <div>22</div>
+          </div>
+          <div class="content">
+            <div>
+              <div class="section-tag">Where I Need Feedback</div>
+              <h2>하드웨어로 넘어가기 전에 묻고 싶은 것들.</h2>
+            </div>
+            <div class="grid-2">
+              <div class="panel red">
+                <span class="label">방향 선택</span>
+                <p>Apple Sidecar / Floating Trio / Cute Hub — 어느 게 가장 끌리는가? 끌리지 않는다면 왜?</p>
+              </div>
+              <div class="panel blue">
+                <span class="label">"3 is enough"</span>
+                <p>3마리 제약이 매력적인가, 답답한가? 5마리, 8마리, 무제한 dock도 나중에 만들어야 하나?</p>
+              </div>
+              <div class="panel green">
+                <span class="label">기능 의견</span>
+                <p>빠진 기능이 있나? 솔레노이드 1축으로 알림 다양화하는 게 충분한가? 머리 누르기 외 다른 입력?</p>
+              </div>
+              <div class="panel gold">
+                <span class="label">실제 구매</span>
+                <p>가격대 추측, 그리고 본인이 직접 살 의향. 누구에게 추천할 건지.</p>
+              </div>
+            </div>
+            <div class="quote">
+              <p>가장 위험한 시나리오: "귀엽긴 한데 쓸 일은 없을 것 같아."</p>
+            </div>
+          </div>
+          <div class="footer">
+            <span>다음 meetup-4 체크포인트: TOP 1 후보로 mock-up 또는 첫 prototype.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="References">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">E</span><span>References</span></div>
+            <div>15</div>
+          </div>
+          <div class="content">
+            <div>
+              <div class="section-tag">Sources Checked Apr 25, 2026</div>
+              <h2>읽은 자료와 원문 링크</h2>
+            </div>
+            <div class="source-list">
+              <a href="https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f" target="_blank" rel="noreferrer">Karpathy, LLM Wiki original Gist</a>
+              <a href="https://x.com/BenJames_____/status/2041157626155741272" target="_blank" rel="noreferrer">Ben James, USB-Clawd demo (1.3M views)</a>
+              <a href="https://gist.github.com/rohitg00/2067ab416f7bbe447c1977edaaa681e2" target="_blank" rel="noreferrer">rohitg00, LLM Wiki v2</a>
+              <a href="https://cozypet.github.io/llm-wiki-schema/" target="_blank" rel="noreferrer">The Schema Is the Product</a>
+              <a href="https://ranjankumar.in/llm-wiki-synthesis-time-decision-rag-agentic-memory" target="_blank" rel="noreferrer">LLM Wiki Is Not a RAG Replacement</a>
+              <a href="https://scribelet.app/blog/karpathy-llm-wiki-reaction" target="_blank" rel="noreferrer">Scribelet, Two directions for a self-maintaining knowledge base</a>
+              <a href="https://arxiv.org/abs/2604.12034" target="_blank" rel="noreferrer">Memory as Metabolism, arXiv 2604.12034</a>
+              <a href="https://github.com/Pratiyush/llm-wiki" target="_blank" rel="noreferrer">Pratiyush/llm-wiki</a>
+              <a href="https://github.com/kytmanov/obsidian-llm-wiki-local" target="_blank" rel="noreferrer">kytmanov/obsidian-llm-wiki-local</a>
+              <a href="https://github.com/NiharShrotri/llm-wiki" target="_blank" rel="noreferrer">NiharShrotri/llm-wiki</a>
+              <a href="https://github.com/atomicmemory/llm-wiki-compiler" target="_blank" rel="noreferrer">atomicmemory/llm-wiki-compiler</a>
+              <a href="https://pypi.org/project/graphifyy/" target="_blank" rel="noreferrer">graphifyy PyPI</a>
+              <a href="https://llmwiki.lol/" target="_blank" rel="noreferrer">llmwiki.lol pattern explainer</a>
+            </div>
+            <p class="small">Local example checked: `/Users/ahnchulwoo/robot-hardware-wiki`. Community projects are moving quickly, so implementation details are a snapshot.</p>
+          </div>
+          <div class="footer">
+            <span>End</span>
+            <span>Karpathy LLM Wiki: 실제로 써보기</span>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="controls" aria-label="slide controls">
+    <button type="button" id="prev" aria-label="Previous slide">‹</button>
+    <div class="counter" id="counter">1 / 23</div>
+    <button type="button" id="next" aria-label="Next slide">›</button>
+  </div>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const counter = document.getElementById("counter");
+    const prev = document.getElementById("prev");
+    const next = document.getElementById("next");
+    let index = 0;
+
+    function fitDeck() {
+      const scale = Math.min(window.innerWidth / 1324, window.innerHeight / 764, 1);
+      document.documentElement.style.setProperty("--deck-scale", String(scale));
+    }
+
+    function showSlide(nextIndex) {
+      index = Math.max(0, Math.min(slides.length - 1, nextIndex));
+      slides.forEach((slide, i) => {
+        slide.classList.toggle("active", i === index);
+      });
+      counter.textContent = `${index + 1} / ${slides.length}`;
+      const title = slides[index].dataset.title || `Slide ${index + 1}`;
+      document.title = `${index + 1}. ${title} - Karpathy LLM Wiki와 USB Companion`;
+      const params = new URLSearchParams(window.location.search);
+      params.set("slide", String(index + 1));
+      history.replaceState(null, "", `${window.location.pathname}?${params.toString()}`);
+    }
+
+    function step(delta) {
+      showSlide(index + delta);
+    }
+
+    prev.addEventListener("click", () => step(-1));
+    next.addEventListener("click", () => step(1));
+
+    window.addEventListener("resize", fitDeck);
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+        event.preventDefault();
+        step(1);
+      }
+      if (event.key === "ArrowLeft" || event.key === "PageUp") {
+        event.preventDefault();
+        step(-1);
+      }
+      if (event.key === "Home") {
+        showSlide(0);
+      }
+      if (event.key === "End") {
+        showSlide(slides.length - 1);
+      }
+      if (event.key.toLowerCase() === "f" && document.fullscreenEnabled) {
+        if (document.fullscreenElement) {
+          document.exitFullscreen();
+        } else {
+          document.documentElement.requestFullscreen();
+        }
+      }
+    });
+
+    const initial = Number(new URLSearchParams(window.location.search).get("slide"));
+    fitDeck();
+    showSlide(Number.isFinite(initial) && initial > 0 ? initial - 1 : 0);
+  </script>
+</body>
+</html>

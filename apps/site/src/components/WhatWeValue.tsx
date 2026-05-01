@@ -17,11 +17,11 @@ export default function WhatWeValue() {
         <div className="reveal mt-8 divide-y divide-[#e5e5e5] md:mt-10">
           {values.map(({ key }, index) => (
             <div key={key} className="group flex gap-5 py-6 sm:gap-8 md:gap-20 md:py-10">
-              <span className="w-8 shrink-0 pt-1 font-[family-name:var(--font-syne)] text-sm font-medium tabular-nums text-[#d4d4d4] transition-colors duration-200 group-hover:text-[#1a1a1a]">
+              <span className="w-8 shrink-0 pt-1 font-display text-sm font-medium tabular-nums text-[#d4d4d4] transition-colors duration-200 group-hover:text-[#1a1a1a]">
                 {String(index + 1).padStart(2, '0')}
               </span>
               <div>
-                <h3 className="font-[family-name:var(--font-syne)] text-[1.4rem] font-bold tracking-tight text-[#1a1a1a] sm:text-2xl md:text-3xl">
+                <h3 className="font-display text-[1.4rem] font-bold tracking-tight text-[#1a1a1a] sm:text-2xl md:text-3xl">
                   {t(key)}
                 </h3>
                 <p className="mt-2 text-[15px] leading-7 text-[#737373] sm:mt-3 sm:text-base sm:leading-relaxed">

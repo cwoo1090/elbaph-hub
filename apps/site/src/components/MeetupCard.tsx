@@ -24,7 +24,7 @@ export default function MeetupCard({ meetup, meetupNumber, locale, posts }: Prop
     <div className="grid gap-6 border-b border-[#e5e5e5] py-6 md:grid-cols-[120px_1fr] md:gap-x-16 md:py-8">
       {/* Left: number + date */}
       <div className="flex items-end justify-between gap-4 pt-0.5 md:block">
-        <p className="font-[family-name:var(--font-syne)] text-4xl font-black leading-none text-[#1a1a1a] md:text-5xl">
+        <p className="font-display text-4xl font-black leading-none text-[#1a1a1a] md:text-5xl">
           #{String(meetupNumber).padStart(2, '0')}
         </p>
         <p className="text-xs text-[#737373] md:mt-2">
@@ -37,23 +37,40 @@ export default function MeetupCard({ meetup, meetupNumber, locale, posts }: Prop
         {meetup.speakers.map((s, i) => {
           const member = members.find((m) => m.id === s.memberId)
           const post = posts.find((p) => p.memberId === s.memberId)
-          return (
-            <div
-              key={i}
-              className="grid gap-2 border-b border-[#e5e5e5] py-4 md:grid-cols-[140px_1fr_auto] md:gap-4 md:py-3"
-            >
-              <span className="text-sm font-semibold text-[#1a1a1a] font-[family-name:var(--font-syne)]">
+          const rowClassName =
+            'grid gap-2 border-b border-[#e5e5e5] py-4 transition-colors duration-150 md:grid-cols-[140px_1fr_auto] md:gap-4 md:py-3'
+          const rowContent = (
+            <>
+              <span className="text-sm font-semibold text-[#1a1a1a] font-display">
                 {member?.name[locale] ?? s.memberId}
               </span>
               <span className="text-[15px] leading-7 text-[#737373] md:text-sm md:leading-relaxed">{s.topic[locale]}</span>
               {post && (
-                <Link
-                  href={`/blog/${post.slug}`}
-                  className="shrink-0 text-sm text-[#737373] transition-colors duration-150 hover:text-[#1a1a1a] md:text-xs"
-                >
+                <span className="shrink-0 text-sm text-[#737373] transition-colors duration-150 md:text-xs">
                   {locale === 'ko' ? '글 읽기 →' : 'Read →'}
-                </Link>
+                </span>
               )}
+            </>
+          )
+
+          if (post) {
+            return (
+              <Link
+                key={i}
+                href={`/blog/${post.slug}`}
+                className={`${rowClassName} hover:bg-[#faf9f6]`}
+              >
+                {rowContent}
+              </Link>
+            )
+          }
+
+          return (
+            <div
+              key={i}
+              className={rowClassName}
+            >
+              {rowContent}
             </div>
           )
         })}

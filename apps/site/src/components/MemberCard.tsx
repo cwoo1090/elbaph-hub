@@ -1,14 +1,26 @@
 import Image from 'next/image'
 import type { Member } from '@/data/members'
+import { Link } from '@/i18n/navigation'
 
 type Props = {
   member: Member
   locale: 'ko' | 'en'
+  archiveHref?: string
 }
 
-export default function MemberCard({ member, locale }: Props) {
+export default function MemberCard({ member, locale, archiveHref }: Props) {
   return (
-    <article className="bg-white p-6 md:p-8">
+    <article
+      id={member.id}
+      className="relative scroll-mt-24 bg-white p-6 transition-colors duration-150 hover:bg-[#faf9f6] md:p-8"
+    >
+      {archiveHref && (
+        <Link
+          href={archiveHref}
+          aria-label={locale === 'ko' ? `${member.name[locale]}의 글 보기` : `View posts by ${member.name[locale]}`}
+          className="absolute inset-0 z-10"
+        />
+      )}
       {/* Header */}
       <div className="flex items-center gap-4">
         {member.photo ? (
@@ -25,7 +37,7 @@ export default function MemberCard({ member, locale }: Props) {
           </span>
         )}
         <div className="flex min-w-0 flex-1 flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-3">
-          <h2 className="font-[family-name:var(--font-syne)] text-xl font-semibold text-[#1a1a1a] md:text-lg">
+          <h2 className="font-display text-xl font-semibold text-[#1a1a1a] md:text-lg">
             {member.name[locale]}
           </h2>
           {(member.linkedin || member.website || member.website2) && (
@@ -35,7 +47,7 @@ export default function MemberCard({ member, locale }: Props) {
                   href={member.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-[#a3a3a3] hover:text-[#1a1a1a] transition-colors duration-150"
+                  className="relative z-20 text-xs text-[#a3a3a3] transition-colors duration-150 hover:text-[#1a1a1a]"
                 >
                   LinkedIn
                 </a>
@@ -45,7 +57,7 @@ export default function MemberCard({ member, locale }: Props) {
                   href={member.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-[#a3a3a3] hover:text-[#1a1a1a] transition-colors duration-150"
+                  className="relative z-20 text-xs text-[#a3a3a3] transition-colors duration-150 hover:text-[#1a1a1a]"
                 >
                   Web
                 </a>
@@ -55,7 +67,7 @@ export default function MemberCard({ member, locale }: Props) {
                   href={member.website2.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-[#a3a3a3] hover:text-[#1a1a1a] transition-colors duration-150"
+                  className="relative z-20 text-xs text-[#a3a3a3] transition-colors duration-150 hover:text-[#1a1a1a]"
                 >
                   {member.website2.label}
                 </a>

@@ -27,7 +27,7 @@ export default function RecentMeetup() {
         <div className="mb-10 flex flex-col gap-4 sm:mb-14 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <span className="section-label">{t('label')}</span>
-            <h2 className="font-[family-name:var(--font-syne)] text-3xl font-bold tracking-tight text-[#1a1a1a] md:text-4xl">
+            <h2 className="font-display text-3xl font-bold tracking-tight text-[#1a1a1a] md:text-4xl">
               {t('title')}
             </h2>
           </div>
@@ -42,7 +42,7 @@ export default function RecentMeetup() {
         <div className="reveal grid gap-6 border-t border-[#e5e5e5] pt-6 md:grid-cols-[120px_1fr] md:gap-x-16 md:pt-8">
           {/* Left: number + date */}
           <div className="flex items-end justify-between gap-4 pt-0.5 md:block">
-            <p className="font-[family-name:var(--font-syne)] text-4xl font-black leading-none text-[#1a1a1a] sm:text-5xl md:text-7xl">
+            <p className="font-display text-4xl font-black leading-none text-[#1a1a1a] sm:text-5xl md:text-7xl">
               #{String(meetupNumber).padStart(2, '0')}
             </p>
             <p className="text-xs text-[#737373] md:mt-3">
@@ -59,7 +59,7 @@ export default function RecentMeetup() {
                   key={i}
                   className="grid gap-1.5 border-b border-[#e5e5e5] py-4 md:grid-cols-[140px_1fr] md:gap-4 md:py-3.5"
                 >
-                  <span className="text-sm font-semibold text-[#1a1a1a] font-[family-name:var(--font-syne)]">
+                  <span className="text-sm font-semibold text-[#1a1a1a] font-display">
                     {member?.name[locale] ?? s.memberId}
                   </span>
                   <span className="text-[15px] leading-7 text-[#737373] md:text-sm md:leading-relaxed">

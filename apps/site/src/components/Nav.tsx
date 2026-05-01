@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 import Image from 'next/image'
+import LanguageToggle from './LanguageToggle'
 
 const navLinks = [
   { href: '/crew', key: 'members' },
@@ -36,13 +37,13 @@ export default function Nav() {
             height={60}
             className="h-11 w-11 object-contain mix-blend-multiply md:h-[60px] md:w-[60px]"
           />
-          <span className="font-[family-name:var(--font-syne)] -ml-1 text-base font-bold tracking-tight text-[#1a1a1a] transition-opacity duration-150 group-hover:opacity-80 md:-ml-2 md:text-lg">
+          <span className="font-display -ml-1 text-base font-bold tracking-tight text-[#1a1a1a] transition-opacity duration-150 group-hover:opacity-80 md:-ml-2 md:text-lg">
             Elbaph
           </span>
         </Link>
 
         {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden items-center gap-8 md:flex">
           {navLinks.map(({ href, key }) => (
             <Link
               key={key}
@@ -52,6 +53,7 @@ export default function Nav() {
               {t(key)}
             </Link>
           ))}
+          <LanguageToggle />
         </div>
 
         {/* Mobile hamburger */}
@@ -81,6 +83,9 @@ export default function Nav() {
                 {t(key)}
               </Link>
             ))}
+            <div className="border-t border-[#e5e5e5] pt-5">
+              <LanguageToggle />
+            </div>
           </div>
         </div>
       )}

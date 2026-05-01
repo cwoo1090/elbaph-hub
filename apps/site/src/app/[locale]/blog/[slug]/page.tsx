@@ -17,13 +17,14 @@ export async function generateStaticParams() {
 }
 
 export default async function BlogPostPage({ params }: Props) {
-  const { slug } = await params
+  const { locale, slug } = await params
+  const currentLocale = locale as 'ko' | 'en'
 
   const post = getPostBySlug(slug)
   if (!post) notFound()
 
   const member = members.find((m) => m.id === post.memberId)
-  const authorName = member ? member.name.en : post.memberId
+  const authorName = member ? member.name[currentLocale] : post.memberId
   const publication = process.env.SUBSTACK_PUBLICATION?.trim().toLowerCase()
 
   return (
@@ -32,7 +33,7 @@ export default async function BlogPostPage({ params }: Props) {
         <BlogPostBody
           date={post.date}
           authorName={authorName}
-          hasTranslation={post.hasTranslation}
+          locale={currentLocale}
           ko={{ title: post.title.ko, subtitle: post.subtitle.ko, body: post.body.ko }}
           en={{ title: post.title.en, subtitle: post.subtitle.en, body: post.body.en }}
         />
