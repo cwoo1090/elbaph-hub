@@ -56,7 +56,8 @@
     "headline": "Get our writing in your inbox.",
     "description": "Weekly dispatches from the crew — meetup recaps, essays, ideas. Korean and English in one email.",
     "fallback": "Open on Substack",
-    "close": "Close newsletter signup"
+    "close": "Close newsletter signup",
+    "continueReading": "Continue reading"
   },
   "Footer": {
     "contact": "Contact",

@@ -56,7 +56,8 @@
     "headline": "엘바프의 글을\n메일로 받아보세요.",
     "description": "매주 크루의 모임 후기, 에세이, 그리고 아이디어를 전합니다. 한국어와 영어가 한 메일에 함께 담깁니다.",
     "fallback": "Substack에서 열기",
-    "close": "뉴스레터 구독창 닫기"
+    "close": "뉴스레터 구독창 닫기",
+    "continueReading": "계속 읽기"
   },
   "Footer": {
     "contact": "문의",

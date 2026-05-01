@@ -97,7 +97,7 @@ export default function NewsletterModal({ publication }: Props) {
       onClick={close}
     >
       <div
-        className="relative max-h-[92vh] w-full max-w-2xl overflow-y-auto border border-[#e5e5e5] bg-white p-6 shadow-2xl sm:p-8"
+        className="relative max-h-[88vh] w-full max-w-xl overflow-y-auto border border-[#e5e5e5] bg-white p-5 shadow-2xl sm:p-6"
         onClick={(event) => event.stopPropagation()}
       >
         <button
@@ -111,11 +111,11 @@ export default function NewsletterModal({ publication }: Props) {
         <span className="section-label">{t('label')}</span>
         <h2
           id="newsletter-modal-title"
-          className="pr-10 font-display text-3xl font-bold leading-tight tracking-tight text-[#1a1a1a] sm:text-4xl"
+          className="pr-10 font-display text-2xl font-bold leading-tight tracking-tight text-[#1a1a1a] sm:text-3xl"
         >
           {t('headline')}
         </h2>
-        <p className="mt-3 max-w-xl text-[15px] leading-7 text-[#737373] sm:text-base sm:leading-relaxed">
+        <p className="mt-3 max-w-lg text-sm leading-6 text-[#737373] sm:text-[15px]">
           {t('description')}
         </p>
         <iframe
@@ -123,19 +123,26 @@ export default function NewsletterModal({ publication }: Props) {
           title={t('label')}
           width="100%"
           height="320"
-          loading="lazy"
-          className="mt-6 w-full border border-[#e5e5e5] bg-white"
+          loading="eager"
+          className="mt-5 w-full border border-[#e5e5e5] bg-white"
         />
-        <p className="mt-3 text-sm text-[#737373]">
+        <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:justify-end">
           <a
             href={substackUrl}
             target="_blank"
             rel="noreferrer"
-            className="font-medium text-[#1a1a1a] underline-offset-4 transition-colors hover:text-[#737373] hover:underline"
+            className="inline-flex w-full items-center justify-center border border-[#1a1a1a] bg-[#1a1a1a] px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-[#333] sm:w-auto"
           >
             {t('fallback')}
           </a>
-        </p>
+          <button
+            type="button"
+            onClick={close}
+            className="w-full border border-[#e5e5e5] px-5 py-3 text-sm font-medium text-[#1a1a1a] transition-colors hover:border-[#1a1a1a] sm:w-auto"
+          >
+            {t('continueReading')}
+          </button>
+        </div>
       </div>
     </div>
   )
