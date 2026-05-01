@@ -48,8 +48,9 @@
   "Newsletter": {
     "label": "Newsletter",
     "headline": "Get our writing in your inbox.",
-    "description": "Monthly dispatches from the crew — meetup recaps, essays, ideas. Korean and English in one email.",
-    "fallback": "Open on Substack"
+    "description": "Weekly dispatches from the crew — meetup recaps, essays, ideas. Korean and English in one email.",
+    "fallback": "Open on Substack",
+    "close": "Close newsletter signup"
   },
   "Footer": {
     "contact": "Contact",

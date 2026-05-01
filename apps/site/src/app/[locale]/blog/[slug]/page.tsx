@@ -3,6 +3,7 @@ import { getAllPosts, getPostBySlug } from '@/lib/posts'
 import { members } from '@/data/members'
 import { routing } from '@/i18n/routing'
 import BlogPostBody from '@/components/BlogPostBody'
+import NewsletterModal from '@/components/NewsletterModal'
 import NewsletterSignup from '@/components/NewsletterSignup'
 
 type Props = {
@@ -36,9 +37,12 @@ export default async function BlogPostPage({ params }: Props) {
           en={{ title: post.title.en, subtitle: post.subtitle.en, body: post.body.en }}
         />
         {publication && (
-          <div className="mt-20 md:mt-24">
-            <NewsletterSignup publication={publication} />
-          </div>
+          <>
+            <NewsletterModal publication={publication} />
+            <div className="mt-20 md:mt-24">
+              <NewsletterSignup publication={publication} />
+            </div>
+          </>
         )}
       </div>
     </article>
