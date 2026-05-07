@@ -5,8 +5,8 @@ title:
   ko: 무엇이든 만들 수 있는 시대에, 무엇을 만들 것인가
   en: In an Era Where Anything Can Be Built, What Do You Build?
 subtitle:
-  ko: ''
-  en: ''
+  ko: 한 달 반의 사이드 프로젝트가 남긴 질문
+  en: A question left behind by a month-and-a-half side project
 ---
 
 최근 한 달 반 정도, 영어 글쓰기 학습 서비스를 사이드 프로젝트로 운영해봤다.
