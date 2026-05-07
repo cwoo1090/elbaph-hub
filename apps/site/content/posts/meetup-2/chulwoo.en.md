@@ -1,77 +1,104 @@
-For the past month and a half or so, I ran a small side project around English writing.
+Over the past month and a half, I ran a side project: an AI-powered English writing learning service.
 
-The starting point was simple. I had been using a personal GPTs setup to study English on my own — drafting sentences, revising them, rewording them more naturally, and reviewing them. After living inside that loop for a while, it occurred to me that this didn't have to stay a private tool. I could shape it into a product. So I polished it like a real service, ran a bit of paid traffic, and started getting actual users.
+It started simply. I originally had a GPT workflow I used for my own English practice — writing sentences, correcting them, rewriting them more naturally, and reviewing them again later. After using it for a while, I started thinking: maybe this shouldn’t remain just a personal tool. Maybe it could become an actual product.
 
-It was a short run, but a few things came through clearly.
+So I polished it into something closer to a real service, ran a bit of advertising, brought in real users, and even made a little money.
 
-The problem itself wasn't a mirage. The shape I first built, though, wasn't the best shape for solving it. And more than anything, it became obvious that the question is no longer "can you build it" — the next question matters far more.
+It was a short experiment, but a few things became very clear.
 
-I think these three observations are really one story.
+The problem was real. But the first version I built was not the best shape for solving it. More importantly, I was left with a stronger realization: we’re entering a world where “Can you build it?” matters less and less compared to the question that comes after.
 
-## I started from a personal need, but the problem turned out to be wider than I thought
+What should you build?
 
-I didn't go in by reading the market first.
+To me, those three realizations are really part of the same story.
 
-If anything, the order was reversed. I built it because I needed it, and then took it outside. English writing is such an old topic that it can look like a tired problem. But "old" doesn't mean "already solved." Demand has always been there; what people may not have found yet is a form they can actually keep using. From the outside, at least to me, it looked closer to the latter.
+## It Started as a Personal Need, But the Problem Was Much Larger
 
-The people who actually came in had a clear shape. Researchers, grad students, students, working professionals, specialists. These weren't people with a vague desire to "be good at English." They were people who had to do something in English. They had papers to write, international communication to handle, study abroad to prepare, work writing to produce, situations where they needed to express something more precisely. The problem wasn't general English ability — it was the problem of people who have to produce in English.
+I didn’t begin by studying the market.
 
-That distinction mattered more than I expected. I had been framing things around writing correction and learning structure, but the real bottleneck sat one step earlier. People didn't just want to write better — they wanted a state in which they could keep writing.
+If anything, it happened in the opposite order. I built something because I personally needed it, and only later brought it outside into the world.
 
-## The problem was friction, not features
+English writing is such an old problem that it can feel almost cliché. But an old problem is not the same thing as a solved problem.
 
-That was the sharpest thing I saw in a month and a half of running it.
+Once I started bringing in users, it became obvious that the demand was real.
 
-People weren't leaving because they didn't care about English writing. People who want to start do exist. But the friction between starting and turning that into a repeatable habit was much higher than I had estimated.
+The people who came in had a surprisingly clear pattern: researchers, graduate students, students, professionals, office workers. These weren’t simply people who “wanted to get better at English.” They were people who needed to produce things in English.
 
-Sitting alone, writing sentences, revising them, reading the report — as a learning structure, that flow is correct. As a product, it isn't. Most people are tired, their attention spans are short, and the moment they start using a new service seriously, they already feel the weight. "Write three sentences" sounds light on paper, but inside a real user's body it lands heavy. A product can collapse on the rhythm of the action long before it collapses on the completeness of the features.
+They needed to write papers, prepare for studying abroad, communicate internationally, or express complex thoughts more precisely in their work.
 
-Looking back, the structure I first built was honest enough. There was a flow where learning could actually happen, and someone who pushed through to the end could feel real value. But that same honesty asked the user to be diligent. That works for some people; for a wider audience, it becomes a wall. The question that mattered to me stopped being conversion itself and became: why do some people come back, while most stop right there?
+That distinction turned out to matter a lot.
 
-That shifted how I thought about the product. What people want may not be English writing skill itself. More precisely, behind the desire to write better English sits a deeper desire to become a self that can express itself in English. If that's true, the product can't only look like a study tool. It needs more interaction, less of the "studying" feel, and the act of writing has to sit inside a more natural context. That's why I later started thinking about a character-based conversational structure.
+At first, I thought I was building around writing correction or learning structure. But the deeper problem existed one layer earlier. People didn’t just want to write better. They wanted to remain in a state where they could consistently produce and express themselves in English.
 
-## What stayed with me was less about the product and more about the era
+## The Problem Was Less About Features Than Habit
 
-What stayed with me from this project wasn't only the product details.
+The clearest thing I saw during those six weeks was retention.
 
-Stepping back, what struck me harder was that the way we make software is itself changing very fast.
+People were not leaving because they didn’t care about English writing. Many genuinely wanted to start. The problem was that the behavior itself didn’t repeat.
 
-Building used to be the big barrier. Turning an idea into an actual service was expensive, and most attempts disappeared before they even started. That's no longer true. Top 0.01% polish, deeply intricate systems, products that demand extreme detail — yes, those are still hard. But most of the software people imagine in normal life can now be built far faster, at a far lower cost.
+Looking back, the reason feels fairly obvious now.
 
-This isn't just a productivity bump. To me, it looks closer to the cost of creation and execution rapidly approaching zero. Where the question used to be "can this be built," the more essential question is shifting toward "what should be built."
+The product was academically honest. The flow — writing sentences, correcting them, rewriting them naturally, reviewing reports — genuinely helped learning. But as a product, it demanded too much discipline from the user.
 
-The reason this matters is clear. The easier it is to build, the less the feature itself defends anything. Anyone can build fast, anyone can reference something similar, anyone can replicate to some degree. So what becomes more important than the feature is which problem you pick, how you see it, and the sense by which you decide its shape.
+Most people open products while tired. Attention spans are short. Building a new habit is far harder than it looks.
 
-## What's left, then, is likely point of view and taste
+Even “Write just three sentences” is not psychologically light inside a real user experience.
 
-I keep arriving back at this conclusion lately.
+That also made me understand services like Duolingo a bit differently. The core problem of language learning isn’t simply teaching effectively. It’s getting people to come back.
 
-If the cost of creation and execution keeps falling, what becomes more important is point of view, taste, and a sense for what to make.
+Learning outcomes alone do not create retention.
 
-Point of view here doesn't mean having lots of opinions. It's closer to the ability to tell which problems matter, what hasn't been solved well yet, where small shifts are happening, and which direction feels like your own. Taste works the same way. It isn't aesthetic preference — it's a sustained sense of what kind of product you want to make. The more tools become commoditized, the sharper these differences get.
+If that’s true, then products cannot feel like pure study tools. They need to feel lighter, more natural, easier to open repeatedly, and more embedded into everyday interaction.
 
-I read what people are doing on Threads in the same light. In an era where everyone has access to the same generation tools, the inner structure of the person deciding what to make becomes more important. Products don't come purely from combinations of features. They come from how a person reads the world, what they keep reacting to, what problem they're strangely obsessed with. Features can be copied; the angle and stubbornness with which someone sees a problem can't be fully copied.
+Designing a strong learning structure and designing a product people continuously want to return to are not the same problem.
 
-## So building products and accumulating a point of view start to fuse
+## In the End, What Remains Is Perspective and Taste
 
-For these reasons, alongside building products, I've started writing my thoughts in public more.
+Lately, I keep returning to the same hypothesis.
 
-This wasn't just "I should add a marketing channel" arithmetic. It was a more upstream question. Storing outside, in some accumulated form, who I am, which problems I've been holding onto, what I find interesting. I take notes every day and organize my thinking every day anyway. Leaving some of that in a slightly more public form sits in the same flow.
+As the cost of creation and execution falls, perspective and taste become more important.
 
-Because going forward, distribution is also likely to keep tying itself to point of view. The faster products are made and copied, the less people will stay just for the features. They look at who made it, why they made it, what that person might make next. An audience stops being just a content-consuming group and becomes the people who try the product first, give the first feedback, buy first. That connection is usually built well before the product is finished, not after.
+In the past, building itself was the barrier. Turning an idea into a product required enormous amounts of time, money, and coordination. Most attempts disappeared before they even began.
 
-## What I got from a month and a half was direction more than revenue
+Now things are different.
 
-By the numbers, this is still a tiny experiment.
+Of course, truly world-class products — systems with extreme polish, precision, and depth — remain difficult. But most software people imagine today can already be built dramatically faster and cheaper than before.
 
-Almost no one paid, and once you factor in the ad spend, it's hard to call this a meaningful business stage. The reason this month and a half still matters is straightforward: what got sharper wasn't what to build more of, but what not to build.
+And this shift is larger than simple productivity improvement.
 
-I'm now standing closer to questions other than English writing itself — why do people want to keep writing, why do some tools become habits while others stay one-time experiences, and how do you spread a product like that in this era.
+For a long time, the defining question was:
 
-In the end, this project is less about validating an English writing service and more about getting a closer look at what it means to make software in a time like this.
+“Can this be built?”
 
-Building will keep getting easier. Copying will keep getting faster. And the question collapses into one.
+Increasingly, the more important questions are:
 
-What, right now, am I going to build.
+“What should be built?”
+And why this, instead of something else?
 
-And that question lands earlier than technology — back on what kind of person I am, in terms of which problems I find important.
+As building becomes easier, functionality itself gets commoditized. Anyone can build something similar. Anyone can reference existing ideas. Anyone can reproduce a reasonable version of almost anything.
+
+Which means the real differentiator gradually shifts elsewhere.
+
+Toward perspective.
+Toward taste.
+
+By perspective, I don’t mean simply having opinions. I mean the ability to notice which problems actually matter, where something remains unsolved, where subtle changes are beginning to emerge.
+
+And taste is not just aesthetics. It’s the persistent instinct for what kind of product feels right to build, what kinds of user experiences feel intolerable, and which problems someone becomes irrationally obsessed with over long periods of time.
+
+As tools become democratized, these differences become more visible, not less.
+
+Features can be copied.
+But the angle from which someone sees the world — and the intensity with which they pursue a problem — is much harder to replicate.
+
+That’s what this project ultimately became for me.
+
+Less a validation of an English writing product, and more an experience that sharpened my sense of what kinds of problems feel worth pursuing, what kinds of products people actually return to, and what building software means in a world where creation itself is rapidly becoming easier.
+
+In the future, the most valuable skill may not simply be the ability to build.
+
+It may be the ability to know what is worth building in the first place — and the taste to shape it into something people genuinely want.
+
+Great products are not created from functionality alone.
+
+They are also created from the way someone interprets the world.
