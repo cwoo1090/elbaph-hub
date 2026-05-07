@@ -59,6 +59,7 @@ export const members: Member[] = [
     dream: { ko: '인생 재밌게살기', en: 'Live an interesting life' },
     fields: ['Mathematics', 'Physics', 'Robotics'],
     photo: '/members/jaehwan.png',
+    linkedin: 'https://www.linkedin.com/in/jaehwan-kim-96628b217',
   },
   {
     id: 'younghoon',

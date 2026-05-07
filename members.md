@@ -50,3 +50,4 @@
   - Graduated from Seoul Science High School. Double-majored in Math and Physics at SNU, then entered Columbia's Math PhD program — currently on leave.
   - Love robotics. Will probably end up there eventually.
 - Dream: Live an interesting life
+- https://www.linkedin.com/in/jaehwan-kim-96628b217
