@@ -8,19 +8,19 @@ Compute, memory bandwidth, memory size.
 
 Once you start looking at all three together, the picture starts to connect. You can see why a particular chip is overwhelmingly expensive, why a particular component goes into shortage, and why memory companies are moving into the center of the AI era — all in one frame.
 
-## Compute matters. But it isn't enough.
+## Compute performance: TFLOPS, TOPS
 
 The first thing that comes up in any chip conversation is usually a number like TFLOPS or TOPS.
 
-These are metrics for how many operations per second a chip can execute. They matter, of course. AI models ultimately run on enormous amounts of numerical computation.
+These are metrics for how many operations per second a chip can execute. If we compare it to a human studying and working in a library, this is the number that tells you how quickly they can read books and write. They matter, of course. AI models ultimately run on enormous amounts of numerical computation.
 
 But in real AI systems, high compute alone doesn't translate directly into performance. The reason is simple: even the fastest chip has to wait if the data to compute on doesn't arrive in time.
 
 An AI model takes inputs, reads weights, stores intermediate results, and passes them on to the next operation — endlessly. In that flow, the actual bottleneck is often data movement, not compute. So when you look at AI chips, memory bandwidth becomes as important as compute — sometimes more so.
 
-## The current bottleneck in AI silicon is closer to memory
+## Memory bandwidth: GB/sec
 
-Look briefly into LLM inference and this sense becomes obvious.
+If we keep the same human analogy, this is the number that tells you how quickly and how much you can bring books from the stacks. The current bottleneck in AI silicon is closer to this memory bandwidth. Look briefly into LLM inference and this sense becomes obvious.
 
 People often think, "if the GPU is fast, isn't that the whole story?" But in practice, "how fast can you pull the data you need into the compute units" matters far more than "how much can you compute" much of the time.
 
@@ -30,9 +30,9 @@ This is where HBM's importance naturally surfaces.
 
 HBM is high-bandwidth memory, and it directly attacks the part that's most often the bottleneck in today's AI systems. The point isn't to make compute units stronger; it's to feed them fast enough that they don't go hungry. That's also why SK Hynix and Samsung are gaining presence. In the AI era, "who makes the better chip" is no longer the only thing that matters — "who can move data faster" has become central.
 
-## Model size is, ultimately, a memory problem
+## Memory / VRAM size: GB
 
-Memory size matters as much as memory bandwidth.
+Memory size matters as much as memory bandwidth. In the human analogy, it is the total number of books available in the library.
 
 We tend to take model sizes — 7B, 70B — as abstract numbers. But from a chip's point of view, those are very physical numbers. A larger model means more weights to store and load, and those weights have to sit on memory before any computation can happen.
 
@@ -83,15 +83,3 @@ Widen your view to on-device AI, edge AI, and robotics, and the definition of "g
 That's why something like Apple Silicon is interesting. From a different direction than data center GPUs, it's been optimized to a high degree of polish for the actual user environment. The future of chips, then, is likely less "one winner takes all areas" and more "the optimum changes depending on what computation is run where."
 
 That's why competition around AI chips is getting more complicated. The important thing now isn't to pick the single fastest chip — it's to understand which bottlenecks exist for which use cases.
-
-## In the end, the core question is one
-
-When I look at AI chips, the question I weight most heavily comes down to one.
-
-What computation, at what cost, run where?
-
-Almost everything fits inside that question. Why memory matters, why HBM matters, why CUDA is a moat, why purpose-built chips are coming back, why foundries are strategic assets — all of it threads through this single question.
-
-Understanding AI is no longer just about understanding the model. It's about understanding which chip the model runs on, which bottleneck it carries, and which cost structure it sits on. And going forward, that lens is only going to matter more.
-
-Because we're moving toward an era where building a good model matters as much as figuring out the most efficient way to actually run it in the real world.

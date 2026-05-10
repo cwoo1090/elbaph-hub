@@ -14,7 +14,7 @@ But that success was generally not built on inventing a brand-new concept first.
 
 The problem is that, in robotics, many people are trying to play exactly the opposite game from the start.
 
-One side says, "Let's mass-produce cheaper than China." The other side says, "Let's build a general-purpose robot brain like the Americans do." But these two axes are precisely where China and the US are strongest. China dominates mass production; the US dominates general-purpose software and platforms. The moment Korea picks either one as the arena for a head-on fight, we're walking into the most disadvantageous field on our own.
+One side says, "Let's mass-produce as cheaply as China." The other side says, "Let's build a general-purpose robot brain like the Americans do." But these two axes are precisely where China and the US are strongest. China dominates mass production; the US dominates general-purpose software and platforms. The moment Korea picks either one as the arena for a head-on fight, we're walking into the most disadvantageous field on our own.
 
 ## The most dangerous move is to copy either China's or America's playbook outright
 
@@ -22,7 +22,7 @@ Stripped down, the problem is this.
 
 Trying to win on cheap mass production is dangerous. Trying to win on generality is dangerous too.
 
-Step into the unit-cost war and you can't beat China. Step into the general-purpose platform race and the talent and capital eventually get pulled into the US. This isn't an emotional point — it's a structural one. Competition over the world's best general-purpose AI and general-purpose platforms tends to converge on whoever has the largest capital market and the strongest research ecosystem. Even when Korea produces excellent talent, you can't really stop the flow toward bigger stages and bigger payouts.
+Step into the unit-cost war and you can't beat China. Step into the general-purpose platform race, and with the United States acting as a black hole for capital and talent, it becomes extremely difficult to secure enough "cost-effective" people and capital domestically to compete with them. This isn't an emotional point — it's a structural one. Competition over the world's best general-purpose AI and general-purpose platforms tends to converge on whoever has the largest capital market and the strongest research ecosystem. Even when Korea produces excellent talent, you can't really stop the flow toward bigger stages and bigger payouts.
 
 The same logic applies to robotics.
 
