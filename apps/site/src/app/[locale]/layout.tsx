@@ -28,9 +28,34 @@ const notoSansKr = Noto_Sans_KR({
   weight: ['400', '500', '600', '700', '800'],
 })
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.elbaph.world'
+const siteDescription = 'Become Giants for Each Other — a tight crew of ambitious builders.'
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: 'Elbaph',
-  description: 'Become Giants for Each Other — a tight crew of ambitious builders.',
+  description: siteDescription,
+  openGraph: {
+    title: 'Elbaph',
+    description: siteDescription,
+    url: '/',
+    siteName: 'Elbaph',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Elbaph',
+      },
+    ],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Elbaph',
+    description: siteDescription,
+    images: ['/og-image.png'],
+  },
 }
 
 type Props = {
