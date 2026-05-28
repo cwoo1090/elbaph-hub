@@ -13,7 +13,7 @@ subtitle:
 
 그냥 raw data를 다 넣고, LLM에게 wiki를 만들게 하는 것이다.
 
-내가 이번에 해본 것은 대략 이런 실험이었다. 태규가 만든 hardware lecture 자료를 공부하면서, 강의 자료, transcript, 내가 공부하면서 ChatGPT와 나눈 질문, 관련 paper와 reference를 한 폴더에 모았다. 그리고 그 raw material을 Codex와 Claude, Obsidian을 엮은 LLM Wiki workflow에 넣었다.
+내가 이번에 해본 것은 대략 이런 실험이었다. 카이스트 DRCD Lab에서 진행하는 hardware lecture 자료를 공부하면서, 강의 자료, transcript, 내가 공부하면서 ChatGPT와 나눈 질문, 관련 paper와 reference를 한 폴더에 모았다. 그리고 그 raw material을 Codex와 Claude, Obsidian을 엮은 LLM Wiki workflow에 넣었다.
 
 결과물은 단순한 요약이 아니었다.
 
@@ -22,6 +22,8 @@ subtitle:
 이건 "AI가 대신 공부해준다"는 느낌과는 조금 다르다.
 
 더 정확히는 공부의 interface가 바뀌는 느낌이었다.
+
+어쩌면 학습의 패러다임 자체가 조금씩 바뀌고 있는지도 모른다. 예전에는 누군가 잘 정리해둔 curriculum을 따라가고, 그 위에 내 노트를 쌓는 방식이 기본이었다. 이제는 내가 남긴 질문, 대화, transcript, reference 같은 흔적들이 먼저 모이고, agent가 그것을 계속 재구성하면서 나에게 맞는 학습 경로를 만들어준다. 공부는 정해진 교재를 소비하는 일에서, 내가 만든 raw material을 바탕으로 개인화된 지식 시스템을 함께 편집하는 일에 가까워지고 있다.
 
 ## LLM Wiki의 출발점은 정리된 노트가 아니라 raw data다
 

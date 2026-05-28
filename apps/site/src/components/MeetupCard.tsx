@@ -1,5 +1,5 @@
 import type { Meetup } from '@/data/meetups'
-import type { Post } from '@/data/posts'
+import type { Article } from '@/data/articles'
 import { members } from '@/data/members'
 import { Link } from '@/i18n/navigation'
 
@@ -7,7 +7,7 @@ type Props = {
   meetup: Meetup
   meetupNumber: number
   locale: 'ko' | 'en'
-  posts: Post[]
+  articles: Article[]
 }
 
 function formatDate(dateStr: string, locale: string) {
@@ -19,7 +19,7 @@ function formatDate(dateStr: string, locale: string) {
   })
 }
 
-export default function MeetupCard({ meetup, meetupNumber, locale, posts }: Props) {
+export default function MeetupCard({ meetup, meetupNumber, locale, articles }: Props) {
   return (
     <div className="grid gap-6 border-b border-[#e5e5e5] py-6 md:grid-cols-[120px_1fr] md:gap-x-16 md:py-8">
       {/* Left: number + date */}
@@ -36,7 +36,7 @@ export default function MeetupCard({ meetup, meetupNumber, locale, posts }: Prop
       <div className="border-t border-[#e5e5e5]">
         {meetup.speakers.map((s, i) => {
           const member = members.find((m) => m.id === s.memberId)
-          const post = posts.find((p) => p.memberId === s.memberId)
+          const article = articles.find((a) => a.memberId === s.memberId)
           const rowClassName =
             'grid gap-2 border-b border-[#e5e5e5] py-4 transition-colors duration-150 md:grid-cols-[140px_1fr_auto] md:gap-4 md:py-3'
           const rowContent = (
@@ -45,7 +45,7 @@ export default function MeetupCard({ meetup, meetupNumber, locale, posts }: Prop
                 {member?.name[locale] ?? s.memberId}
               </span>
               <span className="text-[15px] leading-7 text-[#737373] md:text-sm md:leading-relaxed">{s.topic[locale]}</span>
-              {post && (
+              {article && (
                 <span className="shrink-0 text-sm text-[#737373] transition-colors duration-150 md:text-xs">
                   {locale === 'ko' ? '글 읽기 →' : 'Read →'}
                 </span>
@@ -53,11 +53,11 @@ export default function MeetupCard({ meetup, meetupNumber, locale, posts }: Prop
             </>
           )
 
-          if (post) {
+          if (article) {
             return (
               <Link
                 key={i}
-                href={`/blog/${post.slug}`}
+                href={`/blog/${article.slug}`}
                 className={`${rowClassName} hover:bg-[#faf9f6]`}
               >
                 {rowContent}

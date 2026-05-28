@@ -42,13 +42,13 @@
   "Blog": {
     "label": "Writing",
     "title": "Blog",
-    "empty": "First post coming soon",
+    "empty": "First article coming soon",
     "readMore": "Read more"
   },
   "AuthorArchive": {
     "label": "Crew Writing",
-    "title": "Posts by {name}",
-    "empty": "No posts published yet.",
+    "title": "Articles by {name}",
+    "empty": "No articles published yet.",
     "backToCrew": "Back to crew"
   },
   "Newsletter": {

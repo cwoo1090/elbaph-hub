@@ -42,7 +42,7 @@
   "Blog": {
     "label": "Writing",
     "title": "블로그",
-    "empty": "첫 번째 포스트가 곧 올라옵니다",
+    "empty": "첫 번째 글이 곧 올라옵니다",
     "readMore": "더 읽기"
   },
   "AuthorArchive": {

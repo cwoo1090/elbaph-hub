@@ -2,9 +2,9 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
-import BlogCard from '@/components/BlogCard'
+import ArticleCard from '@/components/ArticleCard'
 import { members } from '@/data/members'
-import { getAllPosts } from '@/lib/posts'
+import { getAllArticles } from '@/lib/articles'
 import { routing } from '@/i18n/routing'
 
 type Props = {
@@ -26,7 +26,7 @@ export default async function MemberArchivePage({ params }: Props) {
 
   const t = await getTranslations('AuthorArchive')
   const blogT = await getTranslations('Blog')
-  const posts = getAllPosts().filter((post) => post.memberId === member.id)
+  const articles = getAllArticles().filter((article) => article.memberId === member.id)
 
   return (
     <section className="px-4 py-20 sm:px-6 md:py-24">
@@ -75,14 +75,14 @@ export default async function MemberArchivePage({ params }: Props) {
           </div>
         </div>
 
-        {posts.length === 0 ? (
+        {articles.length === 0 ? (
           <p className="mt-14 text-sm text-[#737373]">{t('empty')}</p>
         ) : (
           <div className="mt-10 space-y-px border border-[#e5e5e5] md:mt-14">
-            {posts.map((post) => (
-              <BlogCard
-                key={post.slug}
-                post={post}
+            {articles.map((article) => (
+              <ArticleCard
+                key={article.slug}
+                article={article}
                 locale={currentLocale}
                 readMoreLabel={blogT('readMore')}
               />

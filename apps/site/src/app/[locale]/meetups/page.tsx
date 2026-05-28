@@ -1,13 +1,13 @@
 import { useTranslations, useLocale } from 'next-intl'
 import { meetups } from '@/data/meetups'
-import { getAllPosts } from '@/lib/posts'
+import { getAllArticles } from '@/lib/articles'
 import MeetupCard from '@/components/MeetupCard'
 
 export default function MeetupsPage() {
   const t = useTranslations('Meetups')
   const locale = useLocale() as 'ko' | 'en'
 
-  const posts = getAllPosts()
+  const articles = getAllArticles()
   const sorted = [...meetups].reverse()
 
   return (
@@ -24,7 +24,7 @@ export default function MeetupsPage() {
               meetup={m}
               meetupNumber={meetups.length - i}
               locale={locale}
-              posts={posts.filter((p) => p.meetupId === m.id)}
+              articles={articles.filter((article) => article.meetupId === m.id)}
             />
           ))}
         </div>

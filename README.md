@@ -6,10 +6,10 @@ For member profiles, see `members.md`.
 
 ## Main Areas
 
-- `apps/site/` - public Next.js site for Elbaph, meetup pages, and blog content.
+- `apps/site/` - public Next.js site for Elbaph, meetup pages, and published articles.
 - `apps/loki/` - Discord `/ask` bot using Gemini with Google Search grounding.
 - `packages/discord-mcp/` - local Discord MCP server for reading and posting in Discord.
-- `meetups/` - canonical meetup workspace for materials, recording links, transcripts, and blog outputs.
+- `meetups/` - canonical meetup workspace for materials, recording links, transcripts, and article outputs.
 - `.agents/skills/news/`, `.agents/skills/news_codex/`, and `.claude/skills/news/` - daily news briefing skills.
 
 ## Meetup Structure
@@ -35,19 +35,19 @@ meetups/
           outline.md
         recording.md
         transcript.md
-        blog.md
+        article.md
 ```
 
 Rules:
 
-- `meetup-N` must match `apps/site/src/data/meetups.ts`; published blog posts live under `apps/site/content/posts/meetup-N`.
+- `meetup-N` must match `apps/site/src/data/meetups.ts`; published articles live under `apps/site/content/articles/meetup-N`.
 - Presentation folder names use order plus member only, for example `01-chulwoo`.
 - Use `00-overview` for the short opening deck about recent Elbaph activity and discussion topics.
 - Put talk titles and metadata in `meetup.yaml`, not folder names.
 - `materials/` can contain committed presenter inputs such as PDF/PPTX slides, HTML decks, source notes, papers, and deck assets.
 - Store raw video/audio in Google Drive and link it from `recording.md`; do not commit media files.
 - `transcript.md` is ClovaNote STT output.
-- `blog.md` is the final Korean blog post.
+- `article.md` is the final Korean article for the talk.
 
 ## Local Commands
 

@@ -171,6 +171,17 @@ html[lang="ko"] .story-body {
   background: #e5e5e5;
 }
 
+.article-body p:has(> img) + p:has(> em:only-child) {
+  margin-top: 0.5rem;
+  font-size: 0.875em;
+  line-height: 1.55;
+  color: #737373;
+}
+
+.article-body p:has(> img) + p:has(> em:only-child) em {
+  font-style: italic;
+}
+
 @media (max-width: 767px) {
   .reveal,
   .reveal.revealed {

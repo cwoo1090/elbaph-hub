@@ -1,0 +1,7 @@
+interface:
+  display_name: "Publish Meetup Article"
+  short_description: "Publish Elbaph meetup articles end to end."
+  default_prompt: "Use $publish-meetup-article to publish the next Elbaph meetup article with images, English version, Substack copy links, and deployment verification."
+
+policy:
+  allow_implicit_invocation: true

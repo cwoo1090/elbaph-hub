@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation'
-import { getAllPosts, getPostBySlug } from '@/lib/posts'
+import { getAllArticles, getArticleBySlug } from '@/lib/articles'
 import { members } from '@/data/members'
 import { routing } from '@/i18n/routing'
-import BlogPostBody from '@/components/BlogPostBody'
+import ArticleBody from '@/components/ArticleBody'
 import NewsletterModal from '@/components/NewsletterModal'
 import NewsletterSignup from '@/components/NewsletterSignup'
 
@@ -12,30 +12,30 @@ type Props = {
 
 export async function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
-    getAllPosts().map((post) => ({ locale, slug: post.slug })),
+    getAllArticles().map((article) => ({ locale, slug: article.slug })),
   )
 }
 
-export default async function BlogPostPage({ params }: Props) {
+export default async function BlogArticlePage({ params }: Props) {
   const { locale, slug } = await params
   const currentLocale = locale as 'ko' | 'en'
 
-  const post = getPostBySlug(slug)
-  if (!post) notFound()
+  const article = getArticleBySlug(slug)
+  if (!article) notFound()
 
-  const member = members.find((m) => m.id === post.memberId)
-  const authorName = member ? member.name[currentLocale] : post.memberId
+  const member = members.find((m) => m.id === article.memberId)
+  const authorName = member ? member.name[currentLocale] : article.memberId
   const publication = process.env.SUBSTACK_PUBLICATION?.trim().toLowerCase()
 
   return (
     <article className="px-4 py-20 sm:px-6 md:py-24">
       <div className="mx-auto max-w-3xl">
-        <BlogPostBody
-          date={post.date}
+        <ArticleBody
+          date={article.date}
           authorName={authorName}
           locale={currentLocale}
-          ko={{ title: post.title.ko, subtitle: post.subtitle.ko, body: post.body.ko }}
-          en={{ title: post.title.en, subtitle: post.subtitle.en, body: post.body.en }}
+          ko={{ title: article.title.ko, subtitle: article.subtitle.ko, body: article.body.ko }}
+          en={{ title: article.title.en, subtitle: article.subtitle.en, body: article.body.en }}
         />
         {publication && (
           <>

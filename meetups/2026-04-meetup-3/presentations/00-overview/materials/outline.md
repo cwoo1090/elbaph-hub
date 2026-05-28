@@ -26,7 +26,7 @@ Goal: Open the session with a short shared memory of what happened since the Mar
 - Site/blog pipeline: recording -> STT -> LLM draft from transcript/materials/prompt -> speaker final edit -> site/newsletter
 - Live blog screenshot from https://elbaph.vercel.app/blog
 - Speaker materials must be uploaded to improve blog draft quality
-- Final blog posts will be reused as newsletter content
+- Final articles will be reused as newsletter content
 
 ## Slide 5: Discord Activation
 

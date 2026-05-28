@@ -17,7 +17,7 @@ export default function MemberCard({ member, locale, archiveHref }: Props) {
       {archiveHref && (
         <Link
           href={archiveHref}
-          aria-label={locale === 'ko' ? `${member.name[locale]}의 글 보기` : `View posts by ${member.name[locale]}`}
+          aria-label={locale === 'ko' ? `${member.name[locale]}의 글 보기` : `View articles by ${member.name[locale]}`}
           className="absolute inset-0 z-10"
         />
       )}
