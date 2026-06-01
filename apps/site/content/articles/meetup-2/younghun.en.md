@@ -1,4 +1,4 @@
-![The data center scale behind AI infrastructure](/articles/meetup-2/younghoon/01-data-center.png)
+![The data center scale behind AI infrastructure](/articles/meetup-2/younghun/01-data-center.png)
 
 *The performance of AI models is ultimately decided on top of physical infrastructure like this.*
 
@@ -34,7 +34,7 @@ This is where HBM's importance naturally surfaces.
 
 HBM is high-bandwidth memory, and it directly attacks the part that's most often the bottleneck in today's AI systems. The point isn't to make compute units stronger; it's to feed them fast enough that they don't go hungry. That's also why SK Hynix and Samsung are gaining presence. In the AI era, "who makes the better chip" is no longer the only thing that matters — "who can move data faster" has become central.
 
-![Data bandwidth flowing between compute units and memory](/articles/meetup-2/younghoon/02-bandwidth.png)
+![Data bandwidth flowing between compute units and memory](/articles/meetup-2/younghun/02-bandwidth.png)
 
 *To understand a good chip, you have to look not only at compute, but also at how quickly data can move.*
 
@@ -70,7 +70,7 @@ Other companies can build good chips. They can build them cheaper. They can hit 
 
 This is a critical point. The AI chip market isn't a hardware race; it's a hardware-and-software ecosystem race. Building a good chip and getting people to actually develop and operate on top of it are completely different problems on completely different difficulty curves. NVIDIA's dominance sits on top of that gap.
 
-![Layers of software ecosystem forming around an AI chip](/articles/meetup-2/younghoon/04-ecosystem.png)
+![Layers of software ecosystem forming around an AI chip](/articles/meetup-2/younghun/04-ecosystem.png)
 
 *The strength of an AI chip is not just the hardware itself, but the ecosystem that lets developers actually build and operate on top of it.*
 
@@ -82,7 +82,7 @@ Quite the opposite — long-term, AI's center of gravity is likely to shift furt
 
 Training is a heavy, episodic event. Inference, as a service grows, runs every day, continuously, at overwhelming scale. At that point what matters isn't "what's most general-purpose" — it's "what produces tokens most cheaply."
 
-![Small chips producing streams of tokens as an inference system](/articles/meetup-2/younghoon/05-inference.png)
+![Small chips producing streams of tokens as an inference system](/articles/meetup-2/younghun/05-inference.png)
 
 *As a service scales, inference becomes less like a one-time event and more like a production system running every day.*
 
@@ -90,7 +90,7 @@ In that environment, a purpose-built chip designed for a specific inference work
 
 There's a sober reality to keep in mind here too. Designing a chip and actually mass-producing one stably are completely different problems. Design lives in the realm of talent and ambition. Manufacturing lives in the realm of foundries and supply chains. That's why something like TSMC ends up at the strategic center.
 
-![A semiconductor wafer and fabrication process](/articles/meetup-2/younghoon/03-wafer.png)
+![A semiconductor wafer and fabrication process](/articles/meetup-2/younghun/03-wafer.png)
 
 *The future of chips is not determined by design alone. It also depends on manufacturing capacity and supply chains that can deliver at scale.*
 

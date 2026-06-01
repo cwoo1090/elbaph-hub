@@ -12,8 +12,8 @@ Translate a Korean Elbaph blog post to English, write the English body to a sibl
 A single path argument: the Korean source `.md` file. Resolve relative paths against the repo root.
 
 Examples:
-- `apps/site/content/posts/meetup-2/chulwoo.md`
-- `apps/site/content/posts/meetup-3/younghoon.md`
+- `apps/site/content/articles/meetup-2/chulwoo.md`
+- `apps/site/content/articles/meetup-2/younghun.md`
 
 ## Procedure
 

@@ -27,7 +27,7 @@ const SUBSTACK_TAGS_BY_SLUG: Record<string, string[]> = {
     'Technical Learning',
     'Elbaph Meetup',
   ],
-  'meetup-2-younghoon': [
+  'meetup-2-younghun': [
     'AI Hardware',
     'Semiconductors',
     'Infrastructure',

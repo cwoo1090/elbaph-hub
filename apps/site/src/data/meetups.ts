@@ -31,7 +31,7 @@ export const meetups: Meetup[] = [
         },
       },
       {
-        memberId: 'younghoon',
+        memberId: 'younghun',
         topic: {
           ko: '스타트업 빌딩과 엑싯 게임플랜 — Acquihire, Open Source, Hiring 동향',
           en: 'Startup building & exit gameplan — Acquihire, Open Source, Hiring trends',
@@ -81,7 +81,7 @@ export const meetups: Meetup[] = [
         },
       },
       {
-        memberId: 'younghoon',
+        memberId: 'younghun',
         topic: {
           ko: 'AI 칩 시장 동향과 관련 이야기들',
           en: 'AI chip market trends & what it means',

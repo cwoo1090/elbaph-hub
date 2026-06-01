@@ -62,8 +62,8 @@ export const members: Member[] = [
     linkedin: 'https://www.linkedin.com/in/jaehwan-kim-96628b217',
   },
   {
-    id: 'younghoon',
-    name: { ko: '노영훈', en: 'Younghoon Noh' },
+    id: 'younghun',
+    name: { ko: '노영훈', en: 'Younghun Roh' },
     oneLiner: {
       ko: '뭔가 만드는 것, 개선하는 것, 문제를 풀어주는 것이 좋아서 창업의 길을 가려 하는데, 당분간은 탐색/휴지기 일 것 같습니다.',
       en: 'I like building things, improving things, and solving problems — headed toward entrepreneurship.',
@@ -83,8 +83,8 @@ export const members: Member[] = [
       },
     ],
     dream: { ko: '스타트업', en: 'Startup' },
-    fields: ['CS', 'Entrepreneurship'],
-    photo: '',
+    fields: ['Performance Engineering', 'AI Agents', 'Building'],
+    photo: '/members/younghun.jpg',
     website: 'https://diuven.xyz',
     linkedin: 'https://www.linkedin.com/in/yhunroh/',
   },
