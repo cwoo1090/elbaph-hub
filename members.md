@@ -32,7 +32,7 @@
 - https://yechxn.github.io
 - https://www.rosota.run
 
-## Younghoon Noh (노영훈)
+## Younghun Roh (노영훈)
 
 - One-liner: I like building things, improving things, and solving problems — headed toward entrepreneurship, but in exploration mode for now.
 - Facts About Me

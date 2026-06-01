@@ -63,7 +63,7 @@ export const members: Member[] = [
   },
   {
     id: 'younghoon',
-    name: { ko: '노영훈', en: 'Younghoon Noh' },
+    name: { ko: '노영훈', en: 'Younghun Roh' },
     oneLiner: {
       ko: '뭔가 만드는 것, 개선하는 것, 문제를 풀어주는 것이 좋아서 창업의 길을 가려 하는데, 당분간은 탐색/휴지기 일 것 같습니다.',
       en: 'I like building things, improving things, and solving problems — headed toward entrepreneurship.',
