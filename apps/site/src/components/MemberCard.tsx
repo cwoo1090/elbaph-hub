@@ -6,9 +6,10 @@ type Props = {
   member: Member
   locale: 'ko' | 'en'
   archiveHref?: string
+  dreamLabel: string
 }
 
-export default function MemberCard({ member, locale, archiveHref }: Props) {
+export default function MemberCard({ member, locale, archiveHref, dreamLabel }: Props) {
   return (
     <article
       id={member.id}
@@ -105,6 +106,16 @@ export default function MemberCard({ member, locale, archiveHref }: Props) {
           </li>
         ))}
       </ul>
+
+      {/* Dream */}
+      <div className="mt-5 border-t border-[#e5e5e5] pt-4">
+        <p className="text-[11px] font-semibold uppercase tracking-wide text-[#a3a3a3]">
+          {dreamLabel}
+        </p>
+        <p className="mt-1.5 text-sm leading-relaxed text-[#1a1a1a]">
+          {member.dream[locale]}
+        </p>
+      </div>
     </article>
   )
 }
