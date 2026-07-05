@@ -20,6 +20,7 @@ export default function CrewPage() {
               member={m}
               locale={locale}
               archiveHref={`/crew/${m.id}`}
+              dreamLabel={t('dream')}
             />
           ))}
         </div>

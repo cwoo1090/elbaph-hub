@@ -150,4 +150,86 @@ export const members: Member[] = [
     fields: ['Robotics', 'Hardware', 'Mechanical Engineering'],
     photo: '/members/taekyu.jpg',
   },
+  {
+    id: 'terry',
+    name: { ko: '김태욱', en: 'Terry Kim' },
+    oneLiner: {
+      ko: '새로운 도전과 선한 영향력을 만드는 일을 좋아합니다.',
+      en: 'I like taking on new challenges and creating positive impact.',
+    },
+    bio: [
+      {
+        ko: 'MIT에서 컴퓨터공학 학부를 졸업했고, 현재 MIT Perceptual Engineering Lab에서 석사 과정을 하고 있습니다.',
+        en: "Graduated from MIT with a bachelor's degree in Computer Science and is now pursuing a master's at the MIT Perceptual Engineering Lab.",
+      },
+      {
+        ko: '휴학 후 커피숍에서 일하며 커피에 빠져, 현재는 flavor perception 연구를 하고 있습니다.',
+        en: 'Fell into coffee while working at a cafe during a leave of absence, and now researches flavor perception.',
+      },
+      {
+        ko: '2028 보스턴 마라톤을 목표로 훈련 중입니다.',
+        en: 'Training toward the 2028 Boston Marathon.',
+      },
+    ],
+    dream: { ko: '하고 싶은거 하면서 살기', en: 'To live while doing what I want to do' },
+    fields: ['Computer Science', 'Perception', 'Flavor'],
+    photo: '/members/terry.png',
+    linkedin: 'https://linkedin.com/in/terrytwk',
+    website2: { url: 'https://github.com/terrytwk', label: 'GitHub' },
+  },
+  {
+    id: 'seungbin',
+    name: { ko: '오승빈', en: 'Seungbin Oh' },
+    oneLiner: {
+      ko: '로봇이 좋아서 시작했고, 하다 보니 적성에도 잘 맞는 것 같아서 계속 좋아하면서 할 것 같습니다.',
+      en: 'I started because I liked robots, and it seems to fit me well, so I think I will keep liking and doing it.',
+    },
+    bio: [
+      {
+        ko: '초등학교 3학년 때부터 로봇을 하며 사는 것이 꿈이었고, 어느새 그 꿈은 이룬 것 같아 요즘은 더 큰 꿈을 생각해보고 있습니다.',
+        en: 'Since third grade, my dream was to live with robotics; now that I seem to have reached it, I am thinking about a bigger dream.',
+      },
+      {
+        ko: 'KAIST DRCD Lab에서 Robotics 석사과정으로 제어 연구를 하고 있고, 아마 같은 연구실에서 박사도 할 것 같습니다.',
+        en: 'Researching control as a robotics master\'s student at KAIST DRCD Lab, and will likely continue there for a PhD.',
+      },
+      {
+        ko: '조금 이상하게 들릴 수 있지만, 연구실에서 늦게 퇴근하는 거 좋아합니다.',
+        en: 'It may sound a little strange, but I like leaving the lab late.',
+      },
+    ],
+    dream: { ko: '지구최강 제어기 만들기', en: "To build Earth's strongest controller" },
+    fields: ['Robotics', 'Control', 'KAIST'],
+    photo: '/members/seungbin.png',
+  },
+  {
+    id: 'ryan',
+    name: { ko: '김래원', en: 'Ryan Kim' },
+    oneLiner: {
+      ko: '근본적으로 다양한 주제에 대해 호기심이 많고, 이전까지는 bfs(Breadth-First Search)로 살았으나 복학하고 앞으로 dfs(Depth-First Search)로 살 예정. Sciences and Humanities의 교점에서 의미있는 일을 하고 싶음.',
+      en: 'Deeply curious across many subjects; I used to live breadth-first, but after returning to school I plan to live depth-first. I want to do meaningful work at the intersection of sciences and humanities.',
+    },
+    bio: [
+      {
+        ko: '보스턴에서 태어나서 한국에서 9년 동안 영국 학교를 다녔고 미국에서 보딩스쿨 졸업 후 예일대학교 재학 중입니다.',
+        en: 'Born in Boston, attended a British school in Korea for nine years, graduated from boarding school in the U.S., and is now studying at Yale.',
+      },
+      {
+        ko: '공동저자로 네이처 논문 있음.',
+        en: 'Co-authored a Nature paper.',
+      },
+      {
+        ko: '북한 가본 적 있음 (판문점 안에서).',
+        en: 'Has been to North Korea, inside Panmunjom.',
+      },
+    ],
+    dream: {
+      ko: '"We\'re here to put a dent in the universe. Otherwise, why else even be here?" 이문과 백그라운드를 섞어서 AI 기술을 접목시킨 인간 사회의 진보에 기여하며 universe에 dent를 남기고 싶음.',
+      en: '"We\'re here to put a dent in the universe. Otherwise, why else even be here?" I want to combine my science and humanities background with AI technology to contribute to human progress and leave a dent in the universe.',
+    },
+    fields: ['AI', 'Science', 'Humanities'],
+    photo: '/members/ryan.png',
+    linkedin: 'https://www.linkedin.com/in/ryanhwangkim/',
+    website: 'https://ryanhwangkim.com',
+  },
 ]
