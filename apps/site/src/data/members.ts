@@ -219,7 +219,7 @@ export const members: Member[] = [
         en: 'Co-authored a Nature paper.',
       },
       {
-        ko: 'YC AI Startup School 2026에서 올린 트윗(감탄사) 하나가 12시간도 안 되어 약 12만 조회를 기록했고, Alexandr Wang의 답글과 YC, Garry Tan, Clem Delangue의 리포스트를 받았습니다.',
+        ko: 'YC AI Startup School 2026에서 올린 트윗(exclamations) 하나가 12시간도 안 되어 약 12만 조회를 기록했고, Alexandr Wang의 답글과 YC, Garry Tan, Clem Delangue의 리포스트를 받았습니다.',
         en: 'One of my tweets (exclamations) from YC AI Startup School 2026 received ~120K views in under 12 hours with a response from Alexandr Wang and reposts by YC, Garry Tan, and Clem Delangue.',
       },
     ],
