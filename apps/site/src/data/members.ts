@@ -206,8 +206,8 @@ export const members: Member[] = [
     id: 'ryan',
     name: { ko: '김래원', en: 'Ryan Kim' },
     oneLiner: {
-      ko: '근본적으로 다양한 주제에 대해 호기심이 많고, 이전까지는 bfs(Breadth-First Search)로 살았으나 복학하고 앞으로 dfs(Depth-First Search)로 살 예정. Sciences and Humanities의 교점에서 의미있는 일을 하고 싶음.',
-      en: 'Deeply curious across many subjects; I used to live breadth-first, but after returning to school I plan to live depth-first. I want to do meaningful work at the intersection of sciences and humanities.',
+      ko: '근본적으로 다양한 주제에 대해 호기심이 많고, 이전까지는 bfs(Breadth-First Search)로 살았으나 복학하고 앞으로 dfs(Depth-First Search)로 살 예정. Technology and Humanities의 교점에서 의미있는 일을 하고 싶음.',
+      en: 'Deeply curious across many subjects; I used to live breadth-first, but after returning to school I plan to live depth-first. I want to do meaningful work at the intersection of technology and humanities.',
     },
     bio: [
       {
@@ -219,15 +219,15 @@ export const members: Member[] = [
         en: 'Co-authored a Nature paper.',
       },
       {
-        ko: '북한 가본 적 있음 (판문점 안에서).',
-        en: 'Has been to North Korea, inside Panmunjom.',
+        ko: 'YC AI Startup School 2026에서 올린 트윗(감탄사) 하나가 12시간도 안 되어 약 12만 조회를 기록했고, Alexandr Wang의 답글과 YC, Garry Tan, Clem Delangue의 리포스트를 받았습니다.',
+        en: 'One of my tweets (exclamations) from YC AI Startup School 2026 received ~120K views in under 12 hours with a response from Alexandr Wang and reposts by YC, Garry Tan, and Clem Delangue.',
       },
     ],
     dream: {
       ko: '"We\'re here to put a dent in the universe. Otherwise, why else even be here?" 이문과 백그라운드를 섞어서 AI 기술을 접목시킨 인간 사회의 진보에 기여하며 universe에 dent를 남기고 싶음.',
       en: '"We\'re here to put a dent in the universe. Otherwise, why else even be here?" I want to combine my science and humanities background with AI technology to contribute to human progress and leave a dent in the universe.',
     },
-    fields: ['AI', 'Science', 'Humanities'],
+    fields: ['AI', 'Technology', 'Humanities'],
     photo: '/members/ryan.png',
     linkedin: 'https://www.linkedin.com/in/ryanhwangkim/',
     website: 'https://ryanhwangkim.com',

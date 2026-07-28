@@ -74,11 +74,11 @@
 
 ## Ryan Kim (김래원)
 
-- One-liner: Deeply curious across many subjects; I used to live breadth-first, but after returning to school I plan to live depth-first. I want to do meaningful work at the intersection of sciences and humanities.
+- One-liner: Deeply curious across many subjects; I used to live breadth-first, but after returning to school I plan to live depth-first. I want to do meaningful work at the intersection of technology and humanities.
 - Facts About Me
   - Born in Boston, attended a British school in Korea for nine years, graduated from boarding school in the U.S., and is now studying at Yale.
   - Co-authored a Nature paper.
-  - Has been to North Korea, inside Panmunjom.
+  - One of my tweets (exclamations) from YC AI Startup School 2026 received ~120K views in under 12 hours with a response from Alexandr Wang and reposts by YC, Garry Tan, and Clem Delangue.
 - Dream: "We're here to put a dent in the universe. Otherwise, why else even be here?" I want to combine my science and humanities background with AI technology to contribute to human progress and leave a dent in the universe.
 - https://www.linkedin.com/in/ryanhwangkim/
 - https://ryanhwangkim.com
