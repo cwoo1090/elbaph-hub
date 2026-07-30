@@ -1,0 +1,34 @@
+id: meetup-4
+date: 2026-05-31
+title:
+  ko: 4th 밋업
+  en: 4th Meetup
+location: online
+language: ko
+recording_storage: google_drive
+stt_provider: clovanote
+status: preparing
+
+presentations:
+  - order: 0
+    speaker: elbaph
+    type: overview
+    title:
+      ko: 5월 Elbaph 활동 및 오늘의 발표
+      en: May Elbaph activity and today's talks
+  - order: 1
+    speaker: seungjun
+    guest: true
+    title:
+      ko: Precision medicine
+      en: Precision medicine
+  - order: 2
+    speaker: chulwoo
+    title:
+      ko: Building in public, Maple
+      en: Building in public, Maple
+  - order: 3
+    speaker: taekyu
+    title:
+      ko: Sim2real
+      en: Sim2real

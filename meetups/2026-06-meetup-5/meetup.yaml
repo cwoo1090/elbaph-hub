@@ -1,0 +1,33 @@
+id: meetup-5
+date: 2026-06-28
+title:
+  ko: 5th 밋업
+  en: 5th Meetup
+location:
+language: ko
+recording_storage: google_drive
+stt_provider: clovanote
+status: preparing
+
+presentations:
+  - order: 0
+    speaker: elbaph
+    type: overview
+    title:
+      ko: 6월 Elbaph 밋업 및 게스트 소개
+      en: June Elbaph meetup and guest introductions
+  - order: 1
+    speaker: seungbin
+    title:
+      ko: Contact-Implicit Trajectory Optimization
+      en: Contact-Implicit Trajectory Optimization
+  - order: 2
+    speaker: terry
+    title:
+      ko: AI는 왜 냄새를 맡아야 하는가
+      en: Why AI Needs to Smell
+  - order: 4
+    speaker: younghun
+    title:
+      ko: Diffusion Language Model에서의 Linear-Hybrid Attention
+      en: Linear-Hybrid Attention in Diffusion-Based Language Models

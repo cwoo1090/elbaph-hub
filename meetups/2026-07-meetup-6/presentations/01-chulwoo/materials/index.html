@@ -1,0 +1,2447 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>AX 외주 시장은 어디로 갈까</title>
+  <link rel="icon" href="data:,">
+  <style>
+    :root {
+      --canvas: #d9d7d0;
+      --paper: #f6f2e8;
+      --ink: #101113;
+      --muted: #66645f;
+      --line: #cbc5b8;
+      --blue: #3151da;
+      --red: #d94b34;
+      --acid: #d8ff45;
+      --soft-blue: #dfe5ff;
+      --soft-red: #f4d9d0;
+      --dark: #111214;
+      --shadow: 0 28px 80px rgba(16, 17, 19, 0.18);
+      --deck-scale: 1;
+      color: var(--ink);
+      background: var(--canvas);
+      font-family: Pretendard, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background:
+        linear-gradient(145deg, rgba(49, 81, 218, 0.08), transparent 38%),
+        var(--canvas);
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .viewport {
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 22px;
+      overflow: hidden;
+    }
+
+    .deck-wrap {
+      position: relative;
+      width: calc(1280px * var(--deck-scale));
+      height: calc(720px * var(--deck-scale));
+    }
+
+    .deck {
+      position: absolute;
+      inset: 0 auto auto 0;
+      width: 1280px;
+      height: 720px;
+      transform: scale(var(--deck-scale));
+      transform-origin: top left;
+    }
+
+    .slide {
+      display: none;
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .slide.active {
+      display: block;
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.58;
+      background-image:
+        linear-gradient(to right, rgba(16, 17, 19, 0.045) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(16, 17, 19, 0.045) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+
+    .slide.dark {
+      color: #f7f3e9;
+      background: var(--dark);
+      border-color: #27292e;
+    }
+
+    .slide.dark::before {
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+    }
+
+    .frame {
+      position: absolute;
+      inset: 36px 48px 42px;
+      z-index: 1;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 22px;
+    }
+
+    .topbar,
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+
+    .footer > span:last-child {
+      padding-right: 158px;
+      text-align: right;
+    }
+
+    .dark .topbar,
+    .dark .footer {
+      color: #9ea0a7;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      color: var(--ink);
+      font-weight: 850;
+    }
+
+    .dark .brand {
+      color: #f7f3e9;
+    }
+
+    .mark {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      color: var(--paper);
+      background: var(--ink);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .dark .mark {
+      color: var(--ink);
+      background: var(--acid);
+    }
+
+    .content {
+      min-height: 0;
+      display: grid;
+      align-content: center;
+      gap: 26px;
+    }
+
+    .content.top {
+      align-content: start;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      max-width: 1050px;
+      font-size: 76px;
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      font-weight: 930;
+      word-break: keep-all;
+    }
+
+    h2 {
+      max-width: 1100px;
+      font-size: 49px;
+      line-height: 1.08;
+      letter-spacing: -0.045em;
+      font-weight: 900;
+      word-break: keep-all;
+    }
+
+    h3 {
+      font-size: 27px;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      font-weight: 850;
+      word-break: keep-all;
+    }
+
+    .kicker {
+      color: var(--blue);
+      font-size: 15px;
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .dark .kicker {
+      color: var(--acid);
+    }
+
+    .lede {
+      max-width: 940px;
+      color: #343438;
+      font-size: 25px;
+      line-height: 1.48;
+      letter-spacing: -0.025em;
+      word-break: keep-all;
+    }
+
+    .dark .lede {
+      color: #c7c8ce;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1.02fr 0.98fr;
+      gap: 44px;
+      align-items: center;
+    }
+
+    .split.wide-left {
+      grid-template-columns: 1.15fr 0.85fr;
+    }
+
+    .split.wide-right {
+      grid-template-columns: 0.88fr 1.12fr;
+    }
+
+    .accent {
+      color: var(--blue);
+    }
+
+    .danger {
+      color: var(--red);
+    }
+
+    .highlight {
+      display: inline;
+      padding: 0 0.08em;
+      background: linear-gradient(transparent 57%, var(--acid) 57%);
+    }
+
+    .title-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 18px;
+      font-weight: 650;
+    }
+
+    .title-rule {
+      width: 62px;
+      height: 4px;
+      background: var(--blue);
+    }
+
+    .title-signal {
+      position: relative;
+      height: 290px;
+      border-left: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .title-signal .curve {
+      position: absolute;
+      inset: 8px 6px 0 0;
+      overflow: hidden;
+    }
+
+    .title-signal .curve::before {
+      content: "";
+      position: absolute;
+      left: -7%;
+      top: 50%;
+      width: 125%;
+      height: 180px;
+      border-top: 8px solid var(--blue);
+      border-radius: 50%;
+      transform: rotate(-12deg);
+    }
+
+    .title-signal .curve::after {
+      content: "";
+      position: absolute;
+      right: 3%;
+      top: 10%;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 0 12px rgba(217, 75, 52, 0.16);
+    }
+
+    .title-signal .axis-label {
+      position: absolute;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .title-signal .axis-label.left {
+      left: 12px;
+      bottom: 12px;
+    }
+
+    .title-signal .axis-label.right {
+      right: 10px;
+      top: 16px;
+    }
+
+    .chat-layout {
+      display: grid;
+      grid-template-columns: 0.78fr 1.22fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .chat-copy {
+      display: grid;
+      gap: 26px;
+    }
+
+    .quote-mark {
+      color: var(--blue);
+      font-family: Georgia, serif;
+      font-size: 92px;
+      line-height: 0.45;
+    }
+
+    .chat-copy blockquote {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.28;
+      letter-spacing: -0.04em;
+      font-weight: 830;
+      word-break: keep-all;
+    }
+
+    .chat-images {
+      position: relative;
+      height: 500px;
+    }
+
+    .chat-images img {
+      position: absolute;
+      display: block;
+      object-fit: contain;
+      border: 1px solid #aeb7c3;
+      box-shadow: 0 18px 48px rgba(16, 17, 19, 0.18);
+      background: #bacdde;
+    }
+
+    .chat-images img:first-child {
+      top: 0;
+      right: 30px;
+      width: 425px;
+      height: 460px;
+    }
+
+    .chat-images img:last-child {
+      left: 0;
+      bottom: 0;
+      width: 365px;
+      height: 198px;
+    }
+
+    .boutique {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 44px;
+      align-items: center;
+    }
+
+    .people {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      align-items: end;
+      height: 300px;
+      padding: 20px 0 0;
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .person {
+      position: relative;
+      height: var(--height);
+      min-height: 150px;
+      background: var(--blue);
+    }
+
+    .person::before {
+      content: "";
+      position: absolute;
+      top: -42px;
+      left: 50%;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: var(--acid);
+      border: 3px solid var(--ink);
+      transform: translateX(-50%);
+    }
+
+    .person span {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 14px;
+      color: white;
+      font-size: 15px;
+      font-weight: 850;
+      text-align: center;
+    }
+
+    .observation {
+      display: grid;
+      gap: 20px;
+    }
+
+    .observation-line {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 0 0 17px;
+      border-bottom: 1px solid var(--line);
+      font-size: 22px;
+      line-height: 1.4;
+      letter-spacing: -0.02em;
+      word-break: keep-all;
+    }
+
+    .observation-line b {
+      color: var(--blue);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .bookings-layout {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 56px;
+      align-items: end;
+    }
+
+    .bar-chart {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      align-items: end;
+      height: 405px;
+      padding: 0 18px 44px 50px;
+      border-left: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .bar-group {
+      height: 100%;
+      display: grid;
+      align-items: end;
+      gap: 9px;
+    }
+
+    .bar {
+      position: relative;
+      height: var(--bar-height);
+      min-height: 24px;
+      background: var(--blue);
+    }
+
+    .bar.hot {
+      background: var(--red);
+    }
+
+    .bar-value {
+      position: absolute;
+      left: 50%;
+      top: -38px;
+      transform: translateX(-50%);
+      font-size: 24px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .bar-label {
+      position: absolute;
+      left: 50%;
+      bottom: -34px;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 750;
+      transform: translateX(-50%);
+      white-space: nowrap;
+    }
+
+    .derived {
+      margin-top: 24px;
+      padding-top: 22px;
+      border-top: 5px solid var(--ink);
+      font-size: 26px;
+      line-height: 1.35;
+      letter-spacing: -0.03em;
+      font-weight: 820;
+      word-break: keep-all;
+    }
+
+    .mini-comparison {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 16px;
+      align-items: center;
+      margin-top: 26px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .mini-comparison strong {
+      display: block;
+      margin-top: 5px;
+      color: var(--ink);
+      font-size: 22px;
+    }
+
+    .era-word {
+      display: grid;
+      align-content: center;
+      height: 100%;
+    }
+
+    .era-word .year {
+      color: var(--acid);
+      font-size: 17px;
+      font-weight: 850;
+      letter-spacing: 0.18em;
+    }
+
+    .era-word h2 {
+      max-width: none;
+      margin-top: 12px;
+      font-size: 112px;
+      line-height: 0.87;
+      letter-spacing: -0.075em;
+    }
+
+    .era-word p {
+      max-width: 760px;
+      margin-top: 28px;
+      color: #c8c9ce;
+      font-size: 25px;
+      line-height: 1.46;
+      word-break: keep-all;
+    }
+
+    .ebusiness-layout {
+      display: grid;
+      grid-template-columns: 0.82fr 1.18fr;
+      gap: 54px;
+      align-items: center;
+    }
+
+    .ebusiness-examples {
+      display: grid;
+      gap: 0;
+      border-top: 7px solid var(--blue);
+    }
+
+    .ebusiness-example {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 14px;
+      align-items: center;
+      min-height: 72px;
+      border-bottom: 1px solid var(--line);
+      font-size: 21px;
+      line-height: 1.28;
+      font-weight: 780;
+      word-break: keep-all;
+    }
+
+    .ebusiness-example span {
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+    }
+
+    .delivery-system {
+      position: relative;
+      display: grid;
+      gap: 14px;
+      padding-left: 42px;
+    }
+
+    .delivery-system::before {
+      content: "";
+      position: absolute;
+      left: 13px;
+      top: 22px;
+      bottom: 22px;
+      width: 4px;
+      background: var(--line);
+    }
+
+    .delivery-step {
+      position: relative;
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 18px;
+      align-items: center;
+      min-height: 62px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .delivery-step::before {
+      content: "";
+      position: absolute;
+      left: -36px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--acid);
+      border: 3px solid var(--ink);
+    }
+
+    .delivery-step strong {
+      font-size: 21px;
+      letter-spacing: -0.02em;
+    }
+
+    .delivery-step p {
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.35;
+      word-break: keep-all;
+    }
+
+    .full-team {
+      margin-top: 18px;
+      padding: 16px 20px;
+      color: var(--paper);
+      background: var(--ink);
+      font-size: 20px;
+      line-height: 1.4;
+      font-weight: 750;
+      word-break: keep-all;
+    }
+
+    .full-team strong {
+      color: var(--acid);
+    }
+
+    .mortality {
+      display: grid;
+      grid-template-columns: 1fr 120px 1fr;
+      gap: 26px;
+      align-items: center;
+    }
+
+    .mortality-block {
+      min-height: 320px;
+      display: grid;
+      align-content: center;
+      padding: 34px;
+      border-top: 8px solid var(--blue);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .mortality-block.dead {
+      border-top-color: var(--red);
+      background:
+        repeating-linear-gradient(-45deg, rgba(217, 75, 52, 0.08), rgba(217, 75, 52, 0.08) 10px, transparent 10px, transparent 20px);
+    }
+
+    .mortality-number {
+      font-size: 102px;
+      line-height: 0.9;
+      letter-spacing: -0.075em;
+      font-weight: 940;
+    }
+
+    .mortality-label {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1.45;
+      word-break: keep-all;
+    }
+
+    .arrow {
+      color: var(--muted);
+      font-size: 64px;
+      font-weight: 300;
+      text-align: center;
+    }
+
+    .viant-layout {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 52px;
+      align-items: end;
+    }
+
+    .viant-chart {
+      height: 400px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      align-items: end;
+      padding: 0 22px 44px 50px;
+      border-left: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .viant-bar {
+      position: relative;
+      height: var(--bar-height);
+      background: var(--blue);
+    }
+
+    .viant-bar.peak {
+      background: var(--acid);
+      border: 2px solid var(--ink);
+    }
+
+    .viant-bar.crash {
+      background: var(--red);
+    }
+
+    .viant-bar strong {
+      position: absolute;
+      top: -36px;
+      left: 50%;
+      font-size: 23px;
+      transform: translateX(-50%);
+      white-space: nowrap;
+    }
+
+    .viant-bar span {
+      position: absolute;
+      left: 50%;
+      bottom: -34px;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 750;
+      transform: translateX(-50%);
+    }
+
+    .swing {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .swing p {
+      padding: 16px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.35;
+    }
+
+    .swing strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--ink);
+      font-size: 29px;
+    }
+
+    .cause-chain {
+      display: grid;
+      grid-template-columns: 1fr 46px 1fr 46px 1fr;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .cause-step {
+      min-height: 150px;
+      padding: 21px 4px 18px;
+      border-top: 7px solid var(--blue);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .cause-step:nth-of-type(3) {
+      border-top-color: var(--red);
+    }
+
+    .cause-step:nth-of-type(5) {
+      border-top-color: var(--ink);
+    }
+
+    .cause-step .step-label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 850;
+      letter-spacing: 0.1em;
+    }
+
+    .cause-step h3 {
+      margin-top: 10px;
+      font-size: 24px;
+      line-height: 1.22;
+    }
+
+    .cause-step p {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.42;
+      word-break: keep-all;
+    }
+
+    .cause-arrow {
+      color: var(--muted);
+      font-size: 38px;
+      text-align: center;
+    }
+
+    .lag-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .lag-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 6px 18px;
+      align-items: end;
+      padding: 15px 0 13px;
+      border-bottom: 4px solid var(--ink);
+    }
+
+    .lag-item .metric {
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 780;
+    }
+
+    .lag-item .change {
+      grid-row: span 2;
+      color: var(--blue);
+      font-size: 47px;
+      line-height: 0.95;
+      font-weight: 940;
+      letter-spacing: -0.055em;
+    }
+
+    .lag-item.revenue .change {
+      color: var(--red);
+    }
+
+    .lag-item .amount {
+      font-size: 20px;
+      line-height: 1.2;
+      font-weight: 850;
+      letter-spacing: -0.025em;
+    }
+
+    .economics-flip {
+      padding: 15px 22px;
+      color: var(--paper);
+      background: var(--ink);
+      font-size: 20px;
+      line-height: 1.35;
+      font-weight: 760;
+      word-break: keep-all;
+    }
+
+    .economics-flip strong {
+      margin-left: 12px;
+      color: var(--acid);
+      font-size: 28px;
+      letter-spacing: -0.035em;
+    }
+
+    .sapient-company {
+      display: grid;
+      grid-template-columns: 0.72fr 1.28fr;
+      gap: 54px;
+      align-items: stretch;
+    }
+
+    .sapient-identity {
+      display: grid;
+      align-content: space-between;
+      min-height: 330px;
+      padding: 32px;
+      color: var(--paper);
+      background: var(--ink);
+      border-top: 8px solid var(--acid);
+    }
+
+    .sapient-identity .eyebrow {
+      color: var(--acid);
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .sapient-identity .identity-name {
+      margin-top: 18px;
+      font-size: 39px;
+      line-height: 1.05;
+      font-weight: 930;
+      letter-spacing: -0.045em;
+    }
+
+    .sapient-identity p {
+      color: #d4d5da;
+      font-size: 19px;
+      line-height: 1.45;
+      font-weight: 650;
+      word-break: keep-all;
+    }
+
+    .sapient-identity .peak {
+      color: var(--acid);
+      font-size: 42px;
+      line-height: 1;
+      font-weight: 940;
+      letter-spacing: -0.045em;
+    }
+
+    .sapient-identity .peak small {
+      display: block;
+      margin-bottom: 8px;
+      color: #a8a9ad;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+    }
+
+    .sapient-work {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      align-content: center;
+    }
+
+    .sapient-stage {
+      position: relative;
+      min-height: 240px;
+      padding: 28px 20px;
+      border-top: 6px solid var(--blue);
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .sapient-stage + .sapient-stage {
+      border-left: 1px solid var(--line);
+    }
+
+    .sapient-stage .index {
+      color: var(--blue);
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+    }
+
+    .sapient-stage h3 {
+      margin-top: 30px;
+      font-size: 27px;
+      line-height: 1.1;
+    }
+
+    .sapient-stage p {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.42;
+      font-weight: 650;
+      word-break: keep-all;
+    }
+
+    .sapient-stage:nth-child(-n + 3)::after {
+      content: "→";
+      position: absolute;
+      z-index: 2;
+      right: -13px;
+      top: 49%;
+      width: 26px;
+      height: 26px;
+      display: grid;
+      place-items: center;
+      color: var(--paper);
+      background: var(--blue);
+      border-radius: 50%;
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .sapient-contract {
+      grid-column: 1 / -1;
+      margin-top: 24px;
+      padding: 16px 22px;
+      color: var(--paper);
+      background: var(--blue);
+      font-size: 19px;
+      line-height: 1.35;
+      font-weight: 760;
+      word-break: keep-all;
+    }
+
+    .sapient-contract strong {
+      color: var(--acid);
+    }
+
+    .sapient-crash {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .sapient-year {
+      padding: 18px 0 20px;
+      border-top: 6px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .sapient-year.low {
+      border-top-color: var(--red);
+    }
+
+    .sapient-year.recovery {
+      border-top-color: var(--blue);
+    }
+
+    .sapient-year .year {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+    }
+
+    .sapient-year .revenue {
+      margin-top: 12px;
+      font-size: 43px;
+      line-height: 1;
+      font-weight: 940;
+      letter-spacing: -0.05em;
+    }
+
+    .sapient-year.low .revenue {
+      color: var(--red);
+    }
+
+    .sapient-year.recovery .revenue {
+      color: var(--blue);
+    }
+
+    .sapient-year p {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.35;
+      font-weight: 680;
+    }
+
+    .sapient-survival {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 25px;
+    }
+
+    .survival-move {
+      min-height: 166px;
+      padding: 20px 22px;
+      background: #ece8dc;
+    }
+
+    .survival-move .move-label {
+      color: var(--blue);
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .survival-move strong {
+      display: block;
+      margin-top: 12px;
+      font-size: 29px;
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+    }
+
+    .survival-move p {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.35;
+      font-weight: 650;
+      word-break: keep-all;
+    }
+
+    .sapient-outcome {
+      margin-top: 22px;
+      padding: 15px 22px;
+      color: var(--paper);
+      background: var(--ink);
+      font-size: 19px;
+      line-height: 1.35;
+      font-weight: 760;
+      word-break: keep-all;
+    }
+
+    .sapient-outcome strong {
+      color: var(--acid);
+      font-size: 25px;
+    }
+
+    .appstore {
+      display: grid;
+      gap: 46px;
+    }
+
+    .milestones {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      align-items: center;
+      padding-top: 36px;
+    }
+
+    .milestones::before {
+      content: "";
+      position: absolute;
+      left: 9%;
+      right: 9%;
+      top: 50%;
+      height: 4px;
+      background: var(--line);
+      transform: translateY(-50%);
+    }
+
+    .milestone {
+      position: relative;
+      z-index: 1;
+      min-height: 210px;
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      padding: 24px;
+      text-align: center;
+      background: var(--paper);
+      border: 3px solid var(--ink);
+    }
+
+    .milestone.hot {
+      color: var(--paper);
+      background: var(--blue);
+      border-color: var(--blue);
+    }
+
+    .milestone .year {
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+    }
+
+    .milestone.hot .year {
+      color: #cbd4ff;
+    }
+
+    .milestone strong {
+      margin-top: 13px;
+      font-size: 58px;
+      line-height: 1;
+      letter-spacing: -0.06em;
+    }
+
+    .milestone small {
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .milestone.hot small {
+      color: #e3e7ff;
+    }
+
+    .multiplier {
+      justify-self: end;
+      color: var(--red);
+      font-size: 23px;
+      font-weight: 900;
+    }
+
+    .absorption {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .acquisition-line {
+      display: grid;
+      gap: 16px;
+    }
+
+    .acquisition-year {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 22px;
+      align-items: center;
+      min-height: 104px;
+      border-bottom: 1px solid #383a40;
+    }
+
+    .acquisition-year strong {
+      color: var(--acid);
+      font-size: 22px;
+    }
+
+    .acquisition-year span {
+      color: #f3efe5;
+      font-size: 26px;
+      line-height: 1.25;
+      font-weight: 780;
+      word-break: keep-all;
+    }
+
+    .absorption-result {
+      min-height: 360px;
+      display: grid;
+      align-content: center;
+      gap: 22px;
+      padding: 44px;
+      color: var(--ink);
+      background: var(--acid);
+    }
+
+    .absorption-result .big {
+      font-size: 74px;
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+      font-weight: 940;
+    }
+
+    .absorption-result p {
+      max-width: 450px;
+      font-size: 22px;
+      line-height: 1.45;
+      font-weight: 730;
+      word-break: keep-all;
+    }
+
+    .paths {
+      display: grid;
+      gap: 20px;
+    }
+
+    .path {
+      display: grid;
+      grid-template-columns: 78px 250px 1fr;
+      gap: 25px;
+      align-items: center;
+      min-height: 126px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .path-index {
+      width: 60px;
+      height: 60px;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: var(--blue);
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .path:nth-child(2) .path-index {
+      color: var(--ink);
+      background: var(--acid);
+      border: 2px solid var(--ink);
+    }
+
+    .path:nth-child(3) .path-index {
+      background: var(--red);
+    }
+
+    .path h3 {
+      font-size: 25px;
+    }
+
+    .path p {
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1.42;
+      word-break: keep-all;
+    }
+
+    .productivity-compare {
+      display: grid;
+      grid-template-columns: 1fr 72px 1fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .productivity-side {
+      min-height: 260px;
+      padding: 30px 34px;
+      border-top: 7px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .productivity-side.ax {
+      color: var(--paper);
+      background: var(--ink);
+      border-top-color: var(--acid);
+      border-bottom-color: var(--ink);
+    }
+
+    .productivity-label {
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .productivity-side.ax .productivity-label {
+      color: var(--acid);
+    }
+
+    .productivity-formula {
+      margin-top: 20px;
+      font-size: 34px;
+      line-height: 1.15;
+      letter-spacing: -0.045em;
+      font-weight: 920;
+      word-break: keep-all;
+    }
+
+    .productivity-formula strong {
+      color: var(--blue);
+    }
+
+    .productivity-side.ax .productivity-formula strong {
+      color: var(--acid);
+    }
+
+    .productivity-side p {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1.45;
+      font-weight: 650;
+      word-break: keep-all;
+    }
+
+    .productivity-side.ax p {
+      color: #d4d5da;
+    }
+
+    .productivity-versus {
+      display: grid;
+      place-items: center;
+      color: var(--red);
+      font-size: 46px;
+      font-weight: 950;
+    }
+
+    .model-lift {
+      display: grid;
+      grid-template-columns: 1fr 42px 1fr 42px 1.35fr 42px 1.25fr;
+      align-items: center;
+      margin-top: 30px;
+      padding: 20px 26px;
+      color: var(--paper);
+      background: var(--blue);
+    }
+
+    .model-lift span {
+      font-size: 18px;
+      line-height: 1.25;
+      font-weight: 820;
+      text-align: center;
+      word-break: keep-all;
+    }
+
+    .model-lift b {
+      color: var(--acid);
+      font-size: 27px;
+      text-align: center;
+    }
+
+    .productivity-thesis {
+      margin-top: 24px;
+      font-size: 23px;
+      line-height: 1.35;
+      font-weight: 820;
+      text-align: center;
+      word-break: keep-all;
+    }
+
+    .productivity-thesis strong {
+      color: var(--red);
+    }
+
+    .closing {
+      display: grid;
+      align-content: center;
+      height: 100%;
+    }
+
+    .closing h2 {
+      max-width: 1120px;
+      font-size: 68px;
+      line-height: 1.04;
+    }
+
+    .closing-question {
+      max-width: 950px;
+      margin-top: 44px;
+      padding-top: 30px;
+      border-top: 7px solid var(--acid);
+      color: #d4d5da;
+      font-size: 28px;
+      line-height: 1.45;
+      font-weight: 680;
+      word-break: keep-all;
+    }
+
+    .sources {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px 46px;
+      align-content: start;
+      padding-top: 6px;
+    }
+
+    .source-entry {
+      padding: 0 0 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .source-entry strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 18px;
+    }
+
+    .source-entry a {
+      color: var(--blue);
+      font-size: 13px;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+      text-decoration: none;
+    }
+
+    .notes {
+      display: none;
+    }
+
+    .controls {
+      position: fixed;
+      right: 24px;
+      bottom: 22px;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px;
+      color: #ececf0;
+      background: rgba(16, 17, 19, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 0 10px 28px rgba(16, 17, 19, 0.22);
+      backdrop-filter: blur(10px);
+    }
+
+    .controls button {
+      width: 38px;
+      height: 34px;
+      color: inherit;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .counter {
+      min-width: 66px;
+      color: #b9bac1;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .progress {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      z-index: 21;
+      width: var(--progress, 0%);
+      height: 4px;
+      background: var(--blue);
+      transition: width 160ms ease;
+    }
+
+    .notes-panel {
+      position: fixed;
+      left: 24px;
+      bottom: 22px;
+      z-index: 30;
+      width: min(720px, calc(100vw - 180px));
+      max-height: 34vh;
+      display: none;
+      overflow: auto;
+      padding: 18px 20px;
+      color: #e9e9ed;
+      background: rgba(16, 17, 19, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 14px 42px rgba(16, 17, 19, 0.28);
+      font-size: 14px;
+      line-height: 1.55;
+      backdrop-filter: blur(12px);
+    }
+
+    .notes-panel.visible {
+      display: block;
+    }
+
+    .notes-panel strong {
+      color: var(--acid);
+    }
+
+    .notes-panel a {
+      color: #aebcff;
+      overflow-wrap: anywhere;
+    }
+
+    @media (max-width: 720px) {
+      .viewport {
+        padding: 8px;
+      }
+
+      .controls {
+        right: 10px;
+        bottom: 10px;
+      }
+
+      .notes-panel {
+        left: 10px;
+        bottom: 56px;
+        width: calc(100vw - 20px);
+      }
+    }
+
+    @media print {
+      @page {
+        size: 13.333in 7.5in;
+        margin: 0;
+      }
+
+      html,
+      body {
+        width: auto;
+        height: auto;
+        overflow: visible;
+        background: white;
+      }
+
+      .viewport,
+      .deck-wrap,
+      .deck {
+        position: static;
+        width: 1280px;
+        height: auto;
+        display: block;
+        padding: 0;
+        transform: none;
+      }
+
+      .slide,
+      .slide.active {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        display: block;
+        page-break-after: always;
+        border: 0;
+        box-shadow: none;
+      }
+
+      .controls,
+      .progress,
+      .notes-panel {
+        display: none !important;
+      }
+
+      .footer > span:last-child {
+        padding-right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="viewport">
+    <div class="deck-wrap">
+      <main class="deck" aria-live="polite">
+        <section class="slide active" data-title="AX 외주 시장은 어디로 갈까">
+          <div class="frame">
+            <div class="topbar">
+              <div class="brand"><span class="mark">E</span><span>ELBAPH · JULY 2026</span></div>
+              <div>01</div>
+            </div>
+            <div class="content split wide-left">
+              <div>
+                <div class="kicker">AI Transformation Services</div>
+                <h1>AX 외주 시장은<br>어디로 갈까</h1>
+                <div class="title-meta">
+                  <span class="title-rule"></span>
+                  <span>안철우 · Elbaph Meetup</span>
+                </div>
+              </div>
+              <div class="title-signal" aria-label="새로운 기술의 등장과 서비스 시장의 성장 곡선">
+                <div class="curve"></div>
+                <span class="axis-label left">새로운 기술</span>
+                <span class="axis-label right">새로운 서비스 시장</span>
+              </div>
+            </div>
+            <div class="footer">
+              <span>인터넷과 모바일의 과거에서 AX의 다음을 읽어본다.</span>
+              <span>→ / Space로 이동 · N으로 출처</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-title="몇 번의 외주를 해보고 든 생각">
+          <div class="frame">
+            <div class="topbar">
+              <div class="brand"><span class="mark">E</span><span>OBSERVATION</span></div>
+              <div>02</div>
+            </div>
+            <div class="content chat-layout">
+              <div class="chat-copy">
+                <div class="quote-mark">“</div>
+                <blockquote>몇 번 해봤을 뿐인데,<br><span class="highlight">이거 생각보다 큰 시장</span> 아닌가?</blockquote>
+                <p class="lede">나에게는 며칠이면 되는 일이 고객에게는 희소한 실행 능력이었다. 구현 난이도와 고객 가치 사이에 큰 간극이 있었다.</p>
+              </div>
+              <div class="chat-images">
+                <img src="assets/ax-chat-01.png" alt="AX 외주 시장에 대한 카카오톡 대화">
+                <img src="assets/ax-chat-02.png" alt="인터넷과 모바일 초기 SI 시장을 언급한 답변">
+              </div>
+            </div>
+            <div class="footer">
+              <span>개인 경험에서 시작한 시장 질문</span>
+              <span>02 / 14</span>
+            </div>
+          </div>
+          <aside class="notes"><strong>[Sources]</strong> 발표자가 제공한 카카오톡 대화 캡처 2장.</aside>
+        </section>
+
+        <section class="slide" data-title="작고 똑똑한 팀이 먼저 돈을 번다">
+          <div class="frame">
+            <div class="topbar">
+              <div class="brand"><span class="mark">E</span><span>THE BOUTIQUE</span></div>
+              <div>03</div>
+            </div>
+            <div class="content">
+              <div>
+                <div class="kicker">A New Service Market</div>
+                <h2>작고 똑똑한 팀이 큰 회사보다 먼저 돈을 번다.</h2>
+              </div>
+              <div class="boutique">
+                <div class="people" aria-label="소수 정예 AX 팀">
+                  <div class="person" style="--height: 190px"><span>업무 이해</span></div>
+                  <div class="person" style="--height: 240px"><span>AI 구현</span></div>
+                  <div class="person" style="--height: 210px"><span>제품 감각</span></div>
+                  <div class="person" style="--height: 265px"><span>빠른 납품</span></div>
+                </div>
+                <div class="observation">
+                  <div class="observation-line"><b>01</b><span>기업은 AI를 사고 싶은 게 아니라, 자기 업무에 붙은 결과를 사고 싶다.</span></div>
+                  <div class="observation-line"><b>02</b><span>아직 내부 채용보다 외부 전문가를 쓰는 편이 더 빠르고 싸다.</span></div>
+                  <div class="observation-line"><b>03</b><span>그래서 제품 시장보다 먼저 전문 서비스 시장이 열린다.</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="footer">
+              <span>BigShift와 같은 소수정예 AX 팀에서 본 패턴</span>
+              <span>03 / 14</span>
+            </div>
+          </div>
+          <aside class="notes"><strong>[Speaker note]</strong> BigShift의 인원·수익은 공개 재무자료가 아니라 발표자의 직접 관찰이므로, 여기서는 숫자로 단정하지 않고 시장 패턴의 사례로만 사용한다.</aside>
+        </section>
+
+        <section class="slide" data-title="돈은 이미 AI 서비스 회사로 흐르고 있다">
+          <div class="frame">
+            <div class="topbar">
+              <div class="brand"><span class="mark">E</span><span>DEMAND SIGNAL</span></div>
+              <div>04</div>
+            </div>
+            <div class="content bookings-layout">
+              <div>
+                <div class="kicker">Accenture GenAI New Bookings</div>
+                <h2>돈은 이미 AI 서비스 회사로 흐르고 있다.</h2>
+                <p class="lede">Accenture의 생성형 AI 신규 수주는 2023년 3억 달러에서 2025년 59억 달러로 커졌다.</p>
+                <div class="derived">전체 수주는 제자리였지만,<br><span class="accent">AI 수주는 2025년에 거의 두 배</span>가 됐다.</div>
+                <div class="mini-comparison">
+                  <div>전체 수주<strong>$81.2B → $80.6B</strong></div>
+                  <div>vs.</div>
+                  <div>GenAI 수주<strong>$3.0B → $5.9B</strong></div>
+                </div>
+              </div>
+              <div class="bar-chart" aria-label="Accenture 생성형 AI 신규 수주 막대그래프">
+                <div class="bar-group">
+                  <div class="bar" style="--bar-height: 26px">
+                    <span class="bar-value">$0.3B</span>
+                    <span class="bar-label">FY2023*</span>
+                  </div>
+                </div>
+                <div class="bar-group">
+                  <div class="bar" style="--bar-height: 185px">
+                    <span class="bar-value">$3.0B</span>
+                    <span class="bar-label">FY2024</span>
+                  </div>
+                </div>
+                <div class="bar-group">
+                  <div class="bar hot" style="--bar-height: 340px">
+                    <span class="bar-value">$5.9B</span>
+                    <span class="bar-label">FY2025</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="footer">
+              <span>* FY2023 수치는 마지막 6개월 · 단위: USD</span>
+              <span>04 / 14</span>
+            </div>
+          </div>
+          <aside class="notes">
+            <strong>[Sources]</strong>
+            Accenture FY2023 results:
+            <a href="https://newsroom.accenture.com/content/accenture-reports-fourth-quarter-and-strong-full-year-fiscal-2023-results.pdf">newsroom.accenture.com/.../fiscal-2023-results.pdf</a><br>
+            Accenture FY2024 results:
+            <a href="https://www.investor.accenture.com/~/media/Files/A/accenture-v4/investors/earnings-reports/2024/q4/accenture-reports-fourth-quarter-and-full-year-fiscal-2024-results.pdf">investor.accenture.com/.../fiscal-2024-results.pdf</a><br>
+            Accenture FY2025 results:
+            <a href="https://newsroom.accenture.com/content/4q-full-fy25-earnings/accenture-reports-fourth-quarter-and-full-year-fiscal-2025-results.pdf">newsroom.accenture.com/.../fiscal-2025-results.pdf</a><br>
+            Derived: FY2024→FY2025 total bookings -0.7%, GenAI bookings +96.7%.
+          </aside>
+        </section>
+
+        <section class="slide dark" data-title="이 장면은 인터넷 때도 있었다">
+          <div class="frame">
+            <div class="topbar">
+              <div class="brand"><span class="mark">E</span><span>HISTORICAL COMPARABLE</span></div>
+              <div>05</div>
+            </div>
+            <div class="era-word">
+              <div class="year">LATE 1990s → EARLY 2000s</div>
+              <h2>e-Consulting</h2>
+              <p>인터넷이 중요하다는 사실은 모두 알았지만, 실제로 무엇을 만들어야 하는지는 아무도 몰랐다. 그 간극을 메우는 회사들이 폭발적으로 생겨났다.</p>
+            </div>
+            <div class="footer">
+              <span>새 기술의 불확실성이 외부 전문가의 시장을 연다.</span>
+              <span>05 / 14</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-title="e-business는 홈페이지 외주가 아니라 인터넷 사업 구축이었다">
+          <div class="frame">
+            <div class="topbar">
+              <div class="brand"><span class="mark">E</span><span>WHAT E-BUSINESS MEANT</span></div>
+              <div>06</div>
+            </div>
+            <div class="content">
+              <div>
+                <div class="kicker">More Than a Website</div>
+                <h2>e-business는 홈페이지 외주가 아니라 <span class="accent">인터넷 사업 구축</span>이었다.</h2>
+                <p class="lede">웹은 고객이 보는 화면이었고, 실제 프로젝트는 사업모델부터 기존 시스템 연동까지 포함했다.</p>
+              </div>
+              <div class="ebusiness-layout">
+                <div class="ebusiness-examples" aria-label="기업이 추진한 e-business 사례">
+                  <div class="ebusiness-example"><span>01</span><div>온라인 쇼핑·금융 서비스</div></div>
+                  <div class="ebusiness-example"><span>02</span><div>고객·파트너 포털</div></div>
+                  <div class="ebusiness-example"><span>03</span><div>B2B 마켓플레이스</div></div>
+                  <div class="ebusiness-example"><span>04</span><div>사내 지식·협업 시스템</div></div>
+                </div>
+                <div>
+                  <div class="delivery-system" aria-label="e-consulting의 프로젝트 수행 범위">
+                    <div class="delivery-step"><strong>사업전략</strong><p>인터넷에서 무엇을 팔고 어떻게 운영할지 정한다.</p></div>
+                    <div class="delivery-step"><strong>서비스·화면</strong><p>고객 경험과 업무 흐름을 설계한다.</p></div>
+                    <div class="delivery-step"><strong>소프트웨어</strong><p>실제 웹 서비스와 내부 도구를 개발한다.</p></div>
+                    <div class="delivery-step"><strong>연동·출시</strong><p>ERP·물류·결제 등 기존 시스템에 연결한다.</p></div>
+                  </div>
+                  <div class="full-team">기업 내부에 경험이 없었기 때문에 <strong>전략가·디자이너·개발자 팀 전체</strong>를 외부에서 샀다.</div>
+                </div>
+              </div>
+            </div>
+            <div class="footer">
+              <span>지금의 전략 컨설팅 + 제품 디자인 + 개발 외주 + SI를 한 회사가 제공했다.</span>
+              <span>06 / 15</span>
+            </div>
+          </div>
+          <aside class="notes">
+            <strong>[Sources]</strong>
+            Viant Corporation 2001 Form 10-K:
+            <a href="https://www.sec.gov/Archives/edgar/data/1028122/000091205702013097/a2075172z10-k.htm">sec.gov/Archives/edgar/data/1028122/.../a2075172z10-k.htm</a>.
+            Viant described integrated teams of strategists, creative designers and technologists working from strategy through implementation. Its offerings included collaboration networks, knowledge portals and digital solutions integrated into business processes.
+          </aside>
+        </section>
+
+        <section class="slide" data-title="100개 넘게 생겼고 절반 이상 사라졌다">
+          <div class="frame">
+            <div class="topbar">
+              <div class="brand"><span class="mark">E</span><span>THE BOOM AND BUST</span></div>
+              <div>06</div>
+            </div>
+            <div class="content">
+              <div>
+                <div class="kicker">Harvard Business School</div>
+                <h2>100개 넘게 생겼고, 2년 안에 절반 이상 사라졌다.</h2>
+              </div>
+              <div class="mortality">
+                <div class="mortality-block">
+                  <div class="mortality-number">100+</div>
+                  <div class="mortality-label">2000년 1월<br>e-consulting으로 분류된 회사</div>
+                </div>
+                <div class="arrow">→</div>
+                <div class="mortality-block dead">
+                  <div class="mortality-number danger">&gt;50%</div>
+                  <div class="mortality-label">2001년 12월까지<br>시장에서 사라진 비율</div>
+                </div>
+              </div>
+            </div>
+            <div class="footer">
+              <span>시장은 컸지만, 그 시장의 모든 회사가 살아남은 것은 아니었다.</span>
+              <span>06 / 14</span>
+            </div>
+          </div>
+          <aside class="notes">
+            <strong>[Sources]</strong>
+            Harvard Business School, “The Rise and Decline of e-Consulting”:
+            <a href="https://www.hbs.edu/faculty/Pages/item.aspx?num=28778">hbs.edu/faculty/Pages/item.aspx?num=28778</a>
+          </aside>
+        </section>
+
+        <section class="slide" data-title="가장 빠르게 성장한 회사가 가장 빠르게 무너졌다">
+          <div class="frame">
+            <div class="topbar">
+              <div class="brand"><span class="mark">E</span><span>CASE · VIANT</span></div>
+              <div>07</div>
+            </div>
+            <div class="content viant-layout">
+              <div>
+                <div class="kicker">Revenue, USD millions</div>
+                <h2>가장 빠르게 성장한 회사가 가장 빠르게 무너졌다.</h2>
+                <p class="lede">전략가·디자이너·개발자를 한 팀으로 묶어 인터넷 사업을 대신 만들어주던 Viant의 매출이다.</p>
+                <div class="swing">
+                  <p><strong class="accent">+107%</strong>1999 → 2000</p>
+                  <p><strong class="danger">−73%</strong>2000 → 2001</p>
+                </div>
+              </div>
+              <div class="viant-chart" aria-label="Viant 연도별 매출 막대그래프">
+                <div class="viant-bar" style="--bar-height: 160px"><strong>$61M</strong><span>1999</span></div>
+                <div class="viant-bar peak" style="--bar-height: 330px"><strong>$127M</strong><span>2000</span></div>
+                <div class="viant-bar crash" style="--bar-height: 90px"><strong>$35M</strong><span>2001</span></div>
+              </div>
+            </div>
+            <div class="footer">
+              <span>Viant audited financials · 반올림</span>
+              <span>07 / 14</span>
+            </div>
+          </div>
+          <aside class="notes">
+            <strong>[Sources]</strong>
+            Viant Corporation 2001 Form 10-K:
+            <a href="https://www.sec.gov/Archives/edgar/data/1028122/000091205702013097/a2075172z10-k.htm">sec.gov/Archives/edgar/data/1028122/.../a2075172z10-k.htm</a>.
+            Net revenue: $61.332M (1999), $127.162M (2000), $34.606M (2001).
+          </aside>
+        </section>
+
+        <section class="slide" data-title="인터넷 사업이라는 이유만으로 예산을 받는 시대가 끝났다">
+          <div class="frame">
+            <div class="topbar">
+              <div class="brand"><span class="mark">E</span><span>CASE · VIANT</span></div>
+              <div>08</div>
+            </div>
+            <div class="content">
+              <div>
+                <div class="kicker">Why Revenue Collapsed</div>
+                <h2>닷컴 붕괴 뒤, <span class="danger">“인터넷 사업”이라는 이유만으로</span> 예산을 받는 시대가 끝났다.</h2>
+              </div>
+              <div class="cause-chain" aria-label="Viant 매출 붕괴의 인과관계">
+                <div class="cause-step">
+                  <div class="step-label">시장 충격</div>
+                  <h3>닷컴 고객의 발주가 먼저 끊겼다</h3>
+                  <p>투자자금이 마르고 2001년 경기침체까지 겹치며 인터넷 프로젝트가 취소됐다.</p>
+                </div>
+                <div class="cause-arrow">→</div>
+                <div class="cause-step">
+                  <div class="step-label">고객 반응</div>
+                  <h3>속도전에서 ROI 검증으로</h3>
+                  <p>대기업은 신규 승인을 늦췄고, 전략 단계 뒤의 구축 계약도 ROI를 다시 따졌다.</p>
+                </div>
+                <div class="cause-arrow">→</div>
+                <div class="cause-step">
+                  <div class="step-label">VIANT</div>
+                  <h3>프로젝트 수와 규모가 함께 줄었다</h3>
+                  <p>매출은 1년 만에 73% 감소했고, 신규 선수금도 $5.7M에서 $0.7M으로 줄었다.</p>
+                </div>
+              </div>
+              <div class="lag-comparison">
+                <div class="lag-item revenue">
+                  <div class="metric">매출</div>
+                  <div class="change">−73%</div>
+                  <div class="amount">$127.2M → $34.6M</div>
+                </div>
+                <div class="lag-item">
+                  <div class="metric">전문서비스 비용</div>
+                  <div class="change">−38%</div>
+                  <div class="amount">$57.8M → $35.8M</div>
+                </div>
+              </div>
+              <div class="economics-flip">수요가 꺼지는 속도가 비용을 줄이는 속도보다 빨랐다.<strong>매출 $1당 수행 비용 $0.45 → $1.03</strong></div>
+            </div>
+            <div class="footer">
+              <span>2000 → 2001 · Viant</span>
+              <span>08 / 14</span>
+            </div>
+          </div>
+          <aside class="notes">
+            <strong>[Sources]</strong>
+            Viant Corporation 2001 Form 10-K:
+            <a href="https://www.sec.gov/Archives/edgar/data/1028122/000091205702013097/a2075172z10-k.htm">sec.gov/Archives/edgar/data/1028122/.../a2075172z10-k.htm</a>.
+            Viant states that the declining U.S. economic climate and falling demand reduced both the size and number of client engagements. It also explains that each sequential project phase was a separate commitment, so a client could choose not to continue to the next phase. Revenue fell 73%, deferred revenue fell from $5.7M to $0.7M, and professional-services expense fell only 38%, causing excess capacity and lower utilization.<br>
+            NBER dates the 2001 U.S. recession from March:
+            <a href="https://www.nber.org/news/business-cycle-dating-committee-announcement-november-26-2001">nber.org/news/business-cycle-dating-committee-announcement-november-26-2001</a>.<br>
+            Contemporaneous report quoting Viant CEO Bob Gett:
+            <a href="https://www.thestreet.com/technology/viant-warns-of-third-quarter-shortfall-stock-slammed-after-hours-1062922">thestreet.com/technology/viant-warns-of-third-quarter-shortfall...</a>.
+            Gett said many Global 2000 companies had slowed e-business initiatives and stepped back to revisit their strategies.
+          </aside>
+        </section>
+
+        <section class="slide" data-title="Sapient는 대기업의 디지털 사업을 끝까지 만들어주는 회사였다">
+          <div class="frame">
+            <div class="topbar">
+              <div class="brand"><span class="mark">E</span><span>CASE · SAPIENT</span></div>
+              <div>10</div>
+            </div>
+            <div class="content">
+              <div>
+                <div class="kicker">What Sapient Actually Did</div>
+                <h2>Sapient는 대기업의 디지털 사업을 <span class="accent">끝까지 만들어주는 회사</span>였다.</h2>
+                <p class="lede">전략만 제안하거나 웹 화면만 만들지 않았다. 사업 문제를 정의하고 시스템을 구축한 뒤 운영까지 맡았다.</p>
+              </div>
+              <div class="sapient-company">
+                <div class="sapient-identity">
+                  <div>
+                    <div class="eyebrow">Business + Technology Consultancy</div>
+                    <div class="identity-name">Global 2000의<br>복잡한 IT 프로젝트</div>
+                  </div>
+                  <p>금융·통신·소비재·자동차·에너지·공공 부문의 대기업이 주요 고객이었다.</p>
+                  <div class="peak"><small>2000 SERVICE REVENUE</small>$503M</div>
+                </div>
+                <div class="sapient-work" aria-label="Sapient의 프로젝트 수행 범위">
+                  <div class="sapient-stage"><div class="index">01 · PLAN</div><h3>사업 문제 정의</h3><p>매출·비용·운영 목표를 먼저 정했다.</p></div>
+                  <div class="sapient-stage"><div class="index">02 · DESIGN</div><h3>서비스 설계</h3><p>고객 경험과 내부 업무 흐름을 설계했다.</p></div>
+                  <div class="sapient-stage"><div class="index">03 · BUILD</div><h3>시스템 구축</h3><p>맞춤 개발과 패키지·레거시 연동을 수행했다.</p></div>
+                  <div class="sapient-stage"><div class="index">04 · RUN</div><h3>운영·개선</h3><p>애플리케이션 관리와 QA·테스트까지 맡았다.</p></div>
+                  <div class="sapient-contract"><strong>fixed-time / fixed-price</strong>로 납기와 가격을 약속하고, 결과에 책임지는 방식이 핵심 차별점이었다.</div>
+                </div>
+              </div>
+            </div>
+            <div class="footer">
+              <span>오늘날의 전략 컨설팅 + 제품 설계 + SI + 애플리케이션 운영을 한 회사가 제공했다.</span>
+              <span>10 / 17</span>
+            </div>
+          </div>
+          <aside class="notes">
+            <strong>[Sources]</strong>
+            Sapient Corporation 2001 Form 10-K:
+            <a href="https://www.sec.gov/Archives/edgar/data/1008817/000095013502001583/b41794sce10-k_pdf.pdf">sec.gov/Archives/edgar/data/1008817/.../b41794sce10-k_pdf.pdf</a>.
+            Sapient described itself as a business and technology consultancy serving Global 2000 clients, with six industry business units and fixed-price delivery.<br>
+            Sapient Corporation 2003 Form 10-K:
+            <a href="https://www.sec.gov/Archives/edgar/data/1008817/000095013504001259/b49037sce10vk.htm">sec.gov/Archives/edgar/data/1008817/.../b49037sce10vk.htm</a>.
+            The filing describes planning, designing, implementing and managing IT; custom development, package and legacy integration; and application management, QA and testing. Service revenue was $502.964M in 2000.
+          </aside>
+        </section>
+
+        <section class="slide" data-title="Sapient는 회사를 절반으로 줄여 살아남았다">
+          <div class="frame">
+            <div class="topbar">
+              <div class="brand"><span class="mark">E</span><span>CASE · SAPIENT</span></div>
+              <div>11</div>
+            </div>
+            <div class="content">
+              <div>
+                <div class="kicker">How It Survived</div>
+                <h2>Sapient는 회사를 <span class="danger">절반으로 줄여</span> 살아남았다.</h2>
+              </div>
+              <div>
+                <div class="sapient-crash" aria-label="Sapient의 닷컴 붕괴 전후 매출과 인력">
+                  <div class="sapient-year">
+                    <div class="year">2000 · PEAK</div>
+                    <div class="revenue">$503M</div>
+                    <p>직원 3,360명</p>
+                  </div>
+                  <div class="sapient-year low">
+                    <div class="year">2002 · BOTTOM</div>
+                    <div class="revenue">$174M</div>
+                    <p>직원 1,491명 · 매출 −65%</p>
+                  </div>
+                  <div class="sapient-year recovery">
+                    <div class="year">2003 · STABILIZE</div>
+                    <div class="revenue">$185M</div>
+                    <p>매출 +6% · 3·4분기 흑자</p>
+                  </div>
+                </div>
+                <div class="sapient-survival">
+                  <div class="survival-move">
+                    <div class="move-label">01 · Runway</div>
+                    <strong>현금성 자산 $245M</strong>
+                    <p>2001년 말 현금·단기투자가 구조조정을 버틸 시간을 만들었다.</p>
+                  </div>
+                  <div class="survival-move">
+                    <div class="move-label">02 · Resize</div>
+                    <strong>2년간 2,114명 감원</strong>
+                    <p>사무실을 닫고 인력을 줄여 축소된 수요에 맞게 비용 구조를 다시 짰다.</p>
+                  </div>
+                  <div class="survival-move">
+                    <div class="move-label">03 · Mix Shift</div>
+                    <strong>GDD 적용 매출 27% → 54%</strong>
+                    <p>북미·유럽과 뉴델리 팀이 함께 수행했고, 앱 운영 매출도 4%에서 13%로 키웠다.</p>
+                  </div>
+                </div>
+                <div class="sapient-outcome">결국 “웹 구축 회사”가 아니라 <strong>대기업의 디지털 운영 파트너</strong>로 남았고, 2015년 Publicis가 약 $3.7B에 인수했다.</div>
+              </div>
+            </div>
+            <div class="footer">
+              <span>생존 공식: 충분한 현금 + 빠른 축소 + 더 낮고 반복적인 딜리버리 구조</span>
+              <span>11 / 17</span>
+            </div>
+          </div>
+          <aside class="notes">
+            <strong>[Sources]</strong>
+            Sapient Corporation 2001 Form 10-K:
+            <a href="https://www.sec.gov/Archives/edgar/data/1008817/000095013502001583/b41794sce10-k_pdf.pdf">sec.gov/Archives/edgar/data/1008817/.../b41794sce10-k_pdf.pdf</a>.
+            At year-end 2001 Sapient reported $109.744M in cash and $134.793M in short-term investments. The 2001 restructuring plans terminated 1,251 employees.<br>
+            Sapient Corporation 2003 Form 10-K:
+            <a href="https://www.sec.gov/Archives/edgar/data/1008817/000095013504001259/b49037sce10vk.htm">sec.gov/Archives/edgar/data/1008817/.../b49037sce10vk.htm</a>.
+            Service revenue: $502.964M (2000), $173.811M (2002), $184.795M (2003). Total headcount: 3,360 at year-end 2000 and 1,491 at year-end 2002. The 2002 restructuring terminated 863 employees. GDD projects represented 27% of service revenue in 2001, 45% in 2002 and 54% in 2003; application-management revenue represented 4%, 7% and 13%, respectively. Sapient reported net income of $1.0M and $2.6M in Q3 and Q4 2003.<br>
+            Publicis Groupe completion announcement:
+            <a href="https://www.publicisgroupe.com/en/news/press-releases/publicis-groupe-2015-annual-results">publicisgroupe.com/en/news/press-releases/publicis-groupe-2015-annual-results</a>.
+            Publicis completed the Sapient acquisition on February 6, 2015 for total consideration of approximately $3.7B.
+          </aside>
+        </section>
+
+        <section class="slide" data-title="모바일은 더 빠르게 보편화됐다">
+          <div class="frame">
+            <div class="topbar">
+              <div class="brand"><span class="mark">E</span><span>THE MOBILE WAVE</span></div>
+              <div>10</div>
+            </div>
+            <div class="content appstore">
+              <div>
+                <div class="kicker">Apple App Store</div>
+                <h2>모바일은 더 빠르게 보편화됐다.</h2>
+                <p class="lede">새로운 인터페이스가 열리자, 기업이 만들어야 할 것의 수가 폭발했다.</p>
+              </div>
+              <div class="milestones" aria-label="App Store 앱 수 성장">
+                <div class="milestone">
+                  <span class="year">LAUNCH · 2008</span>
+                  <strong>500+</strong>
+                  <small>앱</small>
+                </div>
+                <div class="milestone">
+                  <span class="year">YEAR 1 · 2009</span>
+                  <strong>65K+</strong>
+                  <small>앱 · 개발자 10만+</small>
+                </div>
+                <div class="milestone hot">
+                  <span class="year">YEAR 3 · 2011</span>
+                  <strong>425K+</strong>
+                  <small>앱 · 누적 다운로드 150억+</small>
+                </div>
+              </div>
+              <div class="multiplier">출시 3년 만에 앱 수 850배+</div>
+            </div>
+            <div class="footer">
+              <span>Apple press releases · iOS App Store</span>
+              <span>10 / 14</span>
+            </div>
+          </div>
+          <aside class="notes">
+            <strong>[Sources]</strong>
+            Apple, App Store launch with 500+ native applications:
+            <a href="https://www.apple.com/newsroom/2008/07/10iPhone-3G-on-Sale-Tomorrow/">apple.com/newsroom/2008/07/10iPhone-3G-on-Sale-Tomorrow/</a><br>
+            Apple, 65,000+ apps and 100,000+ developers after one year:
+            <a href="https://www.apple.com/newsroom/2009/07/14Apples-App-Store-Downloads-Top-1-5-Billion-in-First-Year/">apple.com/newsroom/2009/07/14Apples-App-Store-Downloads-Top-1-5-Billion-in-First-Year/</a><br>
+            Apple, 425,000+ apps and 15B+ downloads in 2011:
+            <a href="https://www.apple.com/uk/newsroom/2011/07/07Apples-App-Store-Downloads-Top-15-Billion/">apple.com/uk/newsroom/2011/07/07Apples-App-Store-Downloads-Top-15-Billion/</a>
+          </aside>
+        </section>
+
+        <section class="slide dark" data-title="모바일·디지털 전문성은 사라진 게 아니라 흡수됐다">
+          <div class="frame">
+            <div class="topbar">
+              <div class="brand"><span class="mark">E</span><span>CONSOLIDATION</span></div>
+              <div>11</div>
+            </div>
+            <div class="content">
+              <div>
+                <div class="kicker">Accenture × Fjord</div>
+                <h2>모바일·디지털 전문성은 사라진 게 아니라 흡수됐다.</h2>
+              </div>
+              <div class="absorption">
+                <div class="acquisition-line">
+                  <div class="acquisition-year"><strong>2012</strong><span>Deloitte가 모바일 에이전시 Übermind를 인수</span></div>
+                  <div class="acquisition-year"><strong>2013</strong><span>Accenture가 서비스 디자인 회사 Fjord를 인수</span></div>
+                  <div class="acquisition-year"><strong>2015</strong><span>Fjord 팀 2배+ · 스튜디오 9개 → 17개</span></div>
+                </div>
+                <div class="absorption-result">
+                  <div class="big">전문 분야<br>→ 기본 역량</div>
+                  <p>모바일 시장이 사라진 것이 아니다. 모바일이 모든 컨설팅과 제품 개발의 기본이 되었다.</p>
+                </div>
+              </div>
+            </div>
+            <div class="footer">
+              <span>기술 카테고리의 소멸은 실패가 아니라 보편화일 수 있다.</span>
+              <span>11 / 14</span>
+            </div>
+          </div>
+          <aside class="notes">
+            <strong>[Sources]</strong>
+            Deloitte acquisition of mobile agency Übermind:
+            <a href="https://www.prnewswire.com/news-releases/deloitte-acquires-ubermind-establishes-lead-in-the-mobile-revolution-136656363.html">prnewswire.com/news-releases/deloitte-acquires-ubermind...</a><br>
+            Accenture, “Accenture Interactive Expands its Design and Innovation Capabilities...”:
+            <a href="https://newsroom.accenture.com/news/2015/accenture-interactive-expands-its-design-and-innovation-capabilities-through-new-fjord-studios-bigger-global-footprint-growing-design-team">newsroom.accenture.com/news/2015/...fjord-studios...</a>.
+            Accenture states it acquired Fjord in 2013; by 2015 the design team had more than doubled and studios increased from nine to 17. “기본 역량으로 흡수”는 이 두 인수 사례에서 도출한 해석이다.
+          </aside>
+        </section>
+
+        <section class="slide" data-title="AX에도 같은 세 갈래가 보인다">
+          <div class="frame">
+            <div class="topbar">
+              <div class="brand"><span class="mark">E</span><span>WHAT HAPPENS NEXT</span></div>
+              <div>12</div>
+            </div>
+            <div class="content">
+              <div>
+                <div class="kicker">Three Likely Outcomes</div>
+                <h2>AX에도 같은 세 갈래가 보인다.</h2>
+              </div>
+              <div class="paths">
+                <div class="path">
+                  <div class="path-index">01</div>
+                  <h3>전문가 부티크로 남는다</h3>
+                  <p>규모는 작지만 희소한 실행력과 신뢰를 높은 단가로 판다.</p>
+                </div>
+                <div class="path">
+                  <div class="path-index">02</div>
+                  <h3>딜리버리를 제품화한다</h3>
+                  <p>프로젝트에서 반복되는 코드·업무 지식·운영을 서비스 팩토리나 제품으로 바꾼다.</p>
+                </div>
+                <div class="path">
+                  <div class="path-index">03</div>
+                  <h3>기본 역량으로 흡수된다</h3>
+                  <p>대형 컨설팅사와 기업 내부 조직에 들어가며 ‘AX 회사’라는 이름은 흐려진다.</p>
+                </div>
+              </div>
+            </div>
+            <div class="footer">
+              <span>시장의 성장과 개별 회사의 확장성은 다른 질문이다.</span>
+              <span>12 / 14</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-title="AX의 1인 생산성은 모델 성능과 함께 가속될 수 있다">
+          <div class="frame">
+            <div class="topbar">
+              <div class="brand"><span class="mark">E</span><span>THE IMPORTANT DIFFERENCE</span></div>
+              <div>14</div>
+            </div>
+            <div class="content">
+              <div>
+                <div class="kicker">A Different Scaling Law</div>
+                <h2>AX의 <span class="accent">1인 생산성</span>은 모델 성능과 함께 가속될 수 있다.</h2>
+              </div>
+              <div>
+                <div class="productivity-compare">
+                  <div class="productivity-side">
+                    <div class="productivity-label">e-business service firm</div>
+                    <div class="productivity-formula">산출량 ≈ <strong>사람 수 × 시간</strong></div>
+                    <p>개발 도구가 좋아져도 프로젝트가 늘면 사람도 늘어야 했다. 수행량의 상한은 사람의 시간이었다.</p>
+                  </div>
+                  <div class="productivity-versus">≠</div>
+                  <div class="productivity-side ax">
+                    <div class="productivity-label">AX service firm</div>
+                    <div class="productivity-formula">산출량 ≈ 사람 수 × <strong>모델 능력</strong></div>
+                    <p>같은 사람이라도 ChatGPT·Claude·Codex가 좋아질수록 더 넓은 일을 더 빠르고 높은 품질로 처리할 수 있다.</p>
+                  </div>
+                </div>
+                <div class="model-lift" aria-label="기초 모델 성능 향상이 개인 생산성을 높이는 과정">
+                  <span>기초 모델 성능 향상</span><b>→</b><span>같은 1명</span><b>→</b><span>더 넓은 업무 범위</span><b>→</b><span>더 높은 속도·품질</span>
+                </div>
+                <div class="productivity-thesis">외부 모델이 발전할 때마다, 사람을 더 뽑지 않아도 <strong>1명이 만들 수 있는 가치의 상한</strong>이 계속 올라갈 수 있다.</div>
+              </div>
+            </div>
+            <div class="footer">
+              <span>핵심 가설: 사람 수가 그대로여도 모델 세대가 바뀔 때마다 회사의 생산 능력이 커진다.</span>
+              <span>14 / 16</span>
+            </div>
+          </div>
+          <aside class="notes">
+            <strong>[Interpretation]</strong>
+            여기서 “지수적일 수 있다”는 표현은 측정된 회사 성장률이 아니라 발표의 가설이다.
+            생산성 가속의 원인은 ChatGPT·Claude·Codex 같은 외부 기초 모델의 성능과 작업 범위가 빠르게 향상되는 데 있다.
+            반대로 영업, 고객 신뢰, 현장 변화관리, 데이터 접근, 최종 검증은 여전히 사람 중심의 병목으로 남을 수 있다.
+          </aside>
+        </section>
+
+        <section class="slide dark" data-title="큰 시장이 곧 큰 회사만을 만드는 것은 아니다">
+          <div class="frame">
+            <div class="topbar">
+              <div class="brand"><span class="mark">E</span><span>CONCLUSION</span></div>
+              <div>13</div>
+            </div>
+            <div class="closing">
+              <div class="kicker">The Thesis</div>
+              <h2>큰 시장이 곧<br><span style="color: var(--acid)">큰 회사만을</span> 만드는 것은 아니다.</h2>
+              <div class="closing-question">AX는 수백 개의 작고 수익성 높은 전문가 조직을 먼저 만들 것이다. e‑consulting과 달리, 모델이 좋아지는 것만으로도 그 조직의 1인 생산성이 빠르게 커질 수 있다.</div>
+            </div>
+            <div class="footer">
+              <span>AX가 기본 역량이 된 뒤, 지금의 AX 회사는 무엇으로 남을까?</span>
+              <span>13 / 14</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-title="Sources and method">
+          <div class="frame">
+            <div class="topbar">
+              <div class="brand"><span class="mark">E</span><span>APPENDIX</span></div>
+              <div>14</div>
+            </div>
+            <div class="content top">
+              <div>
+                <div class="kicker">Sources & Method</div>
+                <h2>과거 사례는 1차 자료와 학술 자료를 중심으로 봤다.</h2>
+              </div>
+              <div class="sources">
+                <div class="source-entry">
+                  <strong>현재 AX 수요</strong>
+                  <a href="https://newsroom.accenture.com/content/4q-full-fy25-earnings/accenture-reports-fourth-quarter-and-full-year-fiscal-2025-results.pdf">Accenture FY2025 Results</a>
+                </div>
+                <div class="source-entry">
+                  <strong>e-Consulting 시장</strong>
+                  <a href="https://www.hbs.edu/faculty/Pages/item.aspx?num=28778">Harvard Business School, The Rise and Decline of e-Consulting</a>
+                </div>
+                <div class="source-entry">
+                  <strong>Viant 재무·인력</strong>
+                  <a href="https://www.sec.gov/Archives/edgar/data/1028122/000091205702013097/a2075172z10-k.htm">Viant Corporation 2001 Form 10-K</a>
+                </div>
+                <div class="source-entry">
+                  <strong>Sapient 사업·생존·인수</strong>
+                  <a href="https://www.sec.gov/Archives/edgar/data/1008817/000095013502001583/b41794sce10-k_pdf.pdf">Sapient 2001 Form 10-K</a><br>
+                  <a href="https://www.sec.gov/Archives/edgar/data/1008817/000095013504001259/b49037sce10vk.htm">Sapient 2003 Form 10-K</a><br>
+                  <a href="https://www.publicisgroupe.com/en/news/press-releases/publicis-groupe-2015-annual-results">Publicis acquisition, 2015</a>
+                </div>
+                <div class="source-entry">
+                  <strong>App Store 성장</strong>
+                  <a href="https://www.apple.com/newsroom/2009/07/14Apples-App-Store-Downloads-Top-1-5-Billion-in-First-Year/">Apple Newsroom, 2009</a>
+                </div>
+                <div class="source-entry">
+                  <strong>모바일·디지털 에이전시 흡수</strong>
+                  <a href="https://www.prnewswire.com/news-releases/deloitte-acquires-ubermind-establishes-lead-in-the-mobile-revolution-136656363.html">Deloitte × Übermind, 2012</a><br>
+                  <a href="https://newsroom.accenture.com/news/2015/accenture-interactive-expands-its-design-and-innovation-capabilities-through-new-fjord-studios-bigger-global-footprint-growing-design-team">Accenture Newsroom, 2015</a>
+                </div>
+                <div class="source-entry">
+                  <strong>분석 원칙</strong>
+                  <a href="#17">외부 검증 수치와 회사 공개 수치를 구분하고, 계산값은 원자료에서 단순 산출했다.</a>
+                </div>
+                <div class="source-entry">
+                  <strong>개인 사례</strong>
+                  <a href="#02">발표자의 외주 경험과 BigShift 관찰은 일화적 증거로만 사용했다.</a>
+                </div>
+              </div>
+            </div>
+            <div class="footer">
+              <span>N 키로 각 슬라이드의 상세 출처를 확인할 수 있다.</span>
+              <span>14 / 14</span>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="controls" aria-label="슬라이드 조작">
+    <button type="button" id="prev" title="이전 슬라이드" aria-label="이전 슬라이드">←</button>
+    <div class="counter" id="counter">1 / 17</div>
+    <button type="button" id="next" title="다음 슬라이드" aria-label="다음 슬라이드">→</button>
+  </div>
+  <div class="progress" id="progress"></div>
+  <aside class="notes-panel" id="notesPanel" aria-live="polite"></aside>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const counter = document.getElementById("counter");
+    const progress = document.getElementById("progress");
+    const notesPanel = document.getElementById("notesPanel");
+    const previousButton = document.getElementById("prev");
+    const nextButton = document.getElementById("next");
+    let current = 0;
+    let notesVisible = false;
+
+    function numberSlides() {
+      slides.forEach((slide, index) => {
+        const number = String(index + 1).padStart(2, "0");
+        const total = String(slides.length).padStart(2, "0");
+        const topbarNumber = slide.querySelector(".topbar > div:last-child");
+        const footerNumber = slide.querySelector(".footer > span:last-child");
+
+        if (topbarNumber) {
+          topbarNumber.textContent = number;
+        }
+        if (index > 0 && footerNumber && /^\d{2}\s*\/\s*\d{2}$/.test(footerNumber.textContent.trim())) {
+          footerNumber.textContent = `${number} / ${total}`;
+        }
+      });
+    }
+
+    function fitDeck() {
+      const scale = Math.min(window.innerWidth / 1324, window.innerHeight / 764);
+      document.documentElement.style.setProperty("--deck-scale", Math.max(0.1, scale).toString());
+    }
+
+    function hashIndex() {
+      const value = Number.parseInt(window.location.hash.replace("#", ""), 10);
+      if (!Number.isFinite(value)) {
+        return 0;
+      }
+      return Math.min(Math.max(value - 1, 0), slides.length - 1);
+    }
+
+    function updateNotes() {
+      const notes = slides[current].querySelector(".notes");
+      notesPanel.innerHTML = notes ? notes.innerHTML : "<strong>[Notes]</strong> 이 슬라이드에는 별도 출처가 없습니다.";
+      notesPanel.classList.toggle("visible", notesVisible);
+    }
+
+    function showSlide(index, updateHash = true) {
+      current = (index + slides.length) % slides.length;
+      slides.forEach((slide, slideIndex) => {
+        slide.classList.toggle("active", slideIndex === current);
+      });
+      counter.textContent = `${current + 1} / ${slides.length}`;
+      progress.style.setProperty("--progress", `${((current + 1) / slides.length) * 100}%`);
+      const title = slides[current].dataset.title || `Slide ${current + 1}`;
+      document.title = `${title} · AX 외주 시장은 어디로 갈까`;
+      updateNotes();
+      if (updateHash) {
+        const hash = `#${String(current + 1).padStart(2, "0")}`;
+        if (window.location.hash !== hash) {
+          history.replaceState(null, "", hash);
+        }
+      }
+    }
+
+    function toggleNotes() {
+      notesVisible = !notesVisible;
+      updateNotes();
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen?.();
+      } else {
+        document.exitFullscreen?.();
+      }
+    }
+
+    previousButton.addEventListener("click", () => showSlide(current - 1));
+    nextButton.addEventListener("click", () => showSlide(current + 1));
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+        event.preventDefault();
+        showSlide(current + 1);
+      } else if (event.key === "ArrowLeft" || event.key === "PageUp") {
+        event.preventDefault();
+        showSlide(current - 1);
+      } else if (event.key === "Home") {
+        event.preventDefault();
+        showSlide(0);
+      } else if (event.key === "End") {
+        event.preventDefault();
+        showSlide(slides.length - 1);
+      } else if (event.key.toLowerCase() === "n") {
+        event.preventDefault();
+        toggleNotes();
+      } else if (event.key.toLowerCase() === "f") {
+        event.preventDefault();
+        toggleFullscreen();
+      }
+    });
+
+    window.addEventListener("resize", fitDeck);
+    window.addEventListener("hashchange", () => showSlide(hashIndex(), false));
+
+    numberSlides();
+    fitDeck();
+    showSlide(hashIndex());
+  </script>
+</body>
+</html>

@@ -24,6 +24,7 @@ Follow this workflow for Elbaph meetup article publishing. Do not ask the user t
 2. Put frontmatter only in the Korean article:
    - `slug: meetup-N-member`
    - `date: YYYY-MM-DD`
+   - `publishedAt: YYYY-MM-DDTHH:mm:ss+09:00` for publish-time ordering
    - bilingual `title.ko`, `title.en`, `subtitle.ko`, `subtitle.en`
 3. Create or update the English body at `apps/site/content/articles/meetup-N/member.en.md` without frontmatter.
 4. Preserve the same image order and caption meaning in Korean and English.

@@ -17,6 +17,7 @@ output/
 # Local tools
 .omc/
 .omx/
+.playwright-cli/
 .playwright-mcp/
 
 # macOS

@@ -1,0 +1,27 @@
+id: meetup-6
+date: 2026-07-25
+title:
+  ko: 6th 밋업
+  en: 6th Meetup
+location:
+language: ko
+recording_storage: google_drive
+stt_provider: clovanote
+status: preparing
+
+presentations:
+  - order: 0
+    speaker: elbaph
+    type: overview
+    title:
+      ko: 7월 Elbaph 밋업 및 게스트 소개
+      en: July Elbaph meetup and guest introduction
+  - order: 1
+    speaker: chulwoo
+    title:
+      ko: AX 외주 시장은 어디로 갈까
+      en: Where Is the AX Services Market Going?
+  - order: 2
+    speaker: taekyu
+  - order: 3
+    speaker: jaehwan

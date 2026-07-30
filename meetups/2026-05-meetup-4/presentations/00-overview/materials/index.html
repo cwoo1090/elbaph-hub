@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Elbaph May Meetup Overview</title>
+  <link rel="icon" href="data:,">
+  <style>
+    :root {
+      --bg: #faf9f6;
+      --paper: #fffdf8;
+      --ink: #1a1a1a;
+      --muted: #737373;
+      --line: #dedbd2;
+      --soft: #f0ede5;
+      --accent: #c7442e;
+      --green: #4f6f52;
+      --blue: #315f7c;
+      --gold: #b48a2c;
+      --shadow: 0 24px 80px rgba(26, 26, 26, 0.12);
+      font-family: Inter, Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    body {
+      overflow: hidden;
+    }
+
+    .deck {
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: clamp(10px, 2vw, 28px);
+    }
+
+    .slide {
+      display: none;
+      position: relative;
+      width: min(100vw - 32px, calc((100vh - 32px) * 16 / 9));
+      aspect-ratio: 16 / 9;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .slide.active {
+      display: block;
+    }
+
+    .grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(26, 26, 26, 0.055) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(26, 26, 26, 0.055) 1px, transparent 1px);
+      background-size: 80px 80px;
+      pointer-events: none;
+    }
+
+    .frame {
+      position: absolute;
+      inset: 38px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 22px;
+      z-index: 1;
+    }
+
+    header,
+    footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.02em;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--ink);
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .brand img {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      max-width: 820px;
+      font-size: clamp(64px, 8vw, 104px);
+      line-height: 0.92;
+      font-weight: 920;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      max-width: 900px;
+      font-size: clamp(42px, 5.4vw, 70px);
+      line-height: 0.98;
+      font-weight: 900;
+      letter-spacing: 0;
+      word-break: keep-all;
+    }
+
+    h3 {
+      font-size: 26px;
+      line-height: 1.15;
+      font-weight: 850;
+      letter-spacing: 0;
+      word-break: keep-all;
+    }
+
+    .kicker {
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .content {
+      display: grid;
+      align-content: center;
+      gap: 26px;
+      min-height: 0;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 0.95fr;
+      gap: 34px;
+      align-items: center;
+      min-height: 0;
+    }
+
+    .title-stack {
+      display: grid;
+      align-content: center;
+      gap: 18px;
+    }
+
+    .lede {
+      max-width: 720px;
+      color: #3d3d3d;
+      font-size: 23px;
+      line-height: 1.45;
+      word-break: keep-all;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 7px 12px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.55);
+      color: #383838;
+      font-size: 14px;
+      font-weight: 750;
+    }
+
+    .note-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.24);
+    }
+
+    .note {
+      min-height: 180px;
+      padding: 25px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      align-content: space-between;
+      gap: 22px;
+    }
+
+    .note strong {
+      display: block;
+      font-size: 28px;
+      line-height: 1.1;
+      font-weight: 900;
+      word-break: keep-all;
+    }
+
+    .note span {
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.45;
+      word-break: keep-all;
+    }
+
+    .stats-layout {
+      display: grid;
+      grid-template-columns: 0.55fr 1.45fr;
+      gap: 18px;
+      align-items: stretch;
+      height: 330px;
+      min-height: 0;
+    }
+
+    .metric-stack {
+      display: grid;
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      align-content: stretch;
+    }
+
+    .metric {
+      min-height: 0;
+      padding: 22px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.52);
+      display: grid;
+      align-content: space-between;
+      gap: 18px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 52px;
+      line-height: 1;
+      font-weight: 920;
+      letter-spacing: 0;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.4;
+      word-break: keep-all;
+    }
+
+    .metric small {
+      color: var(--green);
+      font-size: 14px;
+      font-weight: 850;
+    }
+
+    .image-panel {
+      min-height: 0;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.5);
+      padding: 12px;
+      overflow: hidden;
+    }
+
+    .image-panel img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 390px;
+      object-fit: cover;
+      object-position: top left;
+      border: 1px solid var(--line);
+    }
+
+    .stats-layout .image-panel img {
+      min-height: 0;
+    }
+
+    .stats-layout .image-panel,
+    .stats-layout .metric-stack {
+      min-height: 0;
+    }
+
+    .image-panel.page img {
+      object-position: top center;
+    }
+
+    .newsletter-layout {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 18px;
+      align-items: stretch;
+      min-height: 0;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.52);
+      padding: 24px;
+      display: grid;
+      gap: 16px;
+      min-height: 0;
+    }
+
+    .panel p,
+    .panel li {
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.48;
+      word-break: keep-all;
+    }
+
+    .panel ul {
+      margin: 0;
+      padding-left: 19px;
+    }
+
+    .small-note {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.45;
+      word-break: keep-all;
+    }
+
+    .flow-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .flow-item {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      align-items: center;
+      min-height: 39px;
+      border: 1px solid var(--line);
+      background: rgba(250, 249, 246, 0.72);
+    }
+
+    .flow-item b {
+      height: 100%;
+      display: grid;
+      place-items: center;
+      border-right: 1px solid var(--line);
+      color: var(--accent);
+      font-size: 13px;
+    }
+
+    .flow-item span {
+      padding: 0 12px;
+      color: #3d3d3d;
+      font-size: 14px;
+      line-height: 1.3;
+      word-break: keep-all;
+    }
+
+    .activity-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .activity {
+      min-height: 305px;
+      padding: 23px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.52);
+      display: grid;
+      align-content: space-between;
+      gap: 22px;
+    }
+
+    .activity:nth-child(1) {
+      border-top: 7px solid var(--blue);
+    }
+
+    .activity:nth-child(2) {
+      border-top: 7px solid var(--gold);
+    }
+
+    .activity:nth-child(3) {
+      border-top: 7px solid var(--green);
+    }
+
+    .activity:nth-child(4) {
+      border-top: 7px solid var(--accent);
+    }
+
+    .activity small {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .activity strong {
+      display: block;
+      font-size: 28px;
+      line-height: 1.1;
+      font-weight: 900;
+      word-break: keep-all;
+    }
+
+    .activity span {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.45;
+      word-break: keep-all;
+    }
+
+    .guest-card {
+      display: grid;
+      grid-template-columns: 0.48fr 1fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .guest-mark {
+      aspect-ratio: 1;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(135deg, rgba(199, 68, 46, 0.12), transparent 46%),
+        linear-gradient(315deg, rgba(49, 95, 124, 0.12), transparent 48%),
+        rgba(255, 255, 255, 0.58);
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      font-size: 112px;
+      font-weight: 940;
+      letter-spacing: 0;
+    }
+
+    .guest-details {
+      display: grid;
+      gap: 18px;
+    }
+
+    .fact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .fact {
+      min-height: 118px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.52);
+      display: grid;
+      align-content: space-between;
+      gap: 16px;
+    }
+
+    .fact small {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .fact span {
+      color: #3d3d3d;
+      font-size: 20px;
+      line-height: 1.35;
+      font-weight: 780;
+      word-break: keep-all;
+    }
+
+    .lineup {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .talk {
+      min-height: 330px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.52);
+      padding: 26px;
+      display: grid;
+      align-content: space-between;
+      gap: 26px;
+    }
+
+    .talk:nth-child(1) {
+      border-top: 7px solid var(--accent);
+    }
+
+    .talk:nth-child(2) {
+      border-top: 7px solid var(--blue);
+    }
+
+    .talk:nth-child(3) {
+      border-top: 7px solid var(--green);
+    }
+
+    .talk small {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .talk strong {
+      display: block;
+      font-size: 34px;
+      line-height: 1.08;
+      font-weight: 920;
+      word-break: keep-all;
+    }
+
+    .talk span {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.45;
+      word-break: keep-all;
+    }
+
+    .progress {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 5px;
+      width: var(--progress, 16.6%);
+      background: var(--ink);
+      transition: width 180ms ease;
+    }
+
+    @media print {
+      body {
+        overflow: visible;
+        background: white;
+      }
+
+      .deck {
+        display: block;
+        width: auto;
+        height: auto;
+        padding: 0;
+      }
+
+      .slide,
+      .slide.active {
+        display: block;
+        width: 100vw;
+        height: 100vh;
+        page-break-after: always;
+        border: 0;
+        box-shadow: none;
+      }
+
+      .progress {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck" aria-live="polite">
+    <section class="slide active" data-title="Cover">
+      <div class="grid"></div>
+      <div class="frame">
+        <header>
+          <div class="brand"><img src="../../../../../apps/site/public/logo.png" alt=""> Elbaph</div>
+          <span>Meetup 04</span>
+        </header>
+        <div class="content split">
+          <div class="title-stack">
+            <div class="kicker">Overview</div>
+            <h1>May Meetup</h1>
+            <div class="meta-row">
+              <span class="pill">2026.05.31 Sun</span>
+              <span class="pill">10:00 KST</span>
+              <span class="pill">Online</span>
+            </div>
+          </div>
+          <div class="note-grid">
+            <div class="note"><strong>Newsletter 시작</strong><span>59 subscribers, 1.45K views</span></div>
+            <div class="note"><strong>Discord activity</strong><span>밋업 준비, 뉴스, 로봇 대화</span></div>
+            <div class="note"><strong>Guest talk</strong><span>이승준, precision medicine</span></div>
+            <div class="note"><strong>3 presentations</strong><span>승준 → 철우 → 태규</span></div>
+          </div>
+        </div>
+        <footer><span>2026 May</span><span>01 / 06</span></footer>
+      </div>
+      <div class="progress"></div>
+    </section>
+
+    <section class="slide" data-title="Newsletter Started">
+      <div class="grid"></div>
+      <div class="frame">
+        <header>
+          <div class="brand"><img src="../../../../../apps/site/public/logo.png" alt=""> Elbaph</div>
+          <span>Newsletter</span>
+        </header>
+        <div class="content">
+          <div class="title-stack">
+            <div class="kicker">Last Month Update</div>
+            <h2>Elbaph Newsletter 시작</h2>
+          </div>
+          <div class="stats-layout">
+            <div class="metric-stack">
+              <div class="metric"><span>Total subscribers</span><strong>59</strong><small>from 2</small></div>
+              <div class="metric"><span>30d views</span><strong>1.45K</strong><small>May launch month</small></div>
+            </div>
+            <div class="image-panel">
+              <img src="assets/newsletter-analytics.png" alt="Elbaph newsletter analytics screenshot">
+            </div>
+          </div>
+        </div>
+        <footer><span>Overview</span><span>02 / 06</span></footer>
+      </div>
+      <div class="progress"></div>
+    </section>
+
+    <section class="slide" data-title="Newsletter Surface">
+      <div class="grid"></div>
+      <div class="frame">
+        <header>
+          <div class="brand"><img src="../../../../../apps/site/public/logo.png" alt=""> Elbaph</div>
+          <span>Articles</span>
+        </header>
+        <div class="content">
+          <div class="title-stack">
+            <div class="kicker">Publishing Loop</div>
+            <h2>밋업 발표, 외부에 남는 글로</h2>
+          </div>
+          <div class="newsletter-layout">
+            <div class="image-panel page">
+              <img src="assets/newsletter-page.png" alt="Elbaph newsletter page screenshot">
+            </div>
+            <div class="panel">
+              <h3>이번 달에 생긴 변화</h3>
+              <ul>
+                <li>발표와 리서치, Discord 안에서 끝나지 않고 newsletter로 재사용.</li>
+                <li>의료 로봇, 휴머노이드, AI chip, LLM Wiki 글이 외부 독자에게 도달.</li>
+                <li>다음 목표: 더 자주 쓰기보다, 좋은 발표가 자연스럽게 글로 남는 구조.</li>
+              </ul>
+              <p class="small-note">Flow: 밋업 발표 → transcript/materials → article draft → speaker edit → site/newsletter</p>
+            </div>
+          </div>
+        </div>
+        <footer><span>Overview</span><span>03 / 06</span></footer>
+      </div>
+      <div class="progress"></div>
+    </section>
+
+    <section class="slide" data-title="Discord Activity">
+      <div class="grid"></div>
+      <div class="frame">
+        <header>
+          <div class="brand"><img src="../../../../../apps/site/public/logo.png" alt=""> Elbaph</div>
+          <span>Discord</span>
+        </header>
+        <div class="content">
+          <div class="title-stack">
+            <div class="kicker">Community Activity</div>
+            <h2>이번 달 Discord: 밋업 준비와 follow-up 작업 공간</h2>
+          </div>
+          <div class="activity-grid">
+            <article class="activity">
+              <small>#meetups</small>
+              <strong>5월 밋업 thread</strong>
+              <span>2026.05.31 일정 확정, 게스트와 발표 주제 정리.</span>
+            </article>
+            <article class="activity">
+              <small>#news</small>
+              <strong>Daily briefing</strong>
+              <span>AI, robotics, BCI, medtech, Korea startup 뉴스가 매일 축적.</span>
+            </article>
+            <article class="activity">
+              <small>#lounge</small>
+              <strong>Robot control talk</strong>
+              <span>반응속도, manipulation, visual recognition 같은 로봇 대화.</span>
+            </article>
+            <article class="activity">
+              <small>Follow-up</small>
+              <strong>Article editing</strong>
+              <span>4월 발표 글 초안 공유와 수정 요청 follow-up.</span>
+            </article>
+          </div>
+        </div>
+        <footer><span>Overview</span><span>04 / 06</span></footer>
+      </div>
+      <div class="progress"></div>
+    </section>
+
+    <section class="slide" data-title="Guest">
+      <div class="grid"></div>
+      <div class="frame">
+        <header>
+          <div class="brand"><img src="../../../../../apps/site/public/logo.png" alt=""> Elbaph</div>
+          <span>Guest</span>
+        </header>
+        <div class="content guest-card">
+          <div class="guest-mark">SJ</div>
+          <div class="guest-details">
+            <div class="title-stack">
+              <div class="kicker">Today's Guest</div>
+              <h2>이승준</h2>
+            </div>
+            <div class="fact-grid">
+              <div class="fact"><small>School</small><span>경기과학고등학교</span></div>
+              <div class="fact"><small>Medicine</small><span>연세대학교 의과대학</span></div>
+              <div class="fact"><small>Clinical</small><span>성형외과 전문의</span></div>
+              <div class="fact"><small>Current focus</small><span>Precision medicine</span></div>
+            </div>
+          </div>
+        </div>
+        <footer><span>Overview</span><span>05 / 06</span></footer>
+      </div>
+      <div class="progress"></div>
+    </section>
+
+    <section class="slide" data-title="Lineup">
+      <div class="grid"></div>
+      <div class="frame">
+        <header>
+          <div class="brand"><img src="../../../../../apps/site/public/logo.png" alt=""> Elbaph</div>
+          <span>Lineup</span>
+        </header>
+        <div class="content">
+          <div class="title-stack">
+            <div class="kicker">3 Presentations</div>
+            <h2>오늘의 발표 순서</h2>
+          </div>
+          <div class="lineup">
+            <article class="talk">
+              <small>01 Guest</small>
+              <div>
+                <strong>이승준</strong>
+                <span>Precision medicine</span>
+              </div>
+              <span>연구 영역과 임상/의학 문제의식</span>
+            </article>
+            <article class="talk">
+              <small>02 Chulwoo</small>
+              <div>
+                <strong>안철우</strong>
+                <span>Building in public, Maple</span>
+              </div>
+              <span>LLM Wiki app과 public building loop</span>
+            </article>
+            <article class="talk">
+              <small>03 Taekyu</small>
+              <div>
+                <strong>송태규</strong>
+                <span>Sim2real</span>
+              </div>
+              <span>시뮬레이션과 현실 로봇 사이의 간극</span>
+            </article>
+          </div>
+        </div>
+        <footer><span>Elbaph 4th Meetup</span><span>06 / 06</span></footer>
+      </div>
+      <div class="progress"></div>
+    </section>
+  </main>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    let index = 0;
+
+    function show(next) {
+      index = Math.max(0, Math.min(slides.length - 1, next));
+      slides.forEach((slide, i) => {
+        slide.classList.toggle("active", i === index);
+        slide.style.setProperty("--progress", `${((i + 1) / slides.length) * 100}%`);
+      });
+      document.title = `${slides[index].dataset.title} - Elbaph May Meetup`;
+    }
+
+    document.addEventListener("keydown", (event) => {
+      if (["ArrowRight", "PageDown", " "].includes(event.key)) {
+        event.preventDefault();
+        show(index + 1);
+      }
+      if (["ArrowLeft", "PageUp", "Backspace"].includes(event.key)) {
+        event.preventDefault();
+        show(index - 1);
+      }
+      if (event.key === "Home") show(0);
+      if (event.key === "End") show(slides.length - 1);
+    });
+
+    show(0);
+  </script>
+</body>
+</html>
