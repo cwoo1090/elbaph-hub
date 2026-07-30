@@ -1,0 +1,1163 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Building in Public: Maple</title>
+  <link rel="icon" href="data:,">
+  <style>
+    :root {
+      --bg: #f5f2eb;
+      --paper: #fffdf8;
+      --ink: #171717;
+      --muted: #67625a;
+      --line: #d9d2c5;
+      --soft: #ebe4d6;
+      --red: #b94332;
+      --blue: #2d637e;
+      --green: #4d7352;
+      --gold: #b3892e;
+      --violet: #62538b;
+      --shadow: 0 26px 80px rgba(23, 23, 23, 0.15);
+      color: var(--ink);
+      background: var(--bg);
+      font-family: Inter, Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .viewport {
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      padding: 22px;
+    }
+
+    .deck-wrap {
+      position: relative;
+      width: calc(1280px * var(--deck-scale, 1));
+      height: calc(720px * var(--deck-scale, 1));
+    }
+
+    .deck {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1280px;
+      height: 720px;
+      transform: scale(var(--deck-scale, 1));
+      transform-origin: top left;
+    }
+
+    .slide {
+      display: none;
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .slide.active {
+      display: block;
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(to right, rgba(23, 23, 23, 0.045) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(23, 23, 23, 0.045) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+
+    .slide::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 9px;
+      background: linear-gradient(90deg, var(--red), var(--blue), var(--green), var(--gold));
+    }
+
+    .frame {
+      position: absolute;
+      inset: 38px 46px 44px;
+      z-index: 1;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 22px;
+    }
+
+    .topbar,
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.2;
+    }
+
+    .footer span:last-child {
+      text-align: right;
+      padding-right: 154px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--ink);
+      font-weight: 820;
+    }
+
+    .mark {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border: 2px solid var(--ink);
+      background: var(--soft);
+      font-size: 13px;
+      font-weight: 920;
+    }
+
+    .content {
+      min-height: 0;
+      display: grid;
+      align-content: center;
+      gap: 24px;
+    }
+
+    .content.top {
+      align-content: start;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      max-width: 980px;
+      font-size: 74px;
+      line-height: 0.96;
+      letter-spacing: 0;
+      font-weight: 930;
+      word-break: keep-all;
+    }
+
+    .hero-title {
+      max-width: 1040px;
+      font-size: 56px;
+      line-height: 1;
+    }
+
+    h2 {
+      max-width: 1040px;
+      font-size: 52px;
+      line-height: 1.05;
+      letter-spacing: 0;
+      font-weight: 900;
+      word-break: keep-all;
+    }
+
+    h3 {
+      font-size: 27px;
+      line-height: 1.2;
+      letter-spacing: 0;
+      font-weight: 860;
+      word-break: keep-all;
+    }
+
+    .section-tag {
+      color: var(--red);
+      font-size: 14px;
+      font-weight: 880;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .lede {
+      max-width: 910px;
+      color: #33312d;
+      font-size: 24px;
+      line-height: 1.46;
+      word-break: keep-all;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.55;
+      word-break: keep-all;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .wide-left {
+      grid-template-columns: 1.2fr 0.8fr;
+    }
+
+    .wide-right {
+      grid-template-columns: 0.82fr 1.18fr;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .panel {
+      min-height: 118px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.66);
+    }
+
+    .panel.tight {
+      min-height: 94px;
+      padding: 18px;
+    }
+
+    .panel.red {
+      border-top: 7px solid var(--red);
+    }
+
+    .panel.blue {
+      border-top: 7px solid var(--blue);
+    }
+
+    .panel.green {
+      border-top: 7px solid var(--green);
+    }
+
+    .panel.gold {
+      border-top: 7px solid var(--gold);
+    }
+
+    .panel.violet {
+      border-top: 7px solid var(--violet);
+    }
+
+    .label {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 9px;
+      margin-bottom: 10px;
+      border: 1px solid var(--line);
+      background: var(--soft);
+      color: #33312d;
+      font-size: 13px;
+      font-weight: 830;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .panel p,
+    .panel li {
+      color: #3c3a35;
+      font-size: 18px;
+      line-height: 1.46;
+      word-break: keep-all;
+    }
+
+    .panel strong {
+      color: var(--ink);
+      font-weight: 870;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip {
+      min-height: 36px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.76);
+      color: #36332e;
+      font-size: 15px;
+      font-weight: 760;
+    }
+
+    .quote {
+      max-width: 930px;
+      padding: 10px 0 10px 28px;
+      border-left: 9px solid var(--red);
+    }
+
+    .quote p {
+      font-size: 36px;
+      line-height: 1.26;
+      font-weight: 850;
+      word-break: keep-all;
+    }
+
+    .shot-panel {
+      overflow: hidden;
+      border: 2px solid var(--ink);
+      background: #f9f7f0;
+      box-shadow: 0 18px 48px rgba(23, 23, 23, 0.12);
+    }
+
+    .shot-panel img {
+      display: block;
+      width: 100%;
+      height: 430px;
+      object-fit: contain;
+      background: #f9f7f0;
+    }
+
+    .hero-shot {
+      display: grid;
+      gap: 14px;
+    }
+
+    .hero-shot .shot-panel img {
+      height: 330px;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 11px;
+    }
+
+    .event {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      min-height: 74px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.64);
+    }
+
+    .date {
+      display: grid;
+      place-items: center;
+      padding: 12px;
+      background: var(--soft);
+      color: #3e3a33;
+      font-size: 15px;
+      font-weight: 870;
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    .event-main {
+      display: grid;
+      align-content: center;
+      gap: 3px;
+      padding: 14px 18px;
+    }
+
+    .event-main strong {
+      font-size: 19px;
+      line-height: 1.2;
+    }
+
+    .event-main span {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.35;
+      word-break: keep-all;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: 1fr 56px 1fr 56px 1fr;
+      align-items: stretch;
+      gap: 8px;
+    }
+
+    .node {
+      min-height: 154px;
+      display: grid;
+      align-content: center;
+      gap: 9px;
+      padding: 20px;
+      border: 2px solid var(--ink);
+      background: var(--paper);
+      text-align: center;
+    }
+
+    .node strong {
+      font-size: 26px;
+      line-height: 1.1;
+    }
+
+    .node span {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.35;
+      word-break: keep-all;
+    }
+
+    .arrow {
+      display: grid;
+      place-items: center;
+      color: var(--red);
+      font-size: 34px;
+      font-weight: 900;
+    }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.56);
+    }
+
+    .cell {
+      min-height: 92px;
+      padding: 16px;
+      display: grid;
+      align-content: start;
+      gap: 6px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .cell.head {
+      min-height: 58px;
+      align-content: center;
+      background: #191919;
+      color: #f9f4e8;
+      font-weight: 860;
+    }
+
+    .cell strong {
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    .cell span {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.4;
+      word-break: keep-all;
+    }
+
+    .cell.head span {
+      color: #f9f4e8;
+    }
+
+    .public-wiki {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .browser {
+      min-height: 356px;
+      overflow: hidden;
+      border: 2px solid var(--ink);
+      background: #fff;
+    }
+
+    .browser-bar {
+      height: 50px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      padding: 0 18px;
+      border-bottom: 1px solid var(--line);
+      background: var(--soft);
+      font-size: 16px;
+      font-weight: 850;
+    }
+
+    .browser-body {
+      display: grid;
+      gap: 12px;
+      padding: 18px;
+    }
+
+    .search-bar {
+      height: 38px;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+      background: #fbfaf6;
+    }
+
+    .article-card {
+      display: grid;
+      gap: 8px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .article-card strong {
+      font-size: 18px;
+    }
+
+    .article-card span {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.35;
+      word-break: keep-all;
+    }
+
+    .big-number {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--red);
+      font-size: 82px;
+      line-height: 0.9;
+      font-weight: 930;
+      letter-spacing: 0;
+    }
+
+    .controls {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--ink);
+    }
+
+    .controls button {
+      width: 38px;
+      height: 34px;
+      border: 1px solid rgba(23, 23, 23, 0.25);
+      background: rgba(255, 253, 248, 0.92);
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 17px;
+      font-weight: 860;
+    }
+
+    .counter {
+      min-width: 72px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(23, 23, 23, 0.25);
+      background: rgba(255, 253, 248, 0.92);
+      font-size: 13px;
+      font-weight: 820;
+    }
+
+    @media print {
+      html,
+      body {
+        width: auto;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+      }
+
+      .viewport {
+        display: block;
+        width: auto;
+        height: auto;
+        padding: 0;
+      }
+
+      .deck {
+        width: auto;
+        height: auto;
+        transform: none;
+      }
+
+      .deck-wrap {
+        width: auto;
+        height: auto;
+      }
+
+      .slide,
+      .slide.active {
+        display: block;
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        page-break-after: always;
+        box-shadow: none;
+      }
+
+      .controls {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="viewport">
+    <div class="deck-wrap">
+    <main class="deck" aria-label="Building in Public Maple presentation deck">
+      <section class="slide active" data-title="Maple">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">M</span><span>Elbaph 4th Meetup</span></div>
+            <div>2026.05.31</div>
+          </div>
+          <div class="content top">
+            <div class="section-tag">Building in Public</div>
+            <h1 class="hero-title">Maple: 내가 공부하려고 만든 LLM Wiki app</h1>
+            <div class="hero-shot">
+              <div class="shot-panel">
+                <img src="assets/maple-app-robot-hardware-wiki.png" alt="Maple Mac app showing a robot hardware wiki, Ask Wiki panel, and wiki tree">
+              </div>
+              <div class="chips">
+                <span class="chip">Robot hardware wiki</span>
+                <span class="chip">Ask Wiki</span>
+                <span class="chip">Maintain</span>
+                <span class="chip">Public Wiki</span>
+              </div>
+            </div>
+          </div>
+          <div class="footer">
+            <span>Chulwoo</span>
+            <span>Use arrow keys or click controls</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Start">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">M</span><span>시작점</span></div>
+            <div>01</div>
+          </div>
+          <div class="content split wide-left">
+            <div>
+              <div class="section-tag">Personal Need</div>
+              <h2>처음에는 로봇 하드웨어를 공부하려고 LLM Wiki를 썼다.</h2>
+              <p class="lede">Obsidian에 자료를 넣고 Codex로 lecture, transcript, paper, web clipping을 읽게 했다. 목표는 채팅 답변이 아니라 계속 축적되는 공부용 wiki였다.</p>
+            </div>
+            <div class="grid-2">
+              <div class="panel red">
+                <span class="label">Sources</span>
+                <p>강의 PDF, STT transcript, 논문, 웹 글, 개인 메모.</p>
+              </div>
+              <div class="panel blue">
+                <span class="label">Wiki</span>
+                <p>actuator, motor, transmission 같은 개념을 markdown으로 정리.</p>
+              </div>
+              <div class="panel green">
+                <span class="label">Graph</span>
+                <p>개념과 자료가 연결되면서 공부 경로가 생김.</p>
+              </div>
+              <div class="panel gold">
+                <span class="label">Goal</span>
+                <p>다음 질문이 항상 이전 정리 위에서 시작하게 만들기.</p>
+              </div>
+            </div>
+          </div>
+          <div class="footer">
+            <span>Obsidian + Codex was good enough to prove the workflow.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Problem">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">M</span><span>문제</span></div>
+            <div>02</div>
+          </div>
+          <div class="content">
+            <div>
+              <div class="section-tag">Too Much Freedom</div>
+              <h2>그런데 Codex의 자유도가 너무 높았다.</h2>
+              <p class="lede">wiki는 구조가 중요하다. 하지만 agent에게 너무 많은 자유를 주면 페이지 이름, 링크 방식, 출처 관리, 업데이트 기준이 매번 조금씩 흔들린다.</p>
+            </div>
+            <div class="grid-3">
+              <div class="panel red">
+                <span class="big-number">1</span>
+                <p><strong>Structure drift</strong><br>폴더와 페이지 구조가 사용하면서 조금씩 어긋난다.</p>
+              </div>
+              <div class="panel blue">
+                <span class="big-number">2</span>
+                <p><strong>Source drift</strong><br>어떤 주장에 어떤 source가 연결됐는지 관리가 어렵다.</p>
+              </div>
+              <div class="panel green">
+                <span class="big-number">3</span>
+                <p><strong>Maintenance drift</strong><br>새 자료가 들어올 때 어떤 페이지를 고쳐야 할지 계속 사람이 잡아줘야 한다.</p>
+              </div>
+            </div>
+          </div>
+          <div class="footer">
+            <span>LLM Wiki needs constraints, not only intelligence.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="App">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">M</span><span>그래서 앱을 만들었다</span></div>
+            <div>03</div>
+          </div>
+          <div class="content">
+            <div>
+              <div class="section-tag">Product Decision</div>
+              <h2>Maple은 agent에게 rail을 깔아주는 Mac app이다.</h2>
+            </div>
+            <div class="flow">
+              <div class="node">
+                <strong>Import</strong>
+                <span>source를 정해진 위치와 형태로 넣는다.</span>
+              </div>
+              <div class="arrow">→</div>
+              <div class="node">
+                <strong>Build Wiki</strong>
+                <span>페이지, 링크, source mapping을 규칙 안에서 만든다.</span>
+              </div>
+              <div class="arrow">→</div>
+              <div class="node">
+                <strong>Maintain</strong>
+                <span>새 자료가 들어오면 업데이트 후보를 찾고 반영한다.</span>
+              </div>
+            </div>
+            <div class="grid-3">
+              <div class="panel tight red"><p><strong>Ask Wiki</strong><br>현재 문서 또는 전체 wiki를 상대로 질문한다.</p></div>
+              <div class="panel tight blue"><p><strong>Page / Graph</strong><br>텍스트와 연결 구조를 함께 본다.</p></div>
+              <div class="panel tight green"><p><strong>Apply to wiki</strong><br>좋은 답변은 다시 wiki 업데이트로 들어간다.</p></div>
+            </div>
+          </div>
+          <div class="footer">
+            <span>개인 공부용 앱으로 시작했다.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Public Build">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">M</span><span>Building in public</span></div>
+            <div>04</div>
+          </div>
+          <div class="content split wide-left">
+            <div>
+              <div class="section-tag">Thread</div>
+              <h2>만드는 과정을 스레드에 계속 올렸다.</h2>
+              <p class="lede">완성된 런칭 글이 아니라, 지금 만들고 있는 화면과 판단을 공유했다. 내 의도는 Maple을 설명하는 것이었지만, 실제로는 사람들이 자기 문제를 대입하기 시작했다.</p>
+            </div>
+            <div class="timeline">
+              <div class="event">
+                <div class="date">Build</div>
+                <div class="event-main"><strong>내 공부 문제를 푼다</strong><span>robot hardware wiki를 만들면서 제품을 검증.</span></div>
+              </div>
+              <div class="event">
+                <div class="date">Post</div>
+                <div class="event-main"><strong>화면과 과정을 공개한다</strong><span>무엇을 만들었는지보다 왜 필요한지까지 공유.</span></div>
+              </div>
+              <div class="event">
+                <div class="date">Inbound</div>
+                <div class="event-main"><strong>예상 밖의 사람이 연락한다</strong><span>내가 생각하지 못한 사용 사례가 들어옴.</span></div>
+              </div>
+              <div class="event">
+                <div class="date">Learn</div>
+                <div class="event-main"><strong>needs를 더 빨리 듣는다</strong><span>홍보보다 빠른 customer discovery loop.</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="footer">
+            <span>Building in public became a discovery loop.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="IB">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">M</span><span>예상 밖의 고객</span></div>
+            <div>05</div>
+          </div>
+          <div class="content split">
+            <div>
+              <div class="section-tag">First B2B Customer</div>
+              <h2>IB를 가르치는 아카데미에서 연락이 왔다.</h2>
+              <p class="lede">그들은 Maple으로 강의와 문제 세트를 wiki화하고, 학생들이 웹사이트에서 공부할 수 있게 만들고 싶어했다.</p>
+            </div>
+            <div class="grid-2">
+              <div class="panel red">
+                <span class="label">Customer</span>
+                <p>International Baccalaureate를 가르치는 아카데미.</p>
+              </div>
+              <div class="panel blue">
+                <span class="label">Materials</span>
+                <p>강의, 문제 세트, 풀이, 개념 설명, 학습 경로.</p>
+              </div>
+              <div class="panel green">
+                <span class="label">Builder</span>
+                <p>아카데미 팀은 Maple app으로 wiki를 구축하고 관리.</p>
+              </div>
+              <div class="panel gold">
+                <span class="label">Reader</span>
+                <p>학생들은 앱 없이 웹사이트에서 검색하고 공부.</p>
+              </div>
+            </div>
+          </div>
+          <div class="footer">
+            <span>내 용도는 개인 공부였는데, 고객은 교육용 wiki를 봤다.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Contract">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">M</span><span>계약</span></div>
+            <div>06</div>
+          </div>
+          <div class="content split wide-right">
+            <div class="grid-2">
+              <div class="panel red">
+                <span class="label">초기 구축비</span>
+                <p>처음 wiki를 만들고 public website까지 세팅하는 비용.</p>
+              </div>
+              <div class="panel blue">
+                <span class="label">월 구독료</span>
+                <p>계속 자료가 쌓이고 wiki가 업데이트되는 운영 비용.</p>
+              </div>
+              <div class="panel green">
+                <span class="label">B2B Value</span>
+                <p>그들이 사는 것은 AI output 하나가 아니라, 반복 가능한 지식 운영 흐름.</p>
+              </div>
+              <div class="panel gold">
+                <span class="label">Signal</span>
+                <p>좋아요보다 강한 신호는 실제 돈을 내는 고객이었다.</p>
+              </div>
+            </div>
+            <div>
+              <div class="section-tag">Validation</div>
+              <h2>초기 구축비 + 월 구독료로 첫 B2B 계약을 했다.</h2>
+              <p class="lede">이때부터 Maple은 "내가 쓰는 공부 도구"에서 "팀이나 기관이 지식을 구축하고 배포하는 제품"으로 바뀌었다.</p>
+            </div>
+          </div>
+          <div class="footer">
+            <span>The business model appeared through customer pull.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Public Wiki">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">M</span><span>Public Wiki</span></div>
+            <div>07</div>
+          </div>
+          <div class="content">
+            <div>
+              <div class="section-tag">Two Products</div>
+              <h2>Maple app은 만드는 사람용, public wiki는 읽는 사람용이다.</h2>
+            </div>
+            <div class="public-wiki">
+              <div class="browser">
+                <div class="browser-bar"><span>Maple for builders</span><span>Mac app</span></div>
+                <div class="browser-body">
+                  <div class="article-card">
+                    <strong>Import lectures</strong>
+                    <span>강의, 문제, transcript, paper를 source로 넣는다.</span>
+                  </div>
+                  <div class="article-card">
+                    <strong>Build and maintain</strong>
+                    <span>LLM이 wiki를 만들고, 사람이 검토하며, 계속 업데이트한다.</span>
+                  </div>
+                  <div class="article-card">
+                    <strong>Publish</strong>
+                    <span>승인된 페이지를 website로 내보낸다.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="browser">
+                <div class="browser-bar"><span>Public Wiki for readers</span><span>Website</span></div>
+                <div class="browser-body">
+                  <div class="search-bar">Search lecture, concept, problem...</div>
+                  <div class="article-card">
+                    <strong>Lecture 1 Study Path</strong>
+                    <span>학생은 Maple을 설치하지 않고 학습 경로를 웹에서 바로 본다.</span>
+                  </div>
+                  <div class="article-card">
+                    <strong>Problem Set Wiki</strong>
+                    <span>문제, 개념, 풀이, 관련 페이지가 연결된다.</span>
+                  </div>
+                  <div class="article-card">
+                    <strong>Source-aware learning</strong>
+                    <span>중요한 설명에는 출처와 업데이트 기록이 붙는다.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="footer">
+            <span>Builder는 앱을 쓰고, 학생은 웹사이트를 쓴다.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Testbed">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">M</span><span>내 테스트베드</span></div>
+            <div>08</div>
+          </div>
+          <div class="content split wide-left">
+            <div>
+              <div class="section-tag">Robot Hardware Wiki</div>
+              <h2>그래서 내 robot hardware wiki를 public wiki로 먼저 만들고 있다.</h2>
+              <p class="lede">고객용 IB wiki를 바로 만들기 전에, 내가 가장 잘 아는 자료로 reader experience를 검증한다. 검색, study path, source, related page가 실제로 공부에 도움이 되는지 보는 중이다.</p>
+            </div>
+            <div class="shot-panel">
+              <img src="assets/maple-app-robot-hardware-wiki.png" alt="Robot hardware wiki inside Maple">
+            </div>
+          </div>
+          <div class="footer">
+            <span>Dogfooding the public wiki before customer rollout.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Lesson 1">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">M</span><span>배운 점 1</span></div>
+            <div>09</div>
+          </div>
+          <div class="content">
+            <div>
+              <div class="section-tag">Unexpected Use Cases</div>
+              <h2>내가 만든 용도와 고객이 발견한 용도가 달랐다.</h2>
+            </div>
+            <div class="grid-3">
+              <div class="panel red">
+                <span class="label">Me</span>
+                <p>나는 개인 공부용 robot hardware wiki를 만들려고 했다.</p>
+              </div>
+              <div class="panel blue">
+                <span class="label">IB Academy</span>
+                <p>고객은 강의와 문제 세트를 학생용 wiki로 만들고 싶어했다.</p>
+              </div>
+              <div class="panel green">
+                <span class="label">Other Inbounds</span>
+                <p>VC 심사역, 회사 팀 정보, research 결과를 wiki로 정리하고 싶은 사람도 연락했다.</p>
+              </div>
+            </div>
+            <div class="quote">
+              <p>Building in public은 고객 유치이면서, needs를 더 빠르게 직접 듣는 방법이었다.</p>
+            </div>
+          </div>
+          <div class="footer">
+            <span>The market explains the product back to you.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Lesson 2">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">M</span><span>배운 점 2</span></div>
+            <div>10</div>
+          </div>
+          <div class="content split wide-left">
+            <div>
+              <div class="section-tag">AI Arbitrage</div>
+              <h2>AI를 실제 업무에 쓰는 능력에는 아직 큰 간극이 있다.</h2>
+              <p class="lede">솔직히 돈 받기가 조금 미안했다. 나에게는 며칠 뚝딱이면 되는 일처럼 느껴졌기 때문이다. 그런데 고객은 내가 제시한 가격이 너무 싸다고 좋아했다.</p>
+            </div>
+            <div class="grid-2">
+              <div class="panel red">
+                <span class="label">내 기준</span>
+                <p>LLM, Codex, app, website를 이어 붙이면 며칠 안에 결과물이 나온다.</p>
+              </div>
+              <div class="panel blue">
+                <span class="label">고객 기준</span>
+                <p>이것은 강의 자산을 학생용 학습 시스템으로 바꾸는 일이다.</p>
+              </div>
+              <div class="panel green">
+                <span class="label">Value Gap</span>
+                <p>구현 난이도와 고객 가치 사이의 차이가 생각보다 컸다.</p>
+              </div>
+              <div class="panel gold">
+                <span class="label">Durability</span>
+                <p>이 arbitrage는 꽤 오래 유지될 것 같다.</p>
+              </div>
+            </div>
+          </div>
+          <div class="footer">
+            <span>AI usage gap is still a real business gap.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Next">
+        <div class="frame">
+          <div class="topbar">
+            <div class="brand"><span class="mark">M</span><span>Next</span></div>
+            <div>11</div>
+          </div>
+          <div class="content split wide-right">
+            <div class="grid-2">
+              <div class="panel red">
+                <span class="label">1. IB Wiki</span>
+                <p>초기 구축 workflow를 끝까지 성공시키고 반복 가능하게 만든다.</p>
+              </div>
+              <div class="panel blue">
+                <span class="label">2. Public Wiki</span>
+                <p>학생과 reader가 앱 없이 웹에서 공부하는 경험을 완성한다.</p>
+              </div>
+              <div class="panel green">
+                <span class="label">3. Maple App</span>
+                <p>builder의 import, ask, maintain loop를 더 좁고 안정적으로 만든다.</p>
+              </div>
+              <div class="panel gold">
+                <span class="label">4. Keep Posting</span>
+                <p>building in public을 계속해서 다음 customer signal을 더 빨리 받는다.</p>
+              </div>
+            </div>
+            <div>
+              <div class="section-tag">Roadmap</div>
+              <h2>다음 목표는 데모가 아니라, 운영되는 wiki다.</h2>
+              <p class="lede">Maple은 개인 공부 앱에서 시작했지만, 이제는 지식을 구축하고 배포하는 B2B workflow를 만들고 있다.</p>
+            </div>
+          </div>
+          <div class="footer">
+            <span>Ship the real workflow, then generalize.</span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+    </main>
+    </div>
+  </div>
+
+  <div class="controls" aria-label="Slide controls">
+    <button type="button" id="prev" title="Previous slide" aria-label="Previous slide">&larr;</button>
+    <div class="counter" id="counter">1 / 12</div>
+    <button type="button" id="next" title="Next slide" aria-label="Next slide">&rarr;</button>
+  </div>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const counter = document.getElementById("counter");
+    const previousButton = document.getElementById("prev");
+    const nextButton = document.getElementById("next");
+    let current = 0;
+
+    function fitDeck() {
+      const scale = Math.min(window.innerWidth / 1324, window.innerHeight / 764);
+      document.documentElement.style.setProperty("--deck-scale", Math.max(0.1, scale).toString());
+    }
+
+    function hashIndex() {
+      const value = Number.parseInt(window.location.hash.replace("#", ""), 10);
+      if (!Number.isFinite(value)) {
+        return 0;
+      }
+      return Math.min(Math.max(value - 1, 0), slides.length - 1);
+    }
+
+    function showSlide(index, updateHash = true) {
+      current = (index + slides.length) % slides.length;
+      slides.forEach((slide, slideIndex) => {
+        slide.classList.toggle("active", slideIndex === current);
+      });
+      counter.textContent = `${current + 1} / ${slides.length}`;
+      const title = slides[current].dataset.title || `Slide ${current + 1}`;
+      document.title = `${title} - Building in Public: Maple`;
+      if (updateHash) {
+        const hash = `#${String(current + 1).padStart(2, "0")}`;
+        if (window.location.hash !== hash) {
+          history.replaceState(null, "", hash);
+        }
+      }
+    }
+
+    previousButton.addEventListener("click", () => showSlide(current - 1));
+    nextButton.addEventListener("click", () => showSlide(current + 1));
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+        event.preventDefault();
+        showSlide(current + 1);
+      }
+      if (event.key === "ArrowLeft" || event.key === "PageUp") {
+        event.preventDefault();
+        showSlide(current - 1);
+      }
+      if (event.key === "Home") {
+        event.preventDefault();
+        showSlide(0);
+      }
+      if (event.key === "End") {
+        event.preventDefault();
+        showSlide(slides.length - 1);
+      }
+    });
+
+    window.addEventListener("resize", fitDeck);
+    window.addEventListener("hashchange", () => showSlide(hashIndex(), false));
+
+    fitDeck();
+    showSlide(hashIndex());
+  </script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Draft Meetup Article"
+  short_description: "Draft Elbaph articles from meetup sources"
+  default_prompt: "Draft an Elbaph meetup article from the transcript, materials, and speaker style."
