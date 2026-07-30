@@ -5,6 +5,22 @@ import type { Article } from '@/data/articles'
 
 const ARTICLES_DIR = path.join(process.cwd(), 'content/articles')
 
+function frontmatterDate(value: unknown) {
+  return value instanceof Date ? value.toISOString().split('T')[0] : String(value)
+}
+
+function frontmatterDateTime(value: unknown) {
+  if (value == null) return undefined
+  return value instanceof Date ? value.toISOString() : String(value)
+}
+
+function articleSortTime(article: Article) {
+  const value = article.publishedAt ?? article.date
+  const timestamp = Date.parse(value)
+
+  return Number.isNaN(timestamp) ? 0 : timestamp
+}
+
 export function getAllArticles(): Article[] {
   const meetupDirs = fs.readdirSync(ARTICLES_DIR)
   const articles: Article[] = []
@@ -48,10 +64,8 @@ export function getAllArticles(): Article[] {
         slug: data.slug,
         meetupId,
         memberId,
-        date:
-          data.date instanceof Date
-            ? data.date.toISOString().split('T')[0]
-            : String(data.date),
+        date: frontmatterDate(data.date),
+        publishedAt: frontmatterDateTime(data.publishedAt),
         title: { ko: titleKo, en: titleEn },
         subtitle: { ko: subtitleKo, en: subtitleEn },
         body: { ko: koBody, en: enBody },
@@ -60,7 +74,7 @@ export function getAllArticles(): Article[] {
     }
   }
 
-  return articles.sort((a, b) => b.date.localeCompare(a.date))
+  return articles.sort((a, b) => articleSortTime(b) - articleSortTime(a))
 }
 
 export function getArticleBySlug(slug: string): Article | undefined {

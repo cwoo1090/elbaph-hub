@@ -3,6 +3,7 @@ export type Article = {
   meetupId: string
   memberId: string
   date: string
+  publishedAt?: string
   title: { ko: string; en: string }
   subtitle: { ko: string; en: string }
   body: { ko: string; en: string }

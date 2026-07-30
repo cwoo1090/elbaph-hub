@@ -1,7 +1,7 @@
 import type { Meetup } from '@/data/meetups'
 import type { Article } from '@/data/articles'
-import { members } from '@/data/members'
 import { Link } from '@/i18n/navigation'
+import { getSpeakerMeta } from '@/lib/speakers'
 
 type Props = {
   meetup: Meetup
@@ -35,19 +35,29 @@ export default function MeetupCard({ meetup, meetupNumber, locale, articles }: P
       {/* Right: speaker rows */}
       <div className="border-t border-[#e5e5e5]">
         {meetup.speakers.map((s, i) => {
-          const member = members.find((m) => m.id === s.memberId)
           const article = articles.find((a) => a.memberId === s.memberId)
+          const speaker = getSpeakerMeta(meetup.id, s.memberId, locale)
           const rowClassName =
             'grid gap-2 border-b border-[#e5e5e5] py-4 transition-colors duration-150 md:grid-cols-[140px_1fr_auto] md:gap-4 md:py-3'
           const rowContent = (
             <>
               <span className="text-sm font-semibold text-[#1a1a1a] font-display">
-                {member?.name[locale] ?? s.memberId}
+                {speaker.name}
               </span>
-              <span className="text-[15px] leading-7 text-[#737373] md:text-sm md:leading-relaxed">{s.topic[locale]}</span>
-              {article && (
-                <span className="shrink-0 text-sm text-[#737373] transition-colors duration-150 md:text-xs">
-                  {locale === 'ko' ? '글 읽기 →' : 'Read →'}
+              <span className="text-[15px] leading-7 text-[#737373] md:text-sm md:leading-relaxed">
+                {article?.title[locale] ?? s.topic[locale]}
+              </span>
+              {(speaker.role || article) && (
+                <span className="flex shrink-0 items-center gap-2 text-sm text-[#737373] transition-colors duration-150 md:text-xs">
+                  {speaker.role && (
+                    <span className="whitespace-nowrap rounded-full border border-[#d4d4d4] px-2 py-0.5 text-xs font-medium text-[#525252]">
+                      {speaker.role}
+                    </span>
+                  )}
+                  {speaker.role && article && <span className="text-[#d4d4d4]">·</span>}
+                  {article && (
+                    <span className="whitespace-nowrap">{locale === 'ko' ? '글 읽기 →' : 'Read →'}</span>
+                  )}
                 </span>
               )}
             </>

@@ -1,10 +1,10 @@
 import { notFound } from 'next/navigation'
 import { getAllArticles, getArticleBySlug } from '@/lib/articles'
-import { members } from '@/data/members'
 import { routing } from '@/i18n/routing'
 import ArticleBody from '@/components/ArticleBody'
 import NewsletterModal from '@/components/NewsletterModal'
 import NewsletterSignup from '@/components/NewsletterSignup'
+import { getSpeakerMeta } from '@/lib/speakers'
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>
@@ -23,8 +23,7 @@ export default async function BlogArticlePage({ params }: Props) {
   const article = getArticleBySlug(slug)
   if (!article) notFound()
 
-  const member = members.find((m) => m.id === article.memberId)
-  const authorName = member ? member.name[currentLocale] : article.memberId
+  const author = getSpeakerMeta(article.meetupId, article.memberId, currentLocale)
   const publication = process.env.SUBSTACK_PUBLICATION?.trim().toLowerCase()
 
   return (
@@ -32,7 +31,9 @@ export default async function BlogArticlePage({ params }: Props) {
       <div className="mx-auto max-w-3xl">
         <ArticleBody
           date={article.date}
-          authorName={authorName}
+          authorName={author.name}
+          authorRole={author.role}
+          authorHref={author.isMember ? '/crew' : undefined}
           locale={currentLocale}
           ko={{ title: article.title.ko, subtitle: article.subtitle.ko, body: article.body.ko }}
           en={{ title: article.title.en, subtitle: article.subtitle.en, body: article.body.en }}

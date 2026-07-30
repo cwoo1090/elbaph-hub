@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import { Link } from '@/i18n/navigation'
 import type { Article } from '@/data/articles'
-import { members } from '@/data/members'
 import { meetups } from '@/data/meetups'
+import { getSpeakerMeta } from '@/lib/speakers'
 
 type Props = {
   article: Article
@@ -11,8 +11,7 @@ type Props = {
 }
 
 export default function ArticleCard({ article, locale, readMoreLabel }: Props) {
-  const member = members.find((m) => m.id === article.memberId)
-  const authorName = member ? member.name[locale] : article.memberId
+  const author = getSpeakerMeta(article.meetupId, article.memberId, locale)
   const meetup = meetups.find((m) => m.id === article.meetupId)
   const meetupLabel = meetup ? meetup.title[locale] : article.meetupId
 
@@ -35,20 +34,26 @@ export default function ArticleCard({ article, locale, readMoreLabel }: Props) {
         )}
         <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap items-center gap-x-2 gap-y-2">
-            {member?.photo ? (
+            {author.photo ? (
               <Image
-                src={member.photo}
-                alt={authorName}
+                src={author.photo}
+                alt={author.name}
                 width={24}
                 height={24}
                 className="h-6 w-6 rounded-full object-cover"
               />
             ) : (
               <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#e5e5e5] text-[10px] text-[#737373]">
-                {authorName.charAt(0)}
+                {author.name.charAt(0)}
               </div>
             )}
-            <span className="text-xs text-[#737373]">{authorName}</span>
+            <span className="text-xs text-[#737373]">{author.name}</span>
+            {author.role && (
+              <>
+                <span className="text-xs text-[#d4d4d4]">·</span>
+                <span className="text-xs font-medium text-[#525252]">{author.role}</span>
+              </>
+            )}
             <span className="text-xs text-[#d4d4d4]">·</span>
             <span className="text-xs text-[#737373]">{article.date}</span>
           </div>

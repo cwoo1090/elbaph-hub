@@ -10,12 +10,22 @@ type LanguageContent = {
 type Props = {
   date: string
   authorName: string
+  authorRole?: string
+  authorHref?: string
   locale: 'ko' | 'en'
   ko: LanguageContent
   en: LanguageContent
 }
 
-export default function ArticleBody({ date, authorName, locale, ko, en }: Props) {
+export default function ArticleBody({
+  date,
+  authorName,
+  authorRole,
+  authorHref,
+  locale,
+  ko,
+  en,
+}: Props) {
   const current = locale === 'ko' ? ko : en
 
   return (
@@ -31,9 +41,20 @@ export default function ArticleBody({ date, authorName, locale, ko, en }: Props)
         )}
         <div className="mt-4 flex flex-col items-start gap-1 text-sm text-[#737373] sm:flex-row sm:items-center sm:gap-4">
           <span>{date}</span>
-          <Link href="/crew" className="hover:text-[#1a1a1a] transition-colors duration-150">
-            {authorName}
-          </Link>
+          <span className="flex flex-wrap items-center gap-2">
+            {authorHref ? (
+              <Link href={authorHref} className="hover:text-[#1a1a1a] transition-colors duration-150">
+                {authorName}
+              </Link>
+            ) : (
+              <span>{authorName}</span>
+            )}
+            {authorRole && (
+              <span className="rounded-full border border-[#d4d4d4] px-2 py-0.5 text-xs font-medium text-[#525252]">
+                {authorRole}
+              </span>
+            )}
+          </span>
         </div>
       </header>
       <div className="article-body mt-8 text-[15px] leading-7 text-[#1a1a1a] [&_h2]:mt-8 [&_h2]:text-[1.6rem] [&_h2]:font-bold [&_h2]:text-[#1a1a1a] [&_p]:mt-4 [&_p]:first:mt-0 sm:mt-12 sm:text-base sm:leading-relaxed sm:[&_h2]:mt-10 sm:[&_h2]:text-2xl">

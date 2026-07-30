@@ -1,7 +1,8 @@
 import { useTranslations, useLocale } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 import { meetups } from '@/data/meetups'
-import { members } from '@/data/members'
+import { getAllArticles } from '@/lib/articles'
+import { getSpeakerMeta } from '@/lib/speakers'
 
 function formatDate(dateStr: string, locale: string) {
   const d = new Date(dateStr + 'T12:00:00')
@@ -19,6 +20,8 @@ export default function RecentMeetup() {
   const latest = meetups[meetups.length - 1]
   const meetupNumber = meetups.length
   if (!latest) return null
+
+  const articles = getAllArticles().filter((article) => article.meetupId === latest.id)
 
   return (
     <section className="px-4 py-20 sm:px-6 md:py-32">
@@ -53,18 +56,24 @@ export default function RecentMeetup() {
           {/* Right: speaker rows */}
           <div className="border-t border-[#e5e5e5]">
             {latest.speakers.map((s, i) => {
-              const member = members.find((m) => m.id === s.memberId)
+              const article = articles.find((item) => item.memberId === s.memberId)
+              const speaker = getSpeakerMeta(latest.id, s.memberId, locale)
               return (
                 <div
                   key={i}
-                  className="grid gap-1.5 border-b border-[#e5e5e5] py-4 md:grid-cols-[140px_1fr] md:gap-4 md:py-3.5"
+                  className="grid gap-1.5 border-b border-[#e5e5e5] py-4 md:grid-cols-[140px_1fr_auto] md:gap-4 md:py-3.5"
                 >
                   <span className="text-sm font-semibold text-[#1a1a1a] font-display">
-                    {member?.name[locale] ?? s.memberId}
+                    {speaker.name}
                   </span>
                   <span className="text-[15px] leading-7 text-[#737373] md:text-sm md:leading-relaxed">
-                    {s.topic[locale]}
+                    {article?.title[locale] ?? s.topic[locale]}
                   </span>
+                  {speaker.role && (
+                    <span className="shrink-0 whitespace-nowrap rounded-full border border-[#d4d4d4] px-2 py-0.5 text-xs font-medium text-[#525252]">
+                      {speaker.role}
+                    </span>
+                  )}
                 </div>
               )
             })}

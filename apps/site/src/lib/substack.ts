@@ -11,6 +11,28 @@ const DEFAULT_SUBSTACK_TAGS = ['Elbaph Meetup']
 const SUBSTACK_TAGS_BY_SLUG: Record<string, string[]> = {
   'meetup-2-chulwoo': ['Building', 'Product', 'Side Projects', 'AI', 'Elbaph Meetup'],
   'meetup-2-jaehwan': ['AI Agents', 'Research', 'Automation', 'Trading', 'Elbaph Meetup'],
+  'meetup-3-jaehwan': [
+    'Trading',
+    'Oil Markets',
+    'Web3',
+    'Perpetual Futures',
+    'Elbaph Meetup',
+  ],
+  'meetup-4-seungjun': [
+    'Longevity',
+    'Precision Medicine',
+    'Biology',
+    'AI Bio',
+    'Elbaph Meetup',
+  ],
+  'meetup-4-taekyu': ['Robotics', 'Sim2Real', 'Robot Learning', 'Calibration', 'Elbaph Meetup'],
+  'meetup-4-chulwoo': [
+    'AI Literacy',
+    'AI Agents',
+    'Product',
+    'Knowledge Management',
+    'Elbaph Meetup',
+  ],
   'meetup-2-taekyu': ['Robotics', 'Korea', 'Manufacturing', 'AI', 'Elbaph Meetup'],
   'meetup-3-yechan': [
     'Medical Robotics',

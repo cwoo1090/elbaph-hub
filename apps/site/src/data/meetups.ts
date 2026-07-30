@@ -4,6 +4,8 @@ export type Meetup = {
   title: { ko: string; en: string }
   speakers: {
     memberId: string
+    name?: { ko: string; en: string }
+    role?: { ko: string; en: string }
     topic: { ko: string; en: string }
   }[]
   takeaways: { ko: string; en: string }[]
@@ -121,6 +123,37 @@ export const meetups: Meetup[] = [
         topic: {
           ko: 'Karpathy식 LLM Wiki로 공부하기',
           en: 'Studying with a Karpathy-style LLM Wiki',
+        },
+      },
+    ],
+    takeaways: [],
+  },
+  {
+    id: 'meetup-4',
+    date: '2026-05-31',
+    title: { ko: '4th 밋업', en: '4th Meetup' },
+    speakers: [
+      {
+        memberId: 'seungjun',
+        name: { ko: '이승준', en: 'Seungjun Lee' },
+        role: { ko: 'Guest', en: 'Guest' },
+        topic: {
+          ko: 'Precision medicine',
+          en: 'Precision medicine',
+        },
+      },
+      {
+        memberId: 'chulwoo',
+        topic: {
+          ko: 'Building in public, Maple',
+          en: 'Building in public, Maple',
+        },
+      },
+      {
+        memberId: 'taekyu',
+        topic: {
+          ko: 'Sim2real',
+          en: 'Sim2real',
         },
       },
     ],
