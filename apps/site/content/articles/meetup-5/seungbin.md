@@ -1,6 +1,7 @@
 ---
 slug: meetup-5-seungbin
 date: 2026-06-28
+publishedAt: '2026-07-30T12:54:11+09:00'
 title:
   ko: 로봇은 언제 접촉해야 하는지 스스로 찾을 수 있을까
   en: Can Robots Find When to Make Contact on Their Own?
@@ -9,7 +10,7 @@ subtitle:
   en: What contact-implicit trajectory optimization tries to solve in contact-rich control, and where it still falls short
 ---
 
-![접촉 지점을 찾으며 구를 회전시키는 다지 로봇 손](article-assets/01-cover-contact.png)
+![접촉 지점을 찾으며 구를 회전시키는 다지 로봇 손](/articles/meetup-5/seungbin/01-cover-contact.png)
 
 *contact-rich control에서는 힘의 크기보다 먼저 언제 어디에 닿을지를 찾아야 한다.*
 
@@ -43,7 +44,7 @@ trajectory optimization은 보통 gradient 정보를 이용한다. 그런데 접
 
 실제로는 조금만 더 가면 좋은 contact이 있는데, local하게 보면 아무 변화가 없으니 optimizer는 그 자리에 멈출 수 있다.
 
-![접촉 전후 서로 다른 dynamics mode를 보여주는 로봇 gripper와 물체](article-assets/02-hybrid-dynamics.png)
+![접촉 전후 서로 다른 dynamics mode를 보여주는 로봇 gripper와 물체](/articles/meetup-5/seungbin/02-hybrid-dynamics.png)
 
 *닿기 전과 닿은 뒤에는 서로 다른 dynamics mode가 작동한다.*
 
@@ -91,7 +92,7 @@ Relaxation 자체도 trade-off를 만든다. Condition을 너무 느슨하게 �
 
 즉, relaxation은 contact-implicit optimization을 풀 수 있는 길을 열어 준다. 하지만 항상 좋은 solution이나 강건한 control까지 자동으로 보장하지는 않는다.
 
-![불연속적인 contact landscape를 부드러운 경로로 바꾸는 relaxation](article-assets/03-relaxation-landscape.png)
+![불연속적인 contact landscape를 부드러운 경로로 바꾸는 relaxation](/articles/meetup-5/seungbin/03-relaxation-landscape.png)
 
 *relaxation은 끊어진 contact landscape를 부드럽게 해 gradient가 움직일 길을 만든다.*
 
@@ -111,7 +112,7 @@ Retargeting에서는 이미 source motion이 있다는 점도 유리하다. 이�
 
 Morphology 차이가 크면 source motion이 좋은 solution을 보장하지는 않는다. 그래도 아무 initial guess 없이 contact-rich motion을 찾는 것보다는 유리한 출발점이 된다.
 
-![사람의 손 동작을 다른 형태의 로봇 손으로 옮기며 접촉을 다시 찾는 과정](article-assets/04-motion-retargeting.png)
+![사람의 손 동작을 다른 형태의 로봇 손으로 옮기며 접촉을 다시 찾는 과정](/articles/meetup-5/seungbin/04-motion-retargeting.png)
 
 *source motion을 warm start로 쓰더라도, 새로운 robot morphology에서 실제 contact은 다시 찾아야 한다.*
 

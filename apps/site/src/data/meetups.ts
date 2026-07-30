@@ -159,4 +159,33 @@ export const meetups: Meetup[] = [
     ],
     takeaways: [],
   },
+  {
+    id: 'meetup-5',
+    date: '2026-06-28',
+    title: { ko: '5th 밋업', en: '5th Meetup' },
+    speakers: [
+      {
+        memberId: 'seungbin',
+        topic: {
+          ko: 'Contact-Implicit Trajectory Optimization',
+          en: 'Contact-Implicit Trajectory Optimization',
+        },
+      },
+      {
+        memberId: 'terry',
+        topic: {
+          ko: 'AI는 왜 냄새를 맡아야 하는가',
+          en: 'Why AI Needs to Smell',
+        },
+      },
+      {
+        memberId: 'younghun',
+        topic: {
+          ko: 'Diffusion Language Model에서의 Linear-Hybrid Attention',
+          en: 'Linear-Hybrid Attention in Diffusion-Based Language Models',
+        },
+      },
+    ],
+    takeaways: [],
+  },
 ]

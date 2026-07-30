@@ -33,6 +33,13 @@ const SUBSTACK_TAGS_BY_SLUG: Record<string, string[]> = {
     'Knowledge Management',
     'Elbaph Meetup',
   ],
+  'meetup-5-seungbin': [
+    'Robotics',
+    'Trajectory Optimization',
+    'Robot Control',
+    'Dexterous Manipulation',
+    'Elbaph Meetup',
+  ],
   'meetup-2-taekyu': ['Robotics', 'Korea', 'Manufacturing', 'AI', 'Elbaph Meetup'],
   'meetup-3-yechan': [
     'Medical Robotics',
