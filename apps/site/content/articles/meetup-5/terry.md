@@ -1,6 +1,7 @@
 ---
 slug: meetup-5-terry
 date: 2026-06-28
+publishedAt: '2026-08-08T11:35:46+09:00'
 title:
   ko: AI는 왜 냄새를 맡아야 하는가
   en: Why AI Needs to Smell
@@ -9,7 +10,7 @@ subtitle:
   en: Taste and smell as missing chemical senses for general intelligence
 ---
 
-![커피 향의 화학 신호가 AI가 읽는 데이터로 변환되는 감각 과학 연구실](article-assets/01-cover-chemical-sense.png)
+![커피 향의 화학 신호가 AI가 읽는 데이터로 변환되는 감각 과학 연구실](/articles/meetup-5/terry/01-cover-chemical-sense.png)
 
 *냄새와 맛을 디지털화한다는 것은 보이지 않는 chemical signal을 모델이 읽을 수 있는 데이터로 바꾸는 일이다.*
 
@@ -59,7 +60,7 @@ sensory는 외부 자극이 감각기관에 들어오는 층이다. 어떤 분�
 
 화학 구조를 보고 이 분자가 어떤 맛이나 향을 낼 가능성이 있는지, sweetness와 bitterness가 어느 정도인지, 어떤 odor descriptor가 붙을 수 있는지 예측하는 것이다. 사람마다 다른 기억과 감정까지 한 번에 맞히는 문제는 그다음 단계다.
 
-![공기 중 분자가 후각 수용체의 조합적 반응 패턴으로 바뀌는 과정](article-assets/02-olfactory-receptors.png)
+![공기 중 분자가 후각 수용체의 조합적 반응 패턴으로 바뀌는 과정](/articles/meetup-5/terry/02-olfactory-receptors.png)
 
 *냄새는 하나의 분자와 하나의 receptor가 대응하는 신호가 아니라, 여러 receptor가 만드는 조합적 pattern에 가깝다.*
 
@@ -85,7 +86,7 @@ AI가 냄새를 맡는다는 말은 코를 달자는 뜻이 아니다.
 
 분자를 넣고 그 성질을 분류하거나 예측하는 문제부터 시작하는 편이 자연스럽다. 이 분자가 sweet할지, bitter할지, 특정 receptor에 결합할지, 어떤 descriptor label이 붙을지 예측한다. 나중에는 원하는 향이나 맛을 조건으로 주고 새로운 분자를 만들어내는 generative model도 중요해질 수 있다. 하지만 좋은 생성은 좋은 이해 위에서만 의미가 있다.
 
-![분자 구조를 representation으로 바꾸고 감각적 특성을 예측하는 chemical foundation model](article-assets/03-chemical-foundation-model.png)
+![분자 구조를 representation으로 바꾸고 감각적 특성을 예측하는 chemical foundation model](/articles/meetup-5/terry/03-chemical-foundation-model.png)
 
 *chemical foundation model의 출발점은 분자 구조를 읽을 수 있는 representation으로 바꾸는 것이다.*
 
@@ -101,7 +102,7 @@ health and nutrition 쪽에서는 더 흥미로운 문제가 열린다. 설탕�
 
 더 큰 의미는 AI가 chemical world를 읽기 시작한다는 데 있다. 같은 종류의 representation은 제약, 환경 모니터링, 바이오텍 같은 인접 분야로 이어질 수 있다.
 
-![하나의 chemical sensing AI가 식품과 의약품, 환경 시료를 분석하는 연구실](article-assets/04-real-world-applications.png)
+![하나의 chemical sensing AI가 식품과 의약품, 환경 시료를 분석하는 연구실](/articles/meetup-5/terry/04-real-world-applications.png)
 
 *같은 chemical representation은 flavor R&D를 넘어 의약품과 환경 모니터링까지 이어질 수 있다.*
 
@@ -119,7 +120,7 @@ health and nutrition 쪽에서는 더 흥미로운 문제가 열린다. 설탕�
 
 더 현실적인 경로는 단계적으로 가는 것이다. 먼저 분자와 receptor, 분자와 sensory descriptor 사이의 관계를 배운다. 그다음 개인차, 맥락 정보, 감정 반응을 붙인다.
 
-![같은 향을 맡고도 서로 다른 감각 반응을 보이는 연구 참가자들](article-assets/05-personal-perception-data.png)
+![같은 향을 맡고도 서로 다른 감각 반응을 보이는 연구 참가자들](/articles/meetup-5/terry/05-personal-perception-data.png)
 
 *같은 chemical signal도 receptor와 기억, 경험에 따라 다른 perception으로 이어질 수 있다.*
 
