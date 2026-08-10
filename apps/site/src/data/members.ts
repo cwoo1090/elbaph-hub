@@ -232,4 +232,31 @@ export const members: Member[] = [
     linkedin: 'https://www.linkedin.com/in/ryanhwangkim/',
     website: 'https://ryanhwangkim.com',
   },
+  {
+    id: 'jungill',
+    name: { ko: '강준길', en: 'Jun-Gill Kang' },
+    oneLiner: {
+      ko: '로봇이 잘 움직이는 것뿐 아니라, 왜 그렇게 움직이는지 설명할 수 있게 만드는 일에 관심이 많습니다. 완전히 설명하기 어렵다면, 적어도 어떤 원인이 어떤 행동과 결과를 만들었는지는 밝혀내고자 합니다.',
+      en: 'I am interested not only in making robots move well, but also in explaining why they move the way they do. When a complete explanation is difficult, I at least try to uncover which causes led to which actions and outcomes.',
+    },
+    bio: [
+      {
+        ko: '현재 실리콘밸리의 스텔스 로보틱스 스타트업에서 입사 제의를 받고 일하고 있습니다.',
+        en: 'I received an offer from and am now working at a stealth robotics startup in Silicon Valley.',
+      },
+      {
+        ko: 'POSTECH, KAIST, ADD에서 보행 로봇, 드론, 자율주행 로봇을 연구해 왔습니다.',
+        en: 'I have researched legged robots, drones, and autonomous mobile robots at POSTECH, KAIST, and ADD.',
+      },
+      {
+        ko: '다이나믹한 로봇 움직임을 좋아하며, 다이나믹한 운동들을 좋아합니다.',
+        en: 'I enjoy dynamic robot movements and high-energy sports.',
+      },
+    ],
+    dream: { ko: '후회 없이 살기', en: 'To live without regrets' },
+    fields: ['Robotics', 'Control', 'Perception'],
+    photo: '/members/jungill.jpg',
+    linkedin: 'https://www.linkedin.com/in/jun-gill-kang-386205308/',
+    website: 'https://jgkang1210.github.io/',
+  },
 ]
