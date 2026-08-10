@@ -82,3 +82,14 @@
 - Dream: "We're here to put a dent in the universe. Otherwise, why else even be here?" I want to combine my science and humanities background with AI technology to contribute to human progress and leave a dent in the universe.
 - https://www.linkedin.com/in/ryanhwangkim/
 - https://ryanhwangkim.com
+
+## Jun-Gill Kang (강준길)
+
+- One-liner: I am interested not only in making robots move well, but also in explaining why they move the way they do. When a complete explanation is difficult, I at least try to uncover which causes led to which actions and outcomes.
+- Facts About Me
+  - I received an offer from and am now working at a stealth robotics startup in Silicon Valley.
+  - I have researched legged robots, drones, and autonomous mobile robots at POSTECH, KAIST, and ADD.
+  - I enjoy dynamic robot movements and high-energy sports.
+- Dream: To live without regrets
+- https://www.linkedin.com/in/jun-gill-kang-386205308/
+- https://jgkang1210.github.io/
