@@ -158,7 +158,7 @@ export async function fetchMessages(channelId: string, fetchAll = false): Promis
 
 function isThreadChannel(channel?: DiscordChannel): boolean {
   if (!channel) return false;
-  if (channel.parent_id) return true;
+  // Regular guild channels also have parent_id when they belong to a category.
   return channel.type !== undefined && THREAD_CHANNEL_TYPES.has(channel.type);
 }
 
